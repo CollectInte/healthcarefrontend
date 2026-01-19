@@ -105,28 +105,28 @@ export default function OtpVerification() {
                 navigate("/AdminDashboard");
                 localStorage.setItem("adminId", data.id);
                 localStorage.setItem("adminName", data.name);
-            } else if (data.role === "doctor") {
-                localStorage.setItem("userId", data.id);
-                localStorage.setItem("userName", data.name);
-                localStorage.setItem("role", data.role);
-                localStorage.setItem("adminId", data.adminId);
-                // localStorage.setItem("id", data.user.id);
-                // localStorage.setItem("role", data.user.role);
-                // localStorage.setItem("name", data.user.name);
+            } else if (data.user.role === "doctor") {
+                // localStorage.setItem("userId", data.id);
+                // localStorage.setItem("userName", data.name);
+                // localStorage.setItem("role", data.role);
+                // localStorage.setItem("adminId", data.adminId);
+                localStorage.setItem("id", data.user.id);
+                localStorage.setItem("role", data.user.role);
+                localStorage.setItem("name", data.user.name);
                 navigate("/doctor");
-            } else if (data.role === "receptionist") {
-                localStorage.setItem("userId", data.id);
-                localStorage.setItem("userName", data.name);
-                localStorage.setItem("role", data.role);
-                localStorage.setItem("adminId", data.adminId);
-                // localStorage.setItem("id", data.id);
-                // localStorage.setItem("role", data.user.role);
-                // localStorage.setItem("name", data.user.name);
-                navigate("/receptionist");
-            } else if (data.role === "client") {
+            } else if (data.user.role === "receptionist") {
+                // localStorage.setItem("userId", data.id);
+                // localStorage.setItem("userName", data.name);
+                // localStorage.setItem("role", data.role);
+                // localStorage.setItem("adminId", data.adminId);
                 localStorage.setItem("id", data.id);
-                localStorage.setItem("userName", data.name);
-                localStorage.setItem("adminId", data.adminId);
+                localStorage.setItem("role", data.user.role);
+                localStorage.setItem("name", data.user.name);
+                navigate("/receptionist");
+            } else if (data.user.role === "client") {
+                localStorage.setItem("id", data.user.id);
+                localStorage.setItem("userName", data.user.name);
+                localStorage.setItem("adminId", data.user.adminId);
                 navigate("/client");
             } else {
                 navigate("/");
