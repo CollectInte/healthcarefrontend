@@ -233,7 +233,7 @@ const Employees = () => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_EMPLOYEE_DELETE}/${id}`,
+        `${process.env.REACT_APP_URL}/api/staff/delete/${id}`,
         {
           method: "DELETE",
           credentials: "include",

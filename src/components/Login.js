@@ -35,31 +35,31 @@ const Login = () => {
         return;
       }
 
-      if (data.user.role === "admin") {
-        navigate("/AdminDashboard");
-        localStorage.setItem("adminId", data.user.id);
-        localStorage.setItem("adminName", data.user.name);
-      } else if (data.user.role === "doctor") {
-        localStorage.setItem("userId", data.user.id);
-        localStorage.setItem("userName", data.user.name);
-        localStorage.setItem("role", data.user.role);
-        localStorage.setItem("adminId", data.user.adminId);
-        navigate("/doctor/dashboard");
-      } else if (data.user.role === "receptionist") {
-        localStorage.setItem("userId", data.user.id);
-        localStorage.setItem("userName", data.user.name);
-        localStorage.setItem("role", data.user.role);
-        localStorage.setItem("adminId", data.user.adminId);
-        navigate("/receptionist/dashboard");
-      } else if (data.user.role === "client") {
-        localStorage.setItem("id", data.user.id);
-        localStorage.setItem("userName", data.user.name);
-        localStorage.setItem("adminId", data.user.adminId);
-        navigate("/client");
-      } else {
-        navigate("/");
-      }
-      // navigate("/otp-verify");
+      // if (data.user.role === "admin") {
+      //   navigate("/AdminDashboard");
+      //   localStorage.setItem("adminId", data.user.id);
+      //   localStorage.setItem("adminName", data.user.name);
+      // } else if (data.user.role === "doctor") {
+      //   localStorage.setItem("userId", data.user.id);
+      //   localStorage.setItem("userName", data.user.name);
+      //   localStorage.setItem("role", data.user.role);
+      //   localStorage.setItem("adminId", data.user.adminId);
+      //   navigate("/doctor/dashboard");
+      // } else if (data.user.role === "receptionist") {
+      //   localStorage.setItem("userId", data.user.id);
+      //   localStorage.setItem("userName", data.user.name);
+      //   localStorage.setItem("role", data.user.role);
+      //   localStorage.setItem("adminId", data.user.adminId);
+      //   navigate("/receptionist/dashboard");
+      // } else if (data.user.role === "client") {
+      //   localStorage.setItem("id", data.user.id);
+      //   localStorage.setItem("userName", data.user.name);
+      //   localStorage.setItem("adminId", data.user.adminId);
+      //   navigate("/client");
+      // } else {
+      //   navigate("/");
+      // }
+      navigate("/otp-verify");
 
       alert("Login successful");
     } catch (error) {
@@ -129,7 +129,7 @@ const Login = () => {
                 variant="h6"
                 sx={{ color: "#fff", fontWeight: 700,textDecoration: 'underline',cursor:'pointer', fontFamily: "Inter, sans-serif" }}
               >
-              consultdesk360
+              caredesk360
               </Typography>
               <Typography
                 variant="body2"
