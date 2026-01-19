@@ -106,22 +106,22 @@ export default function OtpVerification() {
                 localStorage.setItem("adminId", data.id);
                 localStorage.setItem("adminName", data.name);
             } else if (data.role === "doctor") {
-                // localStorage.setItem("userId", data.id);
-                // localStorage.setItem("userName", data.name);
-                // localStorage.setItem("role", data.role);
-                // localStorage.setItem("adminId", data.adminId);
-                localStorage.setItem("id", data.user.id);
-                localStorage.setItem("role", data.user.role);
-                localStorage.setItem("name", data.user.name);
+                localStorage.setItem("userId", data.id);
+                localStorage.setItem("userName", data.name);
+                localStorage.setItem("role", data.role);
+                localStorage.setItem("adminId", data.adminId);
+                // localStorage.setItem("id", data.user.id);
+                // localStorage.setItem("role", data.user.role);
+                // localStorage.setItem("name", data.user.name);
                 navigate("/doctor");
             } else if (data.role === "receptionist") {
-                // localStorage.setItem("userId", data.id);
-                // localStorage.setItem("userName", data.name);
-                // localStorage.setItem("role", data.role);
-                // localStorage.setItem("adminId", data.adminId);
-                localStorage.setItem("id", data.id);
-                localStorage.setItem("role", data.user.role);
-                localStorage.setItem("name", data.user.name);
+                localStorage.setItem("userId", data.id);
+                localStorage.setItem("userName", data.name);
+                localStorage.setItem("role", data.role);
+                localStorage.setItem("adminId", data.adminId);
+                // localStorage.setItem("id", data.id);
+                // localStorage.setItem("role", data.user.role);
+                // localStorage.setItem("name", data.user.name);
                 navigate("/receptionist");
             } else if (data.role === "client") {
                 localStorage.setItem("id", data.id);
