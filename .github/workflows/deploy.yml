@@ -24,24 +24,30 @@ jobs:
       - name: Build React app
         run: CI=false npm run build
 
-      - name: Upload React build to VPS
+      # 🔹 Upload build to HOME (safe)
+      - name: Upload build to VPS (temp)
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "build"
-          target: "/var/www/healthcarefrontend"
-          rm: true        # 🔴 THIS FIXES YOUR ERROR
+          target: "/home/ubuntu/frontend-build"
+          rm: true
           overwrite: true
 
-      # ---------- RESTART NGINX ----------
-      - name: Restart Nginx
+      # 🔹 Move to /var/www using sudo
+      - name: Move build to web root
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
           script: |
-            sudo systemctl restart nginx
+            sudo rm -rf /var/www/healthcarefrontend
+            sudo mkdir -p /var/www/healthcarefrontend
+            sudo mv /home/ubuntu/frontend-build/build /var/www/healthcarefrontend/
+            sudo chown -R www-data:www-data /var/www/healthcarefrontend
+            sudo chmod -R 755 /var/www/healthcarefrontend
+            sudo systemctl reload nginx
+            echo "✅ Frontend deployment completed successfully!"
