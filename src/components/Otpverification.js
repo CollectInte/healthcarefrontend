@@ -113,7 +113,7 @@ export default function OtpVerification() {
                 localStorage.setItem("id", data.user.id);
                 localStorage.setItem("role", data.user.role);
                 localStorage.setItem("name", data.user.name);
-                navigate("/doctor");
+                navigate("/doctor/dashboard");
             } else if (data.user.role === "receptionist") {
                 // localStorage.setItem("userId", data.id);
                 // localStorage.setItem("userName", data.name);
@@ -122,7 +122,7 @@ export default function OtpVerification() {
                 localStorage.setItem("id", data.id);
                 localStorage.setItem("role", data.user.role);
                 localStorage.setItem("name", data.user.name);
-                navigate("/receptionist");
+                navigate("/receptionist/dashboard");
             } else if (data.user.role === "client") {
                 localStorage.setItem("id", data.user.id);
                 localStorage.setItem("userName", data.user.name);
@@ -134,7 +134,7 @@ export default function OtpVerification() {
 
             if (expired) {
                 alert("OTP has expired. Please login again.");
-                navigate("/login");
+                navigate("/");
                 return;
             }
 
