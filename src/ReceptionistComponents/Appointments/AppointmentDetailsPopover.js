@@ -60,6 +60,9 @@ export default function AppointmentDetailsPopover({
         `${process.env.REACT_APP_URL}/appointment/appointment/${appointment.id}/status`,
         {
           status,
+        },
+        {
+          withCredentials: true,
         }
       );
 
