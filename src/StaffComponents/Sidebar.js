@@ -207,7 +207,7 @@ export default function Sidebar({ isOpen, onToggle, company }) {
           <Avatar
             src={
               staff?.profile_photo
-                ? `${process.env.REACT_APP_SITE_URL}/Images/${staff.profile_photo}`
+                ? `${process.env.REACT_APP_URL}/Images/${staff.profile_photo}`
                 : ""
             }
             onClick={() => setOpenProfile(true)}
