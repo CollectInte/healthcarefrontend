@@ -169,6 +169,9 @@ const AppointmentsPage = () => {
         `${process.env.REACT_APP_URL}/appointment/appointment/${appointmentId}/status`,
         {
           status: newStatus,
+        },
+        {
+          withCredentials: true,
         }
       );
       setAppointments((prev) =>
