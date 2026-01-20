@@ -40,7 +40,7 @@ const menuItems = [
   { text: "Bills", icon: <ReceiptLongIcon />, path: "/receptionist/dashboard/bills" },
   { text: "Clients", icon: <PeopleAltIcon />, path: "/receptionist/dashboard/clients" },
   { text: "Add Slot", icon: <AddCircleOutlineIcon />, path: "/receptionist/dashboard/add-slots" },
-  { text: "Logout", icon: <LogoutIcon />, path: "/login" },
+  { text: "Logout", icon: <LogoutIcon />, path: "/" },
 ];
 
 
@@ -150,12 +150,13 @@ export default function Sidebar({ isOpen, onToggle, company }) {
             src={
               company?.company_logo
                 ? `${process.env.REACT_APP_SITE_URL}/Images/${company.company_logo}`
-                : "/logo/fallback-logo.png"
+                : "/RVlogo.png"
             }
             alt="Company Logo"
             loading="lazy"
             onError={(e) => {
-              e.currentTarget.src = "/logo/fallback-logo.png";
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = "/RVlogo.png";
             }}
             sx={{
               width: "100%",
@@ -212,32 +213,32 @@ export default function Sidebar({ isOpen, onToggle, company }) {
             flexDirection: "column",
           }}
         >
-      <Avatar
-  src={
-    staff?.profile_photo
-      ? `${process.env.REACT_APP_SITE_URL}/Images/${staff.profile_photo}?t=${Date.now()}`
-      : undefined
-  }
-  onClick={() => setOpenProfile(true)}
-  sx={{
-    width: isOpen ? 70 : 40,
-    height: isOpen ? 70 : 40,
-    mx: "auto",
-    mb: 1,
-    cursor: "pointer",
-    border: "3px solid rgba(255, 255, 255, 0.3)",
-  }}
->
-  {!staff?.profile_photo && staffName?.charAt(0)}
-</Avatar>
+          <Avatar
+            src={
+              staff?.profile_photo
+                ? `${process.env.REACT_APP_SITE_URL}/Images/${staff.profile_photo}?t=${Date.now()}`
+                : undefined
+            }
+            onClick={() => setOpenProfile(true)}
+            sx={{
+              width: isOpen ? 70 : 40,
+              height: isOpen ? 70 : 40,
+              mx: "auto",
+              mb: 1,
+              cursor: "pointer",
+              border: "3px solid rgba(255, 255, 255, 0.3)",
+            }}
+          >
+            {!staff?.profile_photo && staffName?.charAt(0)}
+          </Avatar>
 
 
 
-        
-            <Typography fontWeight="bold" sx={{ color: "white", fontSize: {md:"14px",xs:"10px"} }}>
-              {staffName}
-            </Typography>
-         
+
+          <Typography fontWeight="bold" sx={{ color: "white", fontSize: { md: "14px", xs: "10px" } }}>
+            {staffName}
+          </Typography>
+
         </Box>
 
         {/* White divider after Profile */}

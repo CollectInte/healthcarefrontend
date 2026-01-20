@@ -33,7 +33,7 @@ const menuItems = [
   { text: "Attendance", icon: <AccessTimeIcon />, path: "/doctor/dashboard/attendance" },
   { text: "Appointment Review", icon: <AssignmentIcon />, path: "/doctor/dashboard/task-review" },
   { text: "Documents", icon: <DescriptionIcon />, path: "/doctor/dashboard/documents" },
-  { text: "Logout", icon: <LogoutIcon />, path: "/login" },
+  { text: "Logout", icon: <LogoutIcon />, path: "/" },
 ];
 
 export default function Sidebar({ isOpen, onToggle, company }) {
@@ -142,12 +142,13 @@ export default function Sidebar({ isOpen, onToggle, company }) {
             src={
               company?.company_logo
                 ? `${process.env.REACT_APP_SITE_URL}/Images/${company.company_logo}`
-                : "/logo/fallback-logo.png"
+                : "/RVlogo.png"
             }
             alt="Company Logo"
             loading="lazy"
             onError={(e) => {
-              e.currentTarget.src = "/logo/fallback-logo.png";
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = "/RVlogo.png";
             }}
             sx={{
               width: "100%",
@@ -156,6 +157,7 @@ export default function Sidebar({ isOpen, onToggle, company }) {
               display: "block",
             }}
           />
+
         </Box>
 
         {/* Company Name */}
@@ -224,11 +226,11 @@ export default function Sidebar({ isOpen, onToggle, company }) {
             {!staff?.profile_photo && staffName?.charAt(0)}
           </Avatar>
 
-        
-            <Typography fontWeight="bold" sx={{ color: "white", fontSize: {md:"14px",xs:"10px"} }}>
-              {staffName}
-            </Typography>
-         
+
+          <Typography fontWeight="bold" sx={{ color: "white", fontSize: { md: "14px", xs: "10px" } }}>
+            {staffName}
+          </Typography>
+
         </Box>
 
         {/* White divider after Profile */}
