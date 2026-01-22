@@ -77,7 +77,7 @@ export default function OtpVerification() {
         inputRefs.current[pasteOtp.length - 1].focus();
     };
 
-    const handleSubmit = async () => {
+   const handleSubmit = async () => {
         const enteredOtp = otp.join("");
 
         if (enteredOtp.length < OTP_LENGTH) {
@@ -105,6 +105,8 @@ export default function OtpVerification() {
                 navigate("/AdminDashboard");
                 localStorage.setItem("adminId", data.id);
                 localStorage.setItem("adminName", data.name);
+                localStorage.setItem("role", data.role);
+
             } else if (data.role === "doctor") {
                 localStorage.setItem("userId", data.id);
                 localStorage.setItem("userName", data.name);
@@ -127,6 +129,8 @@ export default function OtpVerification() {
                 localStorage.setItem("id", data.id);
                 localStorage.setItem("userName", data.name);
                 localStorage.setItem("adminId", data.adminId);
+                localStorage.setItem("role", data.role);
+
                 navigate("/client");
             } else {
                 navigate("/");

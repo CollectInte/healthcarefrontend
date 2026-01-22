@@ -39,6 +39,8 @@ const Login = () => {
       //   navigate("/AdminDashboard");
       //   localStorage.setItem("adminId", data.user.id);
       //   localStorage.setItem("adminName", data.user.name);
+      //   localStorage.setItem("role", data.user.role);
+
       // } else if (data.user.role === "doctor") {
       //   localStorage.setItem("userId", data.user.id);
       //   localStorage.setItem("userName", data.user.name);
@@ -55,12 +57,14 @@ const Login = () => {
       //   localStorage.setItem("id", data.user.id);
       //   localStorage.setItem("userName", data.user.name);
       //   localStorage.setItem("adminId", data.user.adminId);
+      //   localStorage.setItem("role", data.user.role);
+
       //   navigate("/client");
       // } else {
       //   navigate("/");
       // }
+      // navigate("/otp-verify");
       navigate("/otp-verify");
-
       alert("Login successful");
     } catch (error) {
       console.error("Network error:", error);
@@ -129,7 +133,7 @@ const Login = () => {
                 variant="h6"
                 sx={{ color: "#fff", fontWeight: 700,textDecoration: 'underline',cursor:'pointer', fontFamily: "Inter, sans-serif" }}
               >
-              caredesk360
+              consultdesk360
               </Typography>
               <Typography
                 variant="body2"

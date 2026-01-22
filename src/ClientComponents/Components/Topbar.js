@@ -10,6 +10,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { COLORS } from "../Themes";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import NotificationBell from '../../NotificationBell';
 
 export default function Topbar() {
   const [companyName, setCompanyName] = useState("");
@@ -58,11 +59,7 @@ export default function Topbar() {
         </Typography>
 
         <Box sx={{ marginLeft: "auto" }}>
-          <IconButton color="inherit">
-            <Badge badgeContent={5} color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+         <NotificationBell />
         </Box>
       </Toolbar>
     </AppBar>

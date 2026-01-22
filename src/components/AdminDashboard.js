@@ -312,7 +312,7 @@ export default function AdminDashboard() {
                     },
                   }}
                 >
-                  <NotificationBell />
+                  <NotificationBell  setAdminContent={setContent} />
                 </IconButton>
 
                 <Stack

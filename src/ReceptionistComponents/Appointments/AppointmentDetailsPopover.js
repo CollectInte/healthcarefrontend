@@ -56,7 +56,7 @@ export default function AppointmentDetailsPopover({
     try {
       setActionLoading(status);
 
-      await axios.put(
+     await axios.put(
         `${process.env.REACT_APP_URL}/appointment/appointment/${appointment.id}/status`,
         {
           status,

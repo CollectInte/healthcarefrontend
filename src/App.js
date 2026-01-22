@@ -39,7 +39,7 @@ import Reviews from "./ClientComponents/Reviews";
 import Bills from "./ClientComponents/Bills";
 import AppointmentsPage from "./ClientComponents/Appointments/Appointment";
 function App() {
- const userId =
+  const userId =
     localStorage.getItem("adminId") ||
     localStorage.getItem("userId") ||
     localStorage.getItem("id");
@@ -47,31 +47,31 @@ function App() {
   return (
     <BrowserRouter>
       {/* LISTEN FOR SOCKET EVENTS */}
-        <NotificationListener />
+      <NotificationListener />
 
-        {/* REQUIRED FOR TOASTS */}
-        <ToastContainer position="top-right" autoClose={5000} />
+      {/* REQUIRED FOR TOASTS */}
+      <ToastContainer position="top-right" autoClose={5000} />
       <SocketProvider userId={userId}>
         <Routes>
-          <Route path="/landing" element={<Landingpage/>}/>
-          <Route path='/contact' element={<ContactForm/>}/>
-          <Route path='/demo' element={<BookDemo/>}/>
-        <Route path='/' element={<Login />} />
-        <Route path='/otp-verify' element={<OtpVerification />} />
-        <Route path='/AdminDashboard' element={<AdminDashboard />} />
-        <Route path="/doctor/*" element={<AppRoutes />} />
-      <Route path="/receptionist/*" element={<ReceptionistAppRoutes />} />
-      
-              <Route path="/client" element={<Sidebar />}>
-                <Route index element={<Navigate to="dashboard" />} />
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="documents" element={<Documents />} />
-                <Route path="appointment" element={<AppointmentsPage />} />
-                <Route path="reviews" element={<Reviews />} />
-                <Route path="bills" element={<Bills />} />
-              </Route>
-      </Routes>
-      
+          <Route path="/landing" element={<Landingpage />} />
+          <Route path='/contact' element={<ContactForm />} />
+          <Route path='/demo' element={<BookDemo />} />
+          <Route path='/' element={<Login />} />
+          <Route path='/otp-verify' element={<OtpVerification />} />
+          <Route path='/AdminDashboard' element={<AdminDashboard />} />
+          <Route path="/doctor/*" element={<AppRoutes />} />
+          <Route path="/receptionist/*" element={<ReceptionistAppRoutes />} />
+
+          <Route path="/client" element={<Sidebar />}>
+            <Route index element={<Navigate to="dashboard" />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="documents" element={<Documents />} />
+            <Route path="appointment" element={<AppointmentsPage />} />
+            <Route path="reviews" element={<Reviews />} />
+            <Route path="bills" element={<Bills />} />
+          </Route>
+        </Routes>
+
       </SocketProvider>
     </BrowserRouter>
   );

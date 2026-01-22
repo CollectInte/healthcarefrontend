@@ -31,17 +31,7 @@ import React, { useState } from "react";
 export const drawerWidth = 240;
 export const drawerWidthClosed = 70;
 
-const menuItems = [
-  { text: "Dashboard", icon: <DashboardIcon />, path: "/receptionist/dashboard" },
-  { text: "Appointment", icon: <EventAvailableIcon />, path: "/receptionist/dashboard/appointments" },
-  { text: "Doctor Schedule", icon: <CalendarMonthIcon />, path: "/receptionist/dashboard/schedule" },
-  { text: "Attendance", icon: <AccessTimeIcon />, path: "/receptionist/dashboard/attendance" },
-  { text: "Documents", icon: <DescriptionIcon />, path: "/receptionist/dashboard/documents" },
-  { text: "Bills", icon: <ReceiptLongIcon />, path: "/receptionist/dashboard/bills" },
-  { text: "Clients", icon: <PeopleAltIcon />, path: "/receptionist/dashboard/clients" },
-  { text: "Add Slot", icon: <AddCircleOutlineIcon />, path: "/receptionist/dashboard/add-slots" },
-  { text: "Logout", icon: <LogoutIcon />, path: "/" },
-];
+
 
 
 export default function Sidebar({ isOpen, onToggle, company }) {
@@ -50,6 +40,34 @@ export default function Sidebar({ isOpen, onToggle, company }) {
   const [openProfile, setOpenProfile] = useState(false);
   const [staff, setStaff] = useState(null);
 
+
+
+  const menuItems = [
+  { text: "Dashboard", icon: <DashboardIcon />, path: "/receptionist/dashboard" },
+  { text: "Appointment", icon: <EventAvailableIcon />, path: "/receptionist/dashboard/appointments" },
+  { text: "Doctor Schedule", icon: <CalendarMonthIcon />, path: "/receptionist/dashboard/schedule" },
+  { text: "Attendance", icon: <AccessTimeIcon />, path: "/receptionist/dashboard/attendance" },
+  { text: "Documents", icon: <DescriptionIcon />, path: "/receptionist/dashboard/documents" },
+  { text: "Bills", icon: <ReceiptLongIcon />, path: "/receptionist/dashboard/bills" },
+  { text: "Clients", icon: <PeopleAltIcon />, path: "/receptionist/dashboard/clients" },
+  { text: "Add Slot", icon: <AddCircleOutlineIcon />, path: "/receptionist/dashboard/add-slots" },
+  { text: "Logout", icon: <LogoutIcon />, onClick: () => {
+      handleLogout();
+    } },
+];
+
+    const handleLogout = async () => {
+    try {
+      await fetch(process.env.REACT_APP_LOGOUT, {
+        method: "POST",
+        credentials: "include", // 🔴 REQUIRED
+      });
+      localStorage.clear(); // optional (admin_id, role, etc.)
+      window.location.replace("/");
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+  };
   // ✅ Fetch staff profile
   const fetchStaff = async () => {
     try {
@@ -145,7 +163,7 @@ export default function Sidebar({ isOpen, onToggle, company }) {
             transition: "all 0.3s ease",
           }}
         >
-          <Box
+         <Box
             component="img"
             src={
               company?.company_logo
@@ -213,32 +231,32 @@ export default function Sidebar({ isOpen, onToggle, company }) {
             flexDirection: "column",
           }}
         >
-          <Avatar
-            src={
-              staff?.profile_photo
-                ? `${process.env.REACT_APP_SITE_URL}/Images/${staff.profile_photo}?t=${Date.now()}`
-                : undefined
-            }
-            onClick={() => setOpenProfile(true)}
-            sx={{
-              width: isOpen ? 70 : 40,
-              height: isOpen ? 70 : 40,
-              mx: "auto",
-              mb: 1,
-              cursor: "pointer",
-              border: "3px solid rgba(255, 255, 255, 0.3)",
-            }}
-          >
-            {!staff?.profile_photo && staffName?.charAt(0)}
-          </Avatar>
+      <Avatar
+  src={
+    staff?.profile_photo
+      ? `${process.env.REACT_APP_SITE_URL}/Images/${staff.profile_photo}?t=${Date.now()}`
+      : undefined
+  }
+  onClick={() => setOpenProfile(true)}
+  sx={{
+    width: isOpen ? 70 : 40,
+    height: isOpen ? 70 : 40,
+    mx: "auto",
+    mb: 1,
+    cursor: "pointer",
+    border: "3px solid rgba(255, 255, 255, 0.3)",
+  }}
+>
+  {!staff?.profile_photo && staffName?.charAt(0)}
+</Avatar>
 
 
 
-
-          <Typography fontWeight="bold" sx={{ color: "white", fontSize: { md: "14px", xs: "10px" } }}>
-            {staffName}
-          </Typography>
-
+        
+            <Typography fontWeight="bold" sx={{ color: "white", fontSize: {md:"14px",xs:"10px"} }}>
+              {staffName}
+            </Typography>
+         
         </Box>
 
         {/* White divider after Profile */}
@@ -258,7 +276,7 @@ export default function Sidebar({ isOpen, onToggle, company }) {
               key={item.text}
               component={NavLink}
               to={item.path}
-              end={item.path === "/dashboard"}
+              end={item.path === "/receptionist/dashboard"}
               sx={{
                 borderRadius: 2,
                 color: "white",

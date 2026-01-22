@@ -13,6 +13,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import NotificationBell from './NotificationBell';
 
 export default function HealthcareDashboard() {
   const [time, setTime] = useState(new Date());
@@ -84,9 +85,10 @@ export default function HealthcareDashboard() {
               InputProps={{ startAdornment: <SearchIcon /> }}
               sx={{ background: "#fff", borderRadius: 2 }}
             />
-            <IconButton>
-              <NotificationsNoneIcon sx={{ color: "#fff" }} />
-            </IconButton>
+            {/* <IconButton> */}
+              {/* <NotificationsNoneIcon sx={{ color: "#fff" }} /> */}
+            {/* </IconButton> */}
+            <NotificationBell />
           </Box>
         </Box>
 

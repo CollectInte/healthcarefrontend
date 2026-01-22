@@ -161,10 +161,7 @@ export default function Appointments() {
     try {
       await api.put(`/appointment/appointment/${appointmentId}/status`, {
         status: newStatus,
-      },
-        {
-          withCredentials: true, // 🔑 REQUIRED
-        });
+      });
       setAppointments((prev) =>
         prev.map((appt) =>
           appt.appointment_id === appointmentId
@@ -236,7 +233,7 @@ export default function Appointments() {
         flexWrap="wrap"
         gap={2}
       >
-        <Typography fontWeight={600} fontSize={{ xs: 18, md: 20 }} sx={{ mb: 0 }}>
+        <Typography fontWeight={600} fontSize={{ xs: 18, md: 20 }} sx={{mb:0}}>
           Appointment List
         </Typography>
       </Stack>
@@ -352,7 +349,7 @@ export default function Appointments() {
       <Box
         sx={{
           p: 1,
-
+          
           position: { xs: "sticky", sm: "static" }, // ⬅️ sticky only for mobile
 
           "& .MuiOutlinedInput-root": {
@@ -427,7 +424,7 @@ export default function Appointments() {
                 width: { xs: "50%", sm: "auto", md: 150 },
                 backgroundColor: "#437986",
                 color: "white",
-                textTransform: "none"
+                textTransform:"none"
               }}
             >
               Search
@@ -440,7 +437,7 @@ export default function Appointments() {
                 width: { xs: "50%", sm: "auto", md: 150 },
                 color: "#437986",
                 borderColor: "#437986",
-                textTransform: "none"
+                 textTransform:"none"
               }}
             >
               Clear
@@ -461,29 +458,29 @@ export default function Appointments() {
             padding: 2,
           }}
         >
-          <Typography sx={{ fontSize: "20px", fontWeight: 600, m: 1 }}>
+          <Typography sx={{  fontSize: "20px", fontWeight: 600,m:1}}>
             New Appointments
           </Typography>
           <TableContainer
             sx={{
               background:
                 "linear-gradient(180deg, #a5d0d4ff 0%, #ffffff 100%)",
-              borderRadius: 5, maxHeight: "55vh", overflowY: "auto"
+              borderRadius: 5,maxHeight: "55vh", overflowY: "auto"
             }}
           >
             <Table sx={{ borderCollapse: "collapse" }}>
               <TableHead sx={{
-                position: "sticky",
-                top: 0,
-                zIndex: 4,
-                background: "#a5d0d4ff"
-              }}>
-                <TableRow sx={{ fontSize: "5px" }}>
+    position: "sticky",
+    top: 0,
+    zIndex: 4,
+     background:"#a5d0d4ff"
+  }}>
+                <TableRow sx={{fontSize:"5px"}}>
                   <TableCell
                     sx={{ fontWeight: 600, color: "#01636B" }}
                   >
                     <Typography
-                      sx={headerChipStyle}
+                     sx={headerChipStyle}
                     >
                       Appointment Id
                     </Typography>
@@ -492,22 +489,22 @@ export default function Appointments() {
                     sx={{ fontWeight: 600, color: "#01636B" }}
                   >
                     <Typography
-                      sx={headerChipStyle}
+                     sx={headerChipStyle}
                     >
                       Patient Id
                     </Typography>
                   </TableCell>
                   <TableCell
-                    sx={{ fontWeight: 600, color: "#01636B" }}
+                    sx={{ fontWeight: 600,  color: "#01636B" }}
                   >
                     <Typography
-                      sx={headerChipStyle}
+                     sx={headerChipStyle}
                     >
                       Patient Name
                     </Typography>
                   </TableCell>
                   <TableCell
-                    sx={{ fontWeight: 600, color: "#01636B" }}
+                    sx={{ fontWeight: 600,  color: "#01636B" }}
                   >
                     <Typography
                       sx={headerChipStyle}
@@ -534,7 +531,7 @@ export default function Appointments() {
                     </Typography>
                   </TableCell>
                   <TableCell
-                    sx={{ fontWeight: 600, color: "#01636B" }}
+                    sx={{ fontWeight: 600,  color: "#01636B" }}
                   >
                     <Typography
                       sx={headerChipStyle}

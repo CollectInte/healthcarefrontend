@@ -2,9 +2,22 @@ import { useEffect } from "react";
 import { useSocket } from "./context/SocketContext";
 import { toast } from "react-toastify";
 
-const NotificationListener = () => {
+const NotificationListener = ({ userId }) => {
   const socket = useSocket();
 
+  // 1️⃣ REGISTER USER TO SOCKET ROOM
+  useEffect(() => {
+    if (!socket || !userId) return;
+
+    socket.emit("register", {
+      userId: userId,
+      role: "client",
+    });
+
+    console.log("🔌 Socket registered for user:", userId);
+  }, [socket, userId]);
+
+  // 2️⃣ LISTEN FOR NOTIFICATIONS
   useEffect(() => {
     if (!socket) return;
 
@@ -13,9 +26,8 @@ const NotificationListener = () => {
       Notification.requestPermission();
     }
 
-    // 🔔 COMMON HANDLER (reuse everywhere)
     const showNotification = (title, message) => {
-      // 1️⃣ In-app toast
+      // 🔔 In-app toast
       toast.info(
         <>
           <strong>{title}</strong>
@@ -29,22 +41,26 @@ const NotificationListener = () => {
         }
       );
 
-      // 2️⃣ System notification ONLY if tab hidden
+      // 🔔 Chrome system notification (when tab hidden)
       if (
         "Notification" in window &&
         Notification.permission === "granted" &&
         document.visibilityState === "hidden"
       ) {
-        new Notification(title, { body: message });
+        new Notification(title, {
+          body: message,
+          icon: "/icon.png", // optional
+        });
       }
     };
 
-    // ✅ NORMAL DB NOTIFICATION
     const handleNewNotification = (msg) => {
-      showNotification(msg.title || "Notification", msg.message);
+      showNotification(
+        msg.title || "Notification",
+        msg.message || ""
+      );
     };
 
-    // ✅ APPOINTMENT CREATED
     const handleAppointmentCreated = (data) => {
       showNotification(
         "📅 Appointment Scheduled",

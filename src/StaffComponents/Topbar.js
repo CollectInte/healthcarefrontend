@@ -11,6 +11,7 @@ import {
 
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MailIcon from "@mui/icons-material/Mail";
+import NotificationBell from '../NotificationBell';
 
 export default function Topbar({ sidebarOpen, company }) {
   const theme = useTheme();
@@ -28,7 +29,7 @@ export default function Topbar({ sidebarOpen, company }) {
 
         /* ✅ MOBILE: full width, DESKTOP: reduced */
         width: {
-          xs: `calc(122% - ${sidebarWidth}px )`,
+          xs: sidebarWidth,
           md: `calc(124% - ${sidebarWidth}px - 60px)`,
         },
 
@@ -84,12 +85,9 @@ export default function Topbar({ sidebarOpen, company }) {
             gap: 1,
           }}
         >
+<NotificationBell />
 
-          <IconButton sx={{ color: "white" }}>
-            <Badge badgeContent={5} color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+
         </Box>
       </Toolbar>
     </AppBar>
