@@ -133,7 +133,7 @@ const Login = () => {
                 variant="h6"
                 sx={{ color: "#fff", fontWeight: 700,textDecoration: 'underline',cursor:'pointer', fontFamily: "Inter, sans-serif" }}
               >
-              consultdesk360
+              caredesk360
               </Typography>
               <Typography
                 variant="body2"

@@ -17,6 +17,7 @@ import {
     Stack,
     Typography,
 } from "@mui/material";
+import RestoreIcon from '@mui/icons-material/Restore';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -54,6 +55,16 @@ const LeaveRequest = () => {
     const [updatingId, setUpdatingId] = useState(null);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const handleReset = () => {
+        setFilters({
+            staff_name: "",
+            status: "",
+            leave_type: "",
+            start_date: null,
+            end_date: null,
+        });
+    };
 
     // 🔹 Fetch staff list
     const fetchStaff = async () => {
@@ -256,6 +267,11 @@ const LeaveRequest = () => {
                                             }}
                                         />
                                     </LocalizationProvider>
+                                </Stack>
+                                <Stack mt={2} direction="row" spacing={2} justifyContent="flex-end">
+                                    <Button variant="outlined" size="small" sx={{ backgroundColor: "#3f6f7a", color: "white", textTransform: "none" }} onClick={handleReset}>
+                                        <RestoreIcon /> Reset
+                                    </Button>
                                 </Stack>
                             </Paper>
 

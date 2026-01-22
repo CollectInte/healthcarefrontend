@@ -18,6 +18,7 @@ import {
     MenuItem,
     Paper
 } from "@mui/material";
+import RestoreIcon from '@mui/icons-material/Restore';
 import DeleteIcon from "@mui/icons-material/Delete";
 import { LocalizationProvider, DatePicker, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -51,6 +52,13 @@ const Appointments = () => {
     });
 
 
+        const handleReset = () => {
+    setFilters({
+      date: null,
+      branch: "",
+      clientId: "",
+    });
+  };
 
     // const handleChange = (index, field, value) => {
     //     const updated = [...slots];
@@ -309,7 +317,7 @@ const Appointments = () => {
                     {view === "clientappointments" && (
                         <div className="col-12">
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <Paper sx={{ p: 3, mt: 2 }}>
+                                <Paper sx={{ p: 3 }}>
                                     <Typography variant="h6" mb={2}>
                                         Client Appointments
                                     </Typography>
@@ -364,6 +372,10 @@ const Appointments = () => {
                                                 </MenuItem>
                                             ))}
                                         </TextField>
+
+                                        <Button variant="outlined" size="small" sx={{ backgroundColor: "#3f6f7a", color: "white", textTransform: "none" }} onClick={handleReset}>
+                                            <RestoreIcon /> Reset
+                                        </Button>
                                     </Box>
 
                                     {loading ? (

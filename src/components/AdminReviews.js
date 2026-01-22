@@ -161,17 +161,20 @@ export default function AdminReviews() {
     try {
       const query = new URLSearchParams(filters).toString();
 
-      const res = await fetch(
-        `${process.env.REACT_APP_URL}/review/admin/reviews?${query}`,
-        { credentials: "include" }
-      );
+      const url = query
+        ? `${process.env.REACT_APP_URL}/review/admin/reviews?${query}`
+        : `${process.env.REACT_APP_URL}/review/admin/reviews`;
 
+      const res = await fetch(url, { credentials: "include" });
       const json = await res.json();
+
       setReviews(json.reviews || []);
+      console.log("Reviews Data:", json.reviews);
     } catch (err) {
       console.error(err);
     }
   };
+
 
 
   useEffect(() => {
@@ -231,7 +234,7 @@ export default function AdminReviews() {
             </MenuItem>
           ))}
         </Select> */}
-        <TextField value={selectedBranch} onChange={(e)=>setSelectedBranch(e.target.value)} placeholder="Branch Name" size="small" />
+        {/* <TextField value={selectedBranch} onChange={(e)=>setSelectedBranch(e.target.value)} placeholder="Branch Name" size="small" /> */}
 
 
         <Select
@@ -241,7 +244,7 @@ export default function AdminReviews() {
           value={selectedDoctor}
           onChange={(e) => setSelectedDoctor(e.target.value)}
         >
-          <MenuItem value="">Doctor Name</MenuItem>
+          <MenuItem value="">All Doctors</MenuItem>
 
           {reviews.map(r => (
             <MenuItem key={r.staff_id} value={r.staff_id}>

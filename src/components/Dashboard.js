@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import StaffServiceAnalytics from "./StaffServiceAnalytics";
 import {
     Box,
@@ -49,16 +50,63 @@ const StatCard = ({ title, value, icon }) => (
 export default function Dashboard() {
     const [staffCount, setStaffCount] = useState(0);
     const [clientCount, setClientCount] = useState(0);
-    const [appointments, setAppointments] = useState([]);
+    const [appointments, setAppointments] = useState(0);
     const [billsCount, setBillsCount] = useState(0);
     const [loading, setLoading] = useState(true);
     const [staffs, setStaffs] = useState([]);
     const [clients, setClients] = useState([]);
     const [bills, setBills] = useState([]);
     const [attendance, setAttendance] = useState([]);
+    const [appointmentsdata, setAppointmentsdata] = useState([]);
+    const [doctorpresentcount, setDoctorpresentcount] = useState(0);
+    const [doctorabsentcount, setDoctorabsentcount] = useState(0);
+    const currentYear = new Date().getFullYear();
+
+    const [selectedMonth, setSelectedMonth] = useState(
+        `${currentYear}-${String(new Date().getMonth() + 1).padStart(2, "0")}`
+    );
+
+    const [weeklyStats, setWeeklyStats] = useState([]);
 
     const navigate = useNavigate();
     const today = dayjs().format("YYYY-MM-DD");
+
+    const months = [
+        { label: "January", value: "01" },
+        { label: "February", value: "02" },
+        { label: "March", value: "03" },
+        { label: "April", value: "04" },
+        { label: "May", value: "05" },
+        { label: "June", value: "06" },
+        { label: "July", value: "07" },
+        { label: "August", value: "08" },
+        { label: "September", value: "09" },
+        { label: "October", value: "10" },
+        { label: "November", value: "11" },
+        { label: "December", value: "12" },
+    ];
+
+    useEffect(() => {
+        fetchWeeklyAppointments();
+    }, [selectedMonth]);
+
+    const fetchWeeklyAppointments = async () => {
+        try {
+            const res = await axios.get(
+                `${process.env.REACT_APP_URL}/appointment/appointments/completed/weekly`,
+                {
+                    params: { month: selectedMonth },
+                    withCredentials: true,
+                }
+            );
+            console.log("Weekly Stats:", res.data);
+            setWeeklyStats(res.data.weeklyStats || []);
+        } catch (err) {
+            console.error(err);
+            setWeeklyStats([]);
+        }
+    };
+
 
     useEffect(() => {
         fetchDashboardData();
@@ -72,16 +120,20 @@ export default function Dashboard() {
                 staffRes,
                 clientRes,
                 appointmentRes,
-                billsRes,
+                // billsRes,
                 attendanceRes,
+                doctorAttendanceRes,
             ] = await Promise.all([
                 fetch(process.env.REACT_APP_EMPLOYEE_FETCH, { credentials: "include" }),
                 fetch(process.env.REACT_APP_CLIENT_FETCH, { credentials: "include" }),
-                fetch(`${process.env.REACT_APP_ADMINAPPOINTMENT_FETCH}?date=${today}`, {
+                fetch(`${process.env.REACT_APP_URL}/appointment/appointments?date=${today}`, {
                     credentials: "include",
                 }),
-                fetch(process.env.REACT_APP_BILL_FETCH, { credentials: "include" }),
-                fetch(`${process.env.REACT_APP_ATTENDANCE_DATEFETCH}?date=${today}`,
+                // fetch(process.env.REACT_APP_BILL_FETCH, { credentials: "include" }),
+                fetch(`${process.env.REACT_APP_URL}/api/attendance/date?date=${today}`,
+                    { credentials: "include" }
+                ),
+                fetch(`${process.env.REACT_APP_URL}/api/attendance/doctors?date=${today}`,
                     { credentials: "include" }
                 )
             ]);
@@ -89,23 +141,32 @@ export default function Dashboard() {
             const staffData = await staffRes.json();
             const clientData = await clientRes.json();
             const appointmentData = await appointmentRes.json();
-            const billsData = await billsRes.json();
+            // const billsData = await billsRes.json();
             const attendanceData = await attendanceRes.json();
+            const doctorAttendanceData = await doctorAttendanceRes.json();
 
-            setStaffCount(staffData.count || 0);
+            console.log(staffData, clientData, appointmentData, attendanceData);
+
+            setStaffCount(staffData.data?.length || 0);
             setClientCount(clientData.data?.length || 0);
-            setAppointments(appointmentData || []);
-            setBillsCount(billsData.length || 0);
+            setAppointments(appointmentData?.count ?? 0);
+            // setBillsCount(billsData.length || 0);
             setStaffs(staffData.data || []);
             setClients(clientData.data || []);
-            setBills(billsData || []);
+            // setBills(billsData || []);
             setAttendance(attendanceData.data || []);
+            setAppointmentsdata(appointmentData.data || []);
+            setDoctorpresentcount(doctorAttendanceData.presentCount || 0);
+            setDoctorabsentcount(doctorAttendanceData.leaveCount || 0);
         } catch (error) {
             console.error("Dashboard load error:", error);
         } finally {
             setLoading(false);
         }
     };
+
+    const visibleAppointments = appointmentsdata.slice(0, 6);
+    const visibleAttendance = attendance.slice(0, 6);
 
     if (loading) {
         return (
@@ -116,319 +177,231 @@ export default function Dashboard() {
     }
 
     return (
-        <Box p={3} mt={1}>
-            {/* ================= TOP STATS ================= */}
-            <Grid container spacing={2} alignItems="stretch">
-                <Grid item size={3} sm={6} md={3} lg={3} xl={3} xxl={3}>
-                    <StatCard
-                        title="Total Staff"
-                        value={staffCount}
-                        icon={<PeopleIcon color="primary" fontSize="large" />}
-                    />
-                </Grid>
-                <Grid item size={3} sm={6} md={3} lg={3} xl={3} xxl={3}>
-                    <StatCard
-                        title="Clients"
-                        value={clientCount}
-                        icon={<PersonIcon color="secondary" fontSize="large" />}
-                    />
-                </Grid>
-                <Grid item size={3} sm={6} md={3} lg={3} xl={3} xxl={3}>
-                    <StatCard
-                        title="Today's Appointments"
-                        value={appointments.length}
-                        icon={<EventIcon sx={{ color: "#673AB7" }} fontSize="large" />}
-                    />
-                </Grid>
-                <Grid item size={3} sm={6} md={3} lg={3} xl={3} xxl={3}>
-                    <StatCard
-                        title="Bills"
-                        value={billsCount}
-                        icon={<ReceiptIcon color="success" fontSize="large" />}
-                    />
-                </Grid>
-            </Grid>
+        <div className="dashboard" style={{ fontFamily: "sans-serif" }}>
+            {/* Top Cards */}
+            <div className="top-cards">
+                <div className="card">
+                    <div className="card-title">Total Patients</div>
+                    <div className="card-value">{clientCount}</div>
+                </div>
+                <div className="card">
+                    <div className="card-title">Total Staff</div>
+                    <div className="card-value">{staffCount}</div>
+                </div>
+                <div className="card">
+                    <div className="card-title">Today Appointments</div>
+                    <div className="card-value">{appointments}</div>
+                </div>
+            </div>
 
-            {/* ================= TODAY'S APPOINTMENTS ================= */}
-            <Grid container spacing={2} mt={1}>
-                <Grid item size={6} md={6}>
-                    <Paper sx={{ mt: 3, p: 2 }}>
-                        <Typography variant="h6" mb={1} sx={{ color: "#673AB7" }}>
-                            Today’s Appointments
-                        </Typography>
-                        <Divider sx={{ mb: 2 }} />
 
-                        {appointments.length === 0 ? (
-                            <Typography color="text.secondary">
-                                No appointments for today
-                            </Typography>
+            <div className="main-grid">
+                {/* Check-in Table */}
+                <div className="panel">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Doctor Name</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                            </tr>
+                        </thead >
+                        <tbody>
+                            {visibleAttendance.length === 0 ? (
+                                <tr>
+                                    <td colSpan={6} style={{ textAlign: "center", padding: "16px" }}>
+                                        No one has checked in today
+                                    </td>
+                                </tr>
+                            ) : (
+                                visibleAttendance.map((data, i) => (
+                                    <tr key={i}>
+                                        <td>{data.name}</td>
+                                        <td>{data.clock_in}</td>
+                                        <td>{data.clock_out}</td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table >
+                    {attendance.length > 6 && (
+                        <div style={{ textAlign: "right", marginTop: "10px" }}>
+                            <button
+                                onClick={() =>
+                                    navigate("/AdminDashboard", {
+                                        state: { content: "Attendance" }
+                                    })
+                                }
+                                style={{
+                                    background: "none",
+                                    border: "none",
+                                    color: "#006b6f",
+                                    cursor: "pointer",
+                                    fontWeight: 500,
+                                }}
+                            >
+                                View All
+                            </button>
+                        </div>
+                    )}
+                </div >
+
+
+                {/* Patient Overview */}
+                {/* < div className="panel chart" >
+                    <h4>Patient Overview</h4>
+                    <div className="bars">
+                        {[20, 76, 143, 41, 89].map((v, i) => (
+                            <div key={i} className="bar-wrapper">
+                                <div className="bar" style={{ height: `${v}px` }} />
+                                <span>{v}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div > */}
+                <div className="panel chart">
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginBottom: "12px",
+                        }}
+                    >
+                        <h4>Patient Overview</h4>
+
+                        <select
+                            value={selectedMonth.split("-")[1]}
+                            onChange={(e) =>
+                                setSelectedMonth(`${currentYear}-${e.target.value}`)
+                            }
+                            style={{
+                                padding: "6px 10px",
+                                borderRadius: "6px",
+                                border: "1px solid #ccc",
+                                fontSize: "13px",
+                            }}
+                        >
+                            {months.map((m) => (
+                                <option key={m.value} value={m.value}>
+                                    {m.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {weeklyStats.length === 0 ? (
+                        <p style={{ textAlign: "center", opacity: 0.6 }}>
+                            No Data Available
+                        </p>
+                    ) : (
+                        <div className="bars">
+                            {weeklyStats.map((item, i) => (
+                                <div key={i} className="bar-wrapper">
+                                    <span className="bar-count">{item.count}</span>
+                                    <div
+                                        className="bar"
+                                        style={{
+                                            height: `${item.count * 20}px`,
+                                        }}
+                                    />
+                                    <small>{item.week}</small>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+
+
+                {/* Doctor Schedule */}
+                < div className="panel schedule" >
+                    <h4>Doctors Schedule</h4>
+                    <p>Available: <strong>{doctorpresentcount}</strong></p>
+                    <p>On Leave: <strong>{doctorabsentcount}</strong></p>
+                    <h2>{appointments}</h2>
+                    <span>Total Appointments</span>
+                </div >
+            </div >
+
+
+            {/* Upcoming Appointments */}
+            < div className="panel full" >
+                <h4>Upcoming Appointments | Today</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient Id</th>
+                            <th>Patient Name</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Purpose</th>
+                            <th>Doctor Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {visibleAppointments.length === 0 ? (
+                            <tr>
+                                <td colSpan={6} style={{ textAlign: "center", padding: "16px" }}>
+                                    No appointments available
+                                </td>
+                            </tr>
                         ) : (
-                            <Table size="small">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell sx={{ color: "#1976d2" }}>Time</TableCell>
-                                        <TableCell sx={{ color: "#1976d2" }}>Status</TableCell>
-                                    </TableRow>
-                                </TableHead>
-
-                                <TableBody>
-                                    {appointments.slice(0, 5).map((row) => (
-                                        <TableRow key={row.id}>
-                                            <TableCell>{row.from_time} - {row.to_time}</TableCell>
-                                            <TableCell>{row.status}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
+                            visibleAppointments.map((data, i) => (
+                                <tr key={i}>
+                                    <td>{data.client_id}</td>
+                                    <td>{data.client_name}</td>
+                                    <td>{data.appointment_date}</td>
+                                    <td>{data.from_time} - {data.to_time}</td>
+                                    <td>{data.purpose}</td>
+                                    <td>{data.doctor_name}</td>
+                                </tr>
+                            ))
                         )}
-
-                        <Button size="small" sx={{ mt: 2 }} onClick={() =>
-                            navigate("/AdminDashboard", {
-                                state: { content: "Appointments" }
-                            })
-                        }>
-                            View All Appointments
-                        </Button>
-                    </Paper>
-                </Grid>
-                <Grid item size={6} md={6}>
-                    <Paper sx={{ p: 2, mt: 3 }}>
-                        <Typography variant="h6" mb={1} sx={{ color: "#673AB7" }}>
-                            Today’s Attendance
-                        </Typography>
-
-                        <Divider sx={{ mb: 2 }} />
-
-                        {loading ? (
-                            <Box textAlign="center" py={3}>
-                                <CircularProgress size={24} />
-                            </Box>
-                        ) : attendance.length === 0 ? (
-                            <Typography color="text.secondary">
-                                No attendance marked today
-                            </Typography>
-                        ) : (
-                            <Table size="small">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell sx={{ color: "#1976d2" }}>Staff ID</TableCell>
-                                        <TableCell sx={{ color: "#1976d2" }}>Clock In</TableCell>
-                                        <TableCell sx={{ color: "#1976d2" }}>Clock Out</TableCell>
-                                        <TableCell sx={{ color: "#1976d2" }}>Status</TableCell>
-                                    </TableRow>
-                                </TableHead>
-
-                                <TableBody>
-                                    {attendance.slice(0, 5).map((row) => (
-                                        <TableRow key={row.id}>
-                                            <TableCell>{row.staff_id}</TableCell>
-                                            <TableCell>{row.clock_in || "-"}</TableCell>
-                                            <TableCell>{row.clock_out || "-"}</TableCell>
-                                            <TableCell>{row.status || "-"}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        )}
-
-                        <Button
-                            size="small"
-                            sx={{ mt: 2 }}
+                    </tbody>
+                </table>
+                {appointmentsdata.length > 6 && (
+                    <div style={{ textAlign: "right", marginTop: "10px" }}>
+                        <button
                             onClick={() =>
                                 navigate("/AdminDashboard", {
-                                    state: { content: "Attendance" }
-                                })}
+                                    state: { content: "Appointments" }
+                                })
+                            }
+                            style={{
+                                background: "none",
+                                border: "none",
+                                color: "#006b6f",
+                                cursor: "pointer",
+                                fontWeight: 500,
+                            }}
                         >
-                            View All Attendance
-                        </Button>
-                    </Paper>
-                </Grid>
-            </Grid>
-            {/* Staff Service Analytics */}
-            <StaffServiceAnalytics />
-            {/* Staff Service Analytics */}
-            {/* ================= STAFF + CLIENTS ================= */}
-            <Grid container spacing={2} mt={1}>
-                <Grid item size={6} md={6}>
-                    <Paper sx={{ p: 2 }}>
-                        <Typography variant="h6" mb={1} sx={{ color: "#673AB7" }}>
-                            Staff Overview
-                        </Typography>
-                        <Divider sx={{ mb: 2 }} />
-
-                        {/* <Typography color="text.secondary" mb={1}>
-                            Total Staff: {staffCount}
-                        </Typography> */}
-
-                        {staffs.length === 0 ? (
-                            <Typography color="text.secondary">
-                                No staff found
-                            </Typography>
-                        ) : (
-                            <Table size="small">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell sx={{ color: "#1976d2" }}>Name</TableCell>
-                                        <TableCell sx={{ color: "#1976d2" }}>Email</TableCell>
-                                        <TableCell sx={{ color: "#1976d2" }}>Status</TableCell>
-                                    </TableRow>
-                                </TableHead>
-
-                                <TableBody>
-                                    {staffs.slice(0, 4).map((staff) => (
-                                        <TableRow key={staff.id}>
-                                            <TableCell>{staff.name}</TableCell>
-                                            <TableCell>{staff.email}</TableCell>
-                                            <TableCell sx={{ color: staff.status ? "#216c24ff" : "#f44336" }}>
-                                                {staff.status ? "Active" : "Inactive"}
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        )}
-
-                        {staffs.length > 0 && (
-                            <Button size="small" sx={{ mt: 2 }}
-                                onClick={() =>
-                                    navigate("/AdminDashboard", {
-                                        state: { content: "Employees" }
-                                    })}>
-                                View All Staff
-                            </Button>
-                        )}
-                    </Paper>
-                </Grid>
+                            View All
+                        </button>
+                    </div>
+                )}
+            </div >
 
 
-                <Grid item size={6} md={6}>
-                    <Paper sx={{ p: 2 }}>
-                        <Typography variant="h6" mb={1} sx={{ color: "#673AB7" }}>
-                            Clients Snapshot
-                        </Typography>
-                        <Divider sx={{ mb: 2 }} />
-
-                        {/* <Typography color="text.secondary" mb={1}>
-                            Total Clients: {clientCount}
-                        </Typography> */}
-
-                        {clients.length === 0 ? (
-                            <Typography color="text.secondary">
-                                No clients found
-                            </Typography>
-                        ) : (
-                            <Table size="small">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell sx={{ color: "#1976d2" }}>Name</TableCell>
-                                        <TableCell sx={{ color: "#1976d2" }}>Email</TableCell>
-                                        <TableCell sx={{ color: "#1976d2" }}>Phone</TableCell>
-                                    </TableRow>
-                                </TableHead>
-
-                                <TableBody>
-                                    {clients.slice(0, 4).map((client) => (
-                                        <TableRow key={client.id}>
-                                            <TableCell>{client.name}</TableCell>
-                                            <TableCell>{client.email}</TableCell>
-                                            <TableCell>{client.mobile || "-"}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        )}
-
-                        {clients.length > 0 && (
-                            <Button size="small" sx={{ mt: 2 }}
-                                onClick={() =>
-                                    navigate("/AdminDashboard", {
-                                        state: { content: "Clients" }
-                                    })}>
-                                View All Clients
-                            </Button>
-                        )}
-                    </Paper>
-                </Grid>
-
-            </Grid>
-
-            {/* ================= BILLING + NOTIFICATIONS ================= */}
-            <Grid container spacing={2} mt={1}>
-                <Grid item size={6} md={6}>
-                    <Paper sx={{ p: 2 }}>
-                        <Typography variant="h6" mb={1}>
-                            Billing Summary
-                        </Typography>
-                        <Divider sx={{ mb: 2 }} />
-
-                        {/* <Typography color="text.secondary" mb={1}>
-                            Total Bills: {billsCount}
-                        </Typography> */}
-
-                        {bills.length === 0 ? (
-                            <Typography color="text.secondary">
-                                No bills found
-                            </Typography>
-                        ) : (
-                            <Table size="small">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell sx={{ color: "#1976d2" }}>Bill #</TableCell>
-                                        <TableCell sx={{ color: "#1976d2" }}>Due Date</TableCell>
-                                        <TableCell sx={{ color: "#1976d2" }}>Status</TableCell>
-                                        <TableCell align="right" sx={{ color: "#1976d2" }}>Amount</TableCell>
-                                    </TableRow>
-                                </TableHead>
-
-                                <TableBody>
-                                    {bills.slice(0, 4).map((bill) => (
-                                        <TableRow key={bill.id}>
-                                            <TableCell>#{bill.id}</TableCell>
-                                            <TableCell>
-                                                {dayjs(bill.due_date).format("DD MMM YYYY")}
-                                            </TableCell>
-                                            <TableCell sx={{ color: bill.bill_status === "Paid" ? "#216c24ff" : "#f44336" }}>
-                                                {bill.bill_status}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                ₹{bill.total_amount}
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        )}
-
-                        {bills.length > 0 && (
-                            <Button size="small" sx={{ mt: 2 }}
-                                onClick={() =>
-                                    navigate("/AdminDashboard", {
-                                        state: { content: "Bills" }
-                                    })}>
-                                View All Bills
-                            </Button>
-                        )}
-                    </Paper>
-                </Grid>
-
-                <Grid item size={6} md={6}>
-                    <Paper sx={{ p: 2 }}>
-                        <Typography variant="h6" mb={1} sx={{ color: "#673AB7" }}>
-                            Notifications
-                        </Typography>
-                        <Divider sx={{ mb: 2 }} />
-                        <Typography color="text.secondary">
-                            Send notifications to staff or clients
-                        </Typography>
-                        <Button variant="contained" sx={{ mt: 2 }} onClick={() =>
-                            navigate("/AdminDashboard", {
-                                state: { content: "Notifications" }
-                            })}>
-                            Send Notification
-                        </Button>
-                    </Paper>
-                </Grid>
-            </Grid>
-        </Box>
+            <style>{`
+.dashboard { padding: 20px; background:#f5f7f6; font-family: Inter; }
+.top-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.card { background:#4c7c89; color:#fff; padding:20px; border-radius:10px; }
+.card-title { font-size:14px; }
+.card-value { font-size:26px; font-weight:600; }
+.main-grid { display:grid; grid-template-columns:1fr 2fr 1fr; gap:20px; margin-top:20px; }
+.panel { background:#fff; border-radius:12px; padding:16px; }
+table { width:100%; border-collapse:collapse; }
+th, td { padding:8px; font-size:13px; text-align:left; }
+thead { background:#e3f1ef; }
+tbody tr { border-bottom:1px dashed #ccc; }
+.chart .bars { display:flex; align-items:flex-end; gap:16px; height:180px; }
+.bar-wrapper { text-align:center; }
+.bar { width:30px; background:#bfe7d6; border-radius:6px; }
+.schedule { background:#006b6f; color:#fff; text-align:center; }
+.schedule h2 { margin:10px 0; }
+.full { margin-top:20px; }
+`}</style>
+        </div >
     );
 }

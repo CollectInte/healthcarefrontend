@@ -16,8 +16,9 @@ import {
   TextField,
   MenuItem,
   CircularProgress,
+  Button,
 } from "@mui/material";
-
+import RestoreIcon from '@mui/icons-material/Restore';
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
@@ -32,10 +33,18 @@ const StaffAppointments = () => {
     staffId: "",
   });
 
+    const handleReset = () => {
+    setFilters({
+      date: null,
+      branch: "",
+      staffId: "",
+    });
+  };
+
   // 🔹 Fetch staff list (Admin / Receptionist)
   useEffect(() => {
     axios
-      .get(process.env.REACT_APP_EMPLOYEE_FETCH, {
+      .get(`${process.env.REACT_APP_URL}/api/staff/role?role=doctor`, {
         withCredentials: true,
       })
       .then((res) => setStaffList(res.data.data || []))
@@ -139,6 +148,11 @@ const StaffAppointments = () => {
               </MenuItem>
             ))}
           </TextField>
+
+          {/* Reset Button */}
+      <Button variant="outlined" size="small" sx={{backgroundColor:"#3f6f7a",color:"white",textTransform:"none"}} onClick={handleReset}>
+        <RestoreIcon/> Reset
+      </Button>
         </Box>
 
         {/* 🔹 TABLE */}
