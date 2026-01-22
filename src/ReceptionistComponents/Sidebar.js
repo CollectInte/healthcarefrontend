@@ -43,20 +43,22 @@ export default function Sidebar({ isOpen, onToggle, company }) {
 
 
   const menuItems = [
-  { text: "Dashboard", icon: <DashboardIcon />, path: "/receptionist/dashboard" },
-  { text: "Appointment", icon: <EventAvailableIcon />, path: "/receptionist/dashboard/appointments" },
-  { text: "Doctor Schedule", icon: <CalendarMonthIcon />, path: "/receptionist/dashboard/schedule" },
-  { text: "Attendance", icon: <AccessTimeIcon />, path: "/receptionist/dashboard/attendance" },
-  { text: "Documents", icon: <DescriptionIcon />, path: "/receptionist/dashboard/documents" },
-  { text: "Bills", icon: <ReceiptLongIcon />, path: "/receptionist/dashboard/bills" },
-  { text: "Clients", icon: <PeopleAltIcon />, path: "/receptionist/dashboard/clients" },
-  { text: "Add Slot", icon: <AddCircleOutlineIcon />, path: "/receptionist/dashboard/add-slots" },
-  { text: "Logout", icon: <LogoutIcon />, onClick: () => {
-      handleLogout();
-    } },
-];
+    { text: "Dashboard", icon: <DashboardIcon />, path: "/receptionist/dashboard" },
+    { text: "Appointment", icon: <EventAvailableIcon />, path: "/receptionist/dashboard/appointments" },
+    { text: "Doctor Schedule", icon: <CalendarMonthIcon />, path: "/receptionist/dashboard/schedule" },
+    { text: "Attendance", icon: <AccessTimeIcon />, path: "/receptionist/dashboard/attendance" },
+    { text: "Documents", icon: <DescriptionIcon />, path: "/receptionist/dashboard/documents" },
+    { text: "Bills", icon: <ReceiptLongIcon />, path: "/receptionist/dashboard/bills" },
+    { text: "Clients", icon: <PeopleAltIcon />, path: "/receptionist/dashboard/clients" },
+    { text: "Add Slot", icon: <AddCircleOutlineIcon />, path: "/receptionist/dashboard/add-slots" },
+    {
+      text: "Logout", icon: <LogoutIcon />, onClick: () => {
+        handleLogout();
+      }
+    },
+  ];
 
-    const handleLogout = async () => {
+  const handleLogout = async () => {
     try {
       await fetch(process.env.REACT_APP_LOGOUT, {
         method: "POST",
@@ -163,7 +165,7 @@ export default function Sidebar({ isOpen, onToggle, company }) {
             transition: "all 0.3s ease",
           }}
         >
-         <Box
+          <Box
             component="img"
             src={
               company?.company_logo
@@ -231,32 +233,32 @@ export default function Sidebar({ isOpen, onToggle, company }) {
             flexDirection: "column",
           }}
         >
-      <Avatar
-  src={
-    staff?.profile_photo
-      ? `${process.env.REACT_APP_SITE_URL}/Images/${staff.profile_photo}?t=${Date.now()}`
-      : undefined
-  }
-  onClick={() => setOpenProfile(true)}
-  sx={{
-    width: isOpen ? 70 : 40,
-    height: isOpen ? 70 : 40,
-    mx: "auto",
-    mb: 1,
-    cursor: "pointer",
-    border: "3px solid rgba(255, 255, 255, 0.3)",
-  }}
->
-  {!staff?.profile_photo && staffName?.charAt(0)}
-</Avatar>
+          <Avatar
+            src={
+              staff?.profile_photo
+                ? `${process.env.REACT_APP_SITE_URL}/Images/${staff.profile_photo}?t=${Date.now()}`
+                : undefined
+            }
+            onClick={() => setOpenProfile(true)}
+            sx={{
+              width: isOpen ? 70 : 40,
+              height: isOpen ? 70 : 40,
+              mx: "auto",
+              mb: 1,
+              cursor: "pointer",
+              border: "3px solid rgba(255, 255, 255, 0.3)",
+            }}
+          >
+            {!staff?.profile_photo && staffName?.charAt(0)}
+          </Avatar>
 
 
 
-        
-            <Typography fontWeight="bold" sx={{ color: "white", fontSize: {md:"14px",xs:"10px"} }}>
-              {staffName}
-            </Typography>
-         
+
+          <Typography fontWeight="bold" sx={{ color: "white", fontSize: { md: "14px", xs: "10px" } }}>
+            {staffName}
+          </Typography>
+
         </Box>
 
         {/* White divider after Profile */}
@@ -269,59 +271,70 @@ export default function Sidebar({ isOpen, onToggle, company }) {
           }}
         />
 
-        {/* Menu */}
         <List sx={{ px: 2 }}>
-          {menuItems.map((item) => (
-            <ListItem
-              key={item.text}
-              component={NavLink}
-              to={item.path}
-              end={item.path === "/receptionist/dashboard"}
-              sx={{
-                borderRadius: 2,
-                color: "white",
-                textDecoration: "none",
-                justifyContent: isOpen ? "flex-start" : "center",
-                px: isOpen ? 2 : 1,
-                py: 0.5,
-                minHeight: "44px",
-                transition: "all 0.2s",
-                "&.active": {
-                  backgroundColor: "rgba(255, 255, 255, 0.25)",
-                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
-                },
-                "&.active .MuiListItemIcon-root": {
-                  color: "white",
-                  transform: "scale(1.1)",
-                },
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.15)",
-                },
-              }}
-            >
-              <ListItemIcon
+          {menuItems.map((item) => {
+            const isLogout = item.text === "Logout";
+
+            return (
+              <ListItem
+                key={item.text}
+                component={isLogout ? "div" : NavLink}
+                to={!isLogout ? item.path : undefined}
+                end={!isLogout && item.path === "/receptionist/dashboard"}
+                onClick={isLogout ? item.onClick : undefined}
                 sx={{
-                  minWidth: isOpen ? 36 : "auto",
-                  justifyContent: "center",
+                  cursor: "pointer",
+                  borderRadius: 2,
                   color: "white",
+                  textDecoration: "none",
+                  justifyContent: isOpen ? "flex-start" : "center",
+                  px: isOpen ? 2 : 1,
+                  py: 0.5,
+                  minHeight: "44px",
                   transition: "all 0.2s",
+
+                  "&.active": !isLogout
+                    ? {
+                      backgroundColor: "rgba(255, 255, 255, 0.25)",
+                      boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
+                    }
+                    : {},
+
+                  "&.active .MuiListItemIcon-root": {
+                    color: "white",
+                    transform: "scale(1.1)",
+                  },
+
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.15)",
+                  },
                 }}
               >
-                {item.icon}
-              </ListItemIcon>
-              {isOpen && (
-                <ListItemText
-                  primary={item.text}
+                <ListItemIcon
                   sx={{
-                    "& .MuiTypography-root": {
-                      fontSize: "14px",
-                      fontWeight: 500,
-                    },
+                    minWidth: isOpen ? 36 : "auto",
+                    justifyContent: "center",
+                    color: "white",
+                    transition: "all 0.2s",
                   }}
-                />
-              )}
-            </ListItem>
-          ))}
+                >
+                  {item.icon}
+                </ListItemIcon>
+
+                {isOpen && (
+                  <ListItemText
+                    primary={item.text}
+                    sx={{
+                      "& .MuiTypography-root": {
+                        fontSize: "14px",
+                        fontWeight: 500,
+                      },
+                    }}
+                  />
+                )}
+              </ListItem>
+            );
+          })}
         </List>
 
         <DoctorProfileModal

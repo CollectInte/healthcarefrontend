@@ -35,15 +35,17 @@ export default function Sidebar({ isOpen, onToggle, company }) {
   const [staff, setStaff] = useState(null);
 
   const menuItems = [
-  { text: "Dashboard", icon: <DashboardIcon />, path: "/doctor/dashboard" },
-  { text: "Appointment", icon: <EventIcon />, path: "/doctor/dashboard/appointments" },
-  { text: "Attendance", icon: <AccessTimeIcon />, path: "/doctor/dashboard/attendance" },
-  { text: "Appointment Review", icon: <AssignmentIcon />, path: "/doctor/dashboard/task-review" },
-  { text: "Documents", icon: <DescriptionIcon />, path: "/doctor/dashboard/documents" },
-  { text: "Logout", icon: <LogoutIcon />, onClick: handleLogout },
-];
+    { text: "Dashboard", icon: <DashboardIcon />, path: "/doctor/dashboard" },
+    { text: "Appointment", icon: <EventIcon />, path: "/doctor/dashboard/appointments" },
+    { text: "Attendance", icon: <AccessTimeIcon />, path: "/doctor/dashboard/attendance" },
+    { text: "Appointment Review", icon: <AssignmentIcon />, path: "/doctor/dashboard/task-review" },
+    { text: "Documents", icon: <DescriptionIcon />, path: "/doctor/dashboard/documents" },
+    { text: "Logout", icon: <LogoutIcon />, onClick: () => {
+        handleLogout();
+      } },
+  ];
 
-const handleLogout = async () => {
+  const handleLogout = async () => {
     try {
       await fetch(process.env.REACT_APP_LOGOUT, {
         method: "POST",
@@ -151,7 +153,7 @@ const handleLogout = async () => {
             transition: "all 0.3s ease",
           }}
         >
-         <Box
+          <Box
             component="img"
             src={
               company?.company_logo
@@ -239,11 +241,11 @@ const handleLogout = async () => {
             {!staff?.profile_photo && staffName?.charAt(0)}
           </Avatar>
 
-        
-            <Typography fontWeight="bold" sx={{ color: "white", fontSize: {md:"14px",xs:"10px"} }}>
-              {staffName}
-            </Typography>
-         
+
+          <Typography fontWeight="bold" sx={{ color: "white", fontSize: { md: "14px", xs: "10px" } }}>
+            {staffName}
+          </Typography>
+
         </Box>
 
         {/* White divider after Profile */}
@@ -258,57 +260,69 @@ const handleLogout = async () => {
 
         {/* Menu */}
         <List sx={{ px: 2 }}>
-          {menuItems.map((item) => (
-            <ListItem
-              key={item.text}
-              component={NavLink}
-              to={item.path}
-              end={item.path === "/doctor/dashboard"}
-              sx={{
-                borderRadius: 2,
-                color: "white",
-                textDecoration: "none",
-                justifyContent: isOpen ? "flex-start" : "center",
-                px: isOpen ? 2 : 1,
-                py: 0.5,
-                minHeight: "44px",
-                transition: "all 0.2s",
-                "&.active": {
-                  backgroundColor: "rgba(255, 255, 255, 0.25)",
-                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
-                },
-                "&.active .MuiListItemIcon-root": {
-                  color: "white",
-                  transform: "scale(1.1)",
-                },
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.15)",
-                },
-              }}
-            >
-              <ListItemIcon
+          {menuItems.map((item) => {
+            const isLogout = item.text === "Logout";
+
+            return (
+              <ListItem
+                key={item.text}
+                component={isLogout ? "div" : NavLink}
+                to={!isLogout ? item.path : undefined}
+                end={!isLogout && item.path === "/receptionist/dashboard"}
+                onClick={isLogout ? item.onClick : undefined}
                 sx={{
-                  minWidth: isOpen ? 36 : "auto",
-                  justifyContent: "center",
+                  cursor: "pointer",
+                  borderRadius: 2,
                   color: "white",
+                  textDecoration: "none",
+                  justifyContent: isOpen ? "flex-start" : "center",
+                  px: isOpen ? 2 : 1,
+                  py: 0.5,
+                  minHeight: "44px",
                   transition: "all 0.2s",
+
+                  "&.active": !isLogout
+                    ? {
+                      backgroundColor: "rgba(255, 255, 255, 0.25)",
+                      boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
+                    }
+                    : {},
+
+                  "&.active .MuiListItemIcon-root": {
+                    color: "white",
+                    transform: "scale(1.1)",
+                  },
+
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.15)",
+                  },
                 }}
               >
-                {item.icon}
-              </ListItemIcon>
-              {isOpen && (
-                <ListItemText
-                  primary={item.text}
+                <ListItemIcon
                   sx={{
-                    "& .MuiTypography-root": {
-                      fontSize: "14px",
-                      fontWeight: 500,
-                    },
+                    minWidth: isOpen ? 36 : "auto",
+                    justifyContent: "center",
+                    color: "white",
+                    transition: "all 0.2s",
                   }}
-                />
-              )}
-            </ListItem>
-          ))}
+                >
+                  {item.icon}
+                </ListItemIcon>
+
+                {isOpen && (
+                  <ListItemText
+                    primary={item.text}
+                    sx={{
+                      "& .MuiTypography-root": {
+                        fontSize: "14px",
+                        fontWeight: 500,
+                      },
+                    }}
+                  />
+                )}
+              </ListItem>
+            );
+          })}
         </List>
 
         <DoctorProfileModal
