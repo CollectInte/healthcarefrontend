@@ -25,7 +25,7 @@ export default function Topbar({ sidebarOpen, company }) {
 
       elevation={0}
       sx={{
-        backgroundColor: COLORS.primary,
+        backgroundColor: "#437986",
         width: { xs: "100%", md: "98%" },
         borderRadius: { xs: 0, md: 2 },
         mt: { xs: 0, md: 3 },
