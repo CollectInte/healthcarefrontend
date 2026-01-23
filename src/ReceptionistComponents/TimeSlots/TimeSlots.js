@@ -26,6 +26,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const TimeSlots = () => {
   const isMobile = useMediaQuery("(max-width:768px)");
@@ -46,7 +50,7 @@ const TimeSlots = () => {
     try {
       const res = await axios.get(
         `${process.env.REACT_APP_URL}/api/staff/time-slots/unbooked/filter`,
-        { withCredentials: true }
+        { withCredentials: true },
       );
       setSlots(res.data?.slots || []);
       setPage(1); // 🔥 reset pagination
@@ -81,7 +85,7 @@ const TimeSlots = () => {
             slot_time_from: slot.slot_time_from,
             slot_time_to: slot.slot_time_to,
           },
-        }
+        },
       );
 
       setSnackbar({
@@ -99,12 +103,33 @@ const TimeSlots = () => {
     }
   };
 
+  /* ================= Filter Section ================= */
+
+  const [filters, setFilters] = useState({
+    doctor: "",
+    date: "",
+  });
+  const filteredSlots = slots.filter((s) => {
+    const matchDoctor = filters.doctor
+      ? s.doctor_name === filters.doctor
+      : true;
+
+    const matchDate = filters.date
+      ? dayjs(s.slot_date).format("YYYY-MM-DD") === filters.date
+      : true;
+
+    return matchDoctor && matchDate;
+  });
+
+  const doctorList = [...new Set(slots.map((s) => s.doctor_name))];
+
   /* ================= Pagination ================= */
 
-  const totalPages = Math.ceil(slots.length / rowsPerPage);
-  const paginatedSlots = slots.slice(
+  const totalPages = Math.ceil(filteredSlots.length / rowsPerPage);
+
+  const paginatedSlots = filteredSlots.slice(
     (page - 1) * rowsPerPage,
-    page * rowsPerPage
+    page * rowsPerPage,
   );
 
   /* ================= Alert Section  ================= */
@@ -137,6 +162,155 @@ const TimeSlots = () => {
           Add Slots for Doctors
         </Button>
       </Box>
+
+      {/* ================= HEADING ================= */}
+      <Box
+        sx={{
+          bgcolor: COLORS.primary,
+          color: "#fff",
+          fontSize: { xs: "14px", md: "18px" },
+          px: 1,
+          py: 1,
+          width: { xs: "70%", md: "20%" },
+          borderTopRightRadius: 60,
+        }}
+      >
+        Doctors Time Slots
+      </Box>
+
+      {/* ================= FILTER BAR ================= */}
+      {isMobile ? (
+        /* ================= FILTER BAR Mobile ================= */
+        <Box sx={{ width: "100%", my: 1 }}>
+          {/* 👨‍⚕️ Doctor */}
+          <TextField
+            size="small"
+            fullWidth
+            select
+            label="Doctor"
+            value={filters.doctor}
+            onChange={(e) =>
+              setFilters((prev) => ({ ...prev, doctor: e.target.value }))
+            }
+            sx={{ mb: 1 }}
+          >
+            <MenuItem value="">All Doctors</MenuItem>
+            {doctorList.map((doc) => (
+              <MenuItem key={doc} value={doc}>
+                {doc}
+              </MenuItem>
+            ))}
+          </TextField>
+
+          {/* 📅 Date */}
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Slot Date"
+              value={filters.date ? dayjs(filters.date) : null}
+              onChange={(v) =>
+                setFilters((prev) => ({
+                  ...prev,
+                  date: v ? v.format("YYYY-MM-DD") : "",
+                }))
+              }
+              slotProps={{
+                textField: {
+                  fullWidth: true,
+                  size: "small",
+                },
+              }}
+            />
+          </LocalizationProvider>
+
+          <Button
+            fullWidth
+            sx={{
+              mt: 1,
+              height: 40,
+              fontSize: "12px",
+              textTransform: "capitalize",
+              bgcolor: COLORS.primary,
+              color: "#fff",
+              "&:hover": { bgcolor: COLORS.primary },
+            }}
+            onClick={() =>
+              setFilters({
+                doctor: "",
+                date: "",
+              })
+            }
+          >
+            Reset
+          </Button>
+        </Box>
+      ) : (
+        /* ================= FILTER BAR Desktop ================= */
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            gap: 2,
+            my: 2,
+            alignItems: "center",
+          }}
+        >
+          {/* 👨‍⚕️ Doctor */}
+          <TextField
+            size="small"
+            select
+            label="Doctor"
+            value={filters.doctor}
+            onChange={(e) =>
+              setFilters((prev) => ({ ...prev, doctor: e.target.value }))
+            }
+            sx={{ width: 250 }}
+          >
+            <MenuItem value="">All Doctors</MenuItem>
+            {doctorList.map((doc) => (
+              <MenuItem key={doc} value={doc}>
+                {doc}
+              </MenuItem>
+            ))}
+          </TextField>
+
+          {/* 📅 Date */}
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Slot Date"
+              value={filters.date ? dayjs(filters.date) : null}
+              onChange={(v) =>
+                setFilters((prev) => ({
+                  ...prev,
+                  date: v ? v.format("YYYY-MM-DD") : "",
+                }))
+              }
+              slotProps={{
+                textField: { size: "small", sx: { width: 200 } },
+              }}
+            />
+          </LocalizationProvider>
+
+          <Button
+            variant="outlined"
+            sx={{
+              height: 40,
+              minWidth: 120,
+              textTransform: "capitalize",
+              bgcolor: COLORS.primary,
+              color: "#fff",
+              "&:hover": { bgcolor: COLORS.primary },
+            }}
+            onClick={() =>
+              setFilters({
+                doctor: "",
+                date: "",
+              })
+            }
+          >
+            Reset
+          </Button>
+        </Box>
+      )}
 
       {/* ================= DESKTOP ================= */}
       {!isMobile && (
@@ -197,7 +371,7 @@ const TimeSlots = () => {
             >
               {paginatedSlots.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={5} align="center" sx={{ py: 3 }}>
+                  <TableCell colSpan={7} align="center" sx={{ py: 3 }}>
                     <Typography fontWeight={600} color="text.secondary">
                       No slots found
                     </Typography>
@@ -212,6 +386,7 @@ const TimeSlots = () => {
                     "& td": {
                       border: `1px dashed ${COLORS.softBg}`,
                       fontSize: 13,
+                      py: 1,
                     },
                   }}
                 >

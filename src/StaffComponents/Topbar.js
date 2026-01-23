@@ -26,31 +26,11 @@ export default function Topbar({ sidebarOpen, company }) {
       elevation={0}
       sx={{
         backgroundColor: "#437986",
-
-        /* ✅ MOBILE: full width, DESKTOP: reduced */
-        width: {
-          xs: sidebarWidth,
-          md: `calc(124% - ${sidebarWidth}px - 60px)`,
-        },
-
-        /* ✅ desktop spacing */
-        ml: {
-
-          md: 3,
-        },
-
-        mt: {
-          xs: 0,
-          md: "17px",
-        },
-
-        borderRadius: {
-          xs: 0,
-          md: "15px",
-        },
-
-        transition: "all 0.3s ease",
-        zIndex: theme.zIndex.drawer - 1,
+        width: { xs: "100%", md: "92%", lg: "94%"  },
+        borderRadius: { xs: 0, md: 2 },
+        mt: { xs: 0, md: 3 },
+        ml: { xs: 0, md: 6 },
+        zIndex: (theme) => theme.zIndex.drawer - 1,
       }}
     >
 

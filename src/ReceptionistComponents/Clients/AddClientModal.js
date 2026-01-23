@@ -11,6 +11,7 @@ import {
   Select,
   IconButton,
   Alert,
+  InputLabel,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
@@ -132,7 +133,7 @@ export default function AddClientModal({ open, onClose, onSuccess }) {
           ...formData,
           password: autoPassword,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       onClose();
@@ -220,9 +221,18 @@ export default function AddClientModal({ open, onClose, onSuccess }) {
             name="gender"
             value={formData.gender}
             onChange={handleChange}
-            sx={inputStyle}
+            displayEmpty
+            renderValue={(selected) =>
+              selected ? selected : "Select Gender (Optional)"
+            }
+            sx={{
+              ...inputStyle,
+              color: formData.gender ? "inherit" : "text.secondary",
+            }}
           >
-            <MenuItem value="">Select Gender (Optional)</MenuItem>
+            <MenuItem value="" disabled>
+              Select Gender (Optional)
+            </MenuItem>
             <MenuItem value="Male">Male</MenuItem>
             <MenuItem value="Female">Female</MenuItem>
             <MenuItem value="Other">Other</MenuItem>
@@ -234,7 +244,14 @@ export default function AddClientModal({ open, onClose, onSuccess }) {
             name="blood_group"
             value={formData.blood_group}
             onChange={handleChange}
-            sx={inputStyle}
+            displayEmpty
+            renderValue={(selected) =>
+              selected ? selected : "Blood Group (Optional)"
+            }
+            sx={{
+              ...inputStyle,
+              color: formData.blood_group ? "inherit" : "text.secondary",
+            }}
           >
             <MenuItem value="">Blood Group (Optional)</MenuItem>
             {["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map((bg) => (
@@ -252,9 +269,11 @@ export default function AddClientModal({ open, onClose, onSuccess }) {
             size="small"
             type="date"
             name="dob"
+            label="Date of Birth"
             value={formData.dob}
             onChange={handleChange}
             sx={inputStyle}
+            InputLabelProps={{ shrink: true }}
           />
 
           <Select
@@ -293,7 +312,7 @@ export default function AddClientModal({ open, onClose, onSuccess }) {
           px: 5,
           fontWeight: 600,
           textTransform: "none",
-          fontSize:{xs:12,md:18},
+          fontSize: { xs: 12, md: 18 },
           "&:hover": { bgcolor: COLORS.softBg },
         }}
       >

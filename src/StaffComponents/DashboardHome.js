@@ -582,7 +582,7 @@ const getGreeting = () => {
                       </TableBody>
                       <Box sx={{ textAlign: "center", mt: 2 }}>
                         <Typography
-                          onClick={() => navigate("/dashboard/appointments")}
+                          onClick={() => navigate("/doctor/dashboard/appointments")}
                           sx={{
                             cursor: "pointer",
                             fontSize: "0.8rem",
@@ -676,7 +676,7 @@ const getGreeting = () => {
               </Box>
               <Box sx={{ textAlign: "center", mt: 2 }}>
                 <Typography
-                  onClick={() => navigate("/dashboard/appointments")}
+                  onClick={() => navigate("/doctor/dashboard/appointments")}
                   sx={{
                     cursor: "pointer",
                     fontSize: "0.8rem",
@@ -782,7 +782,7 @@ const getGreeting = () => {
                     ))}
                     <Box sx={{ textAlign: "center", mt: 2 }}>
                       <Typography
-                        onClick={() => navigate("/dashboard/attendance")}
+                        onClick={() => navigate("/doctor/dashboard/attendance")}
                         sx={{
                           cursor: "pointer",
                           fontSize: "0.8rem",

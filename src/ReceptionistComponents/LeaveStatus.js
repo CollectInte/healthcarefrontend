@@ -71,19 +71,25 @@ export default function LeaveStatusPopup({ open, onClose }) {
   };
 
   const handleEditClick = (leave) => {
-    setEditLeave({
-      id: leave.id,
-      leaveType: leave.leave_type,
-      fromDate: leave.start_date,
-      toDate: leave.end_date,
-      reason: leave.reason,
-    });
+    setEditLeave(leave); // pass full leave object
     setEditOpen(true);
   };
 
   const handleEditClose = () => {
     setEditOpen(false);
     setEditLeave(null);
+  };
+
+  // Called after successful update
+  const handleEditSuccess = () => {
+    fetchLeaveData(); // refresh list
+    setEditOpen(false);
+    setEditLeave(null);
+    setSnack({
+      open: true,
+      message: "Leave updated successfully!",
+      severity: "success",
+    });
   };
 
   // Pagination logic
@@ -243,6 +249,7 @@ export default function LeaveStatusPopup({ open, onClose }) {
           open={editOpen}
           onClose={handleEditClose}
           initialData={editLeave}
+          onSuccess={handleEditSuccess} // ✅ refresh + close only edit
         />
       )}
 

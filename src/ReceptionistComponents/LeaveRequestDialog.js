@@ -38,32 +38,45 @@ const LEAVE_TYPES = [
   "Other",
 ];
 
-export default function LeaveRequestDialog({ open, onClose, initialData }) {
+export default function LeaveRequestDialog({
+  open,
+  onClose,
+  initialData,
+  onSuccess,
+}) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [formData, setFormData] = useState(initialState);
   const [loading, setLoading] = useState(false);
-  const [activeDateField, setActiveDateField] = useState("");
+  const [activeDateField, setActiveDateField] = useState("fromDate"); // ✅ default
   const [snack, setSnack] = useState({
     open: false,
     message: "",
     severity: "success",
   });
 
-  // Populate form if editing
+  // ✅ Populate form when editing
   useEffect(() => {
-    if (initialData) {
+    if (!open) return;
+
+    if (initialData?.id) {
       setFormData({
         leaveType: initialData.leave_type || "",
-        fromDate: initialData.start_date || "",
-        toDate: initialData.end_date || "",
+        fromDate: initialData.start_date
+          ? dayjs(initialData.start_date).format("YYYY-MM-DD")
+          : "",
+        toDate: initialData.end_date
+          ? dayjs(initialData.end_date).format("YYYY-MM-DD")
+          : "",
         reason: initialData.reason || "",
       });
+      setActiveDateField("fromDate");
     } else {
       setFormData(initialState);
+      setActiveDateField("fromDate");
     }
-  }, [initialData, open]);
+  }, [open, initialData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -85,25 +98,22 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
       };
 
       if (initialData?.id) {
-        // Edit existing leave request
         await api.put(`/api/leave/update/${initialData.id}`, payload);
         setSnack({
           open: true,
           message: "Leave request updated successfully!",
           severity: "success",
         });
+        if (onSuccess) onSuccess(); // ✅ notify parent
       } else {
-        // Create new leave request
         await api.post("/api/leave/create/", payload);
         setSnack({
           open: true,
           message: "Leave request submitted successfully!",
           severity: "success",
         });
+        setTimeout(onClose, 800);
       }
-
-      setFormData(initialState);
-      setTimeout(onClose, 900);
     } catch (error) {
       setSnack({
         open: true,
@@ -180,18 +190,16 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DateCalendar
                     value={
-                      activeDateField === "fromDate"
-                        ? formData.fromDate
-                          ? dayjs(formData.fromDate)
-                          : null
-                        : activeDateField === "toDate"
+                      activeDateField === "toDate"
                         ? formData.toDate
                           ? dayjs(formData.toDate)
                           : null
+                        : formData.fromDate
+                        ? dayjs(formData.fromDate)
                         : null
                     }
                     onChange={(newValue) => {
-                      if (!newValue) return;
+                      if (!newValue || !activeDateField) return;
                       const formatted = newValue.format("YYYY-MM-DD");
                       setFormData((prev) => ({
                         ...prev,
@@ -222,13 +230,14 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
                 gap={2}
                 mb={2}
               >
-                {/* Start Date */}
                 <TextField
                   label="Start Date"
                   name="fromDate"
+                  type="date"
                   value={formData.fromDate}
                   onChange={handleChange}
                   onFocus={() => setActiveDateField("fromDate")}
+                  InputLabelProps={{ shrink: true }}
                   InputProps={{
                     endAdornment: (
                       <CalendarMonthIcon sx={{ color: "#01636B" }} />
@@ -248,13 +257,14 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
                   }}
                 />
 
-                {/* End Date */}
                 <TextField
                   label="End Date"
                   name="toDate"
+                  type="date"
                   value={formData.toDate}
                   onChange={handleChange}
                   onFocus={() => setActiveDateField("toDate")}
+                  InputLabelProps={{ shrink: true }}
                   InputProps={{
                     endAdornment: (
                       <CalendarMonthIcon sx={{ color: "#01636B" }} />
@@ -275,7 +285,6 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
                 />
               </Box>
 
-              {/* Leave Type Dropdown */}
               <TextField
                 label="Leave Type"
                 name="leaveType"
@@ -302,7 +311,6 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
                 ))}
               </TextField>
 
-              {/* Reason */}
               <TextField
                 label="Comment (Optional)"
                 name="reason"
@@ -350,7 +358,6 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
         </DialogContent>
       </Dialog>
 
-      {/* Snackbar */}
       <Snackbar
         open={snack.open}
         autoHideDuration={3000}

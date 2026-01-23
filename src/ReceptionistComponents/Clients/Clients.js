@@ -46,7 +46,7 @@ const Clients = () => {
         `${process.env.REACT_APP_URL}/api/client/get`,
         {
           withCredentials: true,
-        }
+        },
       );
 
       const list = Array.isArray(res.data?.data) ? res.data.data : [];
@@ -68,9 +68,9 @@ const Clients = () => {
       const text = search.toLowerCase();
 
       data = data.filter((c) =>
-        [c.client_id, c.name, c.email, c.address, c.mobile]
+        [c.client_id, c.name, c.email, c.mobile]
           .filter(Boolean)
-          .some((v) => String(v).toLowerCase().includes(text))
+          .some((v) => String(v).toLowerCase().includes(text)),
       );
     }
 
@@ -83,7 +83,7 @@ const Clients = () => {
 
   const paginatedClients = filteredClients.slice(
     (page - 1) * rowsPerPage,
-    page * rowsPerPage
+    page * rowsPerPage,
   );
 
   // ---------------- STATUS COLOR ----------------
@@ -105,7 +105,12 @@ const Clients = () => {
   };
 
   return (
-    <Box px={2}>
+    <Box
+      px={1}
+      sx={{
+        pt: 2.8,
+      }}
+    >
       <Box display="flex" justifyContent="flex-end" px={2}>
         <Button
           sx={{
@@ -122,10 +127,24 @@ const Clients = () => {
           }}
           onClick={() => setOpenAddClient(true)}
         >
-          Add Clients
+          Add Client
         </Button>
       </Box>
 
+      {/* ================= HEADING ================= */}
+      <Box
+        sx={{
+          bgcolor: COLORS.primary,
+          color: "#fff",
+          fontSize: { xs: "14px", md: "18px" },
+          px: 1,
+          py: 1,
+          width: { xs: "70%", md: "20%" },
+          borderTopRightRadius: 60,
+        }}
+      >
+        View All Clients
+      </Box>
       {/* ================= SEARCH ================= */}
       <Box
         sx={{
@@ -239,6 +258,7 @@ const Clients = () => {
                     "& td": {
                       border: `1px dashed ${COLORS.softBg}`,
                       fontSize: 13,
+                      py: 1.5,
                     },
                   }}
                 >

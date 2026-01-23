@@ -109,7 +109,7 @@ export default function Sidebar({ isOpen, onToggle, company }) {
       }}
     >
       {/* Mobile-only divider */}
-      <Box
+      {/* <Box
         sx={{
           display: { xs: "block", md: "none" },
           height: "1px",
@@ -117,10 +117,10 @@ export default function Sidebar({ isOpen, onToggle, company }) {
           mx: 2,
           my: 1.5,
         }}
-      />
+      /> */}
 
       {/* Mobile-only Toggle Button */}
-      <Box
+      {/* <Box
         sx={{
           display: { xs: "flex", md: "none" },
           justifyContent: "end",
@@ -141,9 +141,8 @@ export default function Sidebar({ isOpen, onToggle, company }) {
         >
           {isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
-      </Box>
+      </Box> */}
 
-      {/* Logo Section */}
       <Box
         sx={{
           backgroundColor: "#F8F6F6",
@@ -154,13 +153,20 @@ export default function Sidebar({ isOpen, onToggle, company }) {
           justifyContent: isOpen ? "flex-start" : "center",
           gap: 1.5,
           transition: "all 0.3s",
+          cursor: { xs: "pointer", md: "default" }, // clickable only on mobile
+        }}
+        onClick={() => {
+          // Toggle sidebar only on mobile (xs view)
+          if (window.innerWidth < 900) {
+            onToggle();
+          }
         }}
       >
         {/* Company Logo */}
         <Box
           sx={{
-            width: isOpen ? 40 : 32,
-            height: isOpen ? 40 : 32,
+            width: isOpen ? 60 : 48, // increased size
+            height: isOpen ? 60 : 48, // increased size
             flexShrink: 0,
             transition: "all 0.3s ease",
           }}
@@ -189,19 +195,19 @@ export default function Sidebar({ isOpen, onToggle, company }) {
 
         {/* Company Name */}
         {/* {isOpen && (
-          <Typography
-            sx={{
-              color: "#0d7377",
-              fontWeight: "bold",
-              fontSize: "14px",
-              lineHeight: 1.2,
-              letterSpacing: "0.5px",
-              textAlign: "center",
-            }}
-          >
-            {company?.company_name || "HEALTHCARE"}
-          </Typography>
-        )} */}
+    <Typography
+      sx={{
+        color: "#0d7377",
+        fontWeight: "bold",
+        fontSize: "14px",
+        lineHeight: 1.2,
+        letterSpacing: "0.5px",
+        textAlign: "center",
+      }}
+    >
+      {company?.company_name || "HEALTHCARE"}
+    </Typography>
+  )} */}
       </Box>
 
       {/* Blue Section */}

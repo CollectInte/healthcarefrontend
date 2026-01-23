@@ -301,6 +301,7 @@ export default function Sidebar({ isOpen, onToggle }) {
           {/* Date & Time */}
           <Typography
             variant="body2"
+            component="div"
             sx={{
               color: COLORS.texWhite,
               display: "flex",

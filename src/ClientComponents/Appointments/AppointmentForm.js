@@ -356,7 +356,12 @@ const AppointmentForm = ({ open, onClose, onSuccess }) => {
                   width: { xs: "100%", md: "100px" },
                 }}
               >
-                <Stack spacing={2}>
+                <Stack
+                  spacing={2}
+                  sx={{
+                    mx: { xs: "1", md: 5 },
+                  }}
+                >
                   {/* BRANCH */}
                   <TextField
                     label="Purpose"
@@ -394,10 +399,25 @@ const AppointmentForm = ({ open, onClose, onSuccess }) => {
                     helperText={errors.doctor}
                     fullWidth
                     size="small"
+                    sx={{
+                      "& .MuiSelect-select": {
+                        whiteSpace: "wrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        display: "block",
+                      },
+                    }}
                   >
                     {doctorsByBranch.map((doc) => (
-                      <MenuItem key={doc.id} value={doc.id}>
-                        Dr. {doc.name}
+                      <MenuItem
+                        key={doc.id}
+                        value={doc.id}
+                        sx={{
+                          whiteSpace: "normal", // dropdown can wrap
+                          wordBreak: "break-word",
+                        }}
+                      >
+                        {doc.name}
                       </MenuItem>
                     ))}
                   </TextField>

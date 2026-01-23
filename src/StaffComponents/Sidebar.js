@@ -40,9 +40,11 @@ export default function Sidebar({ isOpen, onToggle, company }) {
     { text: "Attendance", icon: <AccessTimeIcon />, path: "/doctor/dashboard/attendance" },
     { text: "Appointment Review", icon: <AssignmentIcon />, path: "/doctor/dashboard/task-review" },
     { text: "Documents", icon: <DescriptionIcon />, path: "/doctor/dashboard/documents" },
-    { text: "Logout", icon: <LogoutIcon />, onClick: () => {
+    {
+      text: "Logout", icon: <LogoutIcon />, onClick: () => {
         handleLogout();
-      } },
+      }
+    },
   ];
 
   const handleLogout = async () => {
@@ -97,7 +99,7 @@ export default function Sidebar({ isOpen, onToggle, company }) {
       }}
     >
       {/* Mobile-only divider */}
-      <Box
+      {/* <Box
         sx={{
           display: { xs: "block", md: "none" },
           height: "1px",
@@ -105,10 +107,10 @@ export default function Sidebar({ isOpen, onToggle, company }) {
           mx: 2,
           my: 1.5,
         }}
-      />
+      /> */}
 
       {/* Mobile-only Toggle Button */}
-      <Box
+      {/* <Box
         sx={{
           display: { xs: "flex", md: "none" },
           justifyContent: "end",
@@ -129,7 +131,7 @@ export default function Sidebar({ isOpen, onToggle, company }) {
         >
           {isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
-      </Box>
+      </Box> */}
 
       {/* Logo Section */}
       <Box
@@ -142,13 +144,20 @@ export default function Sidebar({ isOpen, onToggle, company }) {
           justifyContent: isOpen ? "flex-start" : "center",
           gap: 1.5,
           transition: "all 0.3s",
+          cursor: { xs: "pointer", md: "default" }, // clickable only on mobile
+        }}
+        onClick={() => {
+          // Toggle sidebar only on mobile (xs view)
+          if (window.innerWidth < 900) {
+            onToggle();
+          }
         }}
       >
         {/* Company Logo */}
         <Box
           sx={{
-            width: isOpen ? 40 : 32,
-            height: isOpen ? 40 : 32,
+            width: isOpen ? 60 : 48,
+            height: isOpen ? 60 : 48,
             flexShrink: 0,
             transition: "all 0.3s ease",
           }}
@@ -171,25 +180,15 @@ export default function Sidebar({ isOpen, onToggle, company }) {
               height: "100%",
               objectFit: "contain",
               display: "block",
+              border: "1px solid black",
             }}
           />
         </Box>
 
         {/* Company Name */}
         {/* {isOpen && (
-          <Typography
-            sx={{
-              color: "#0d7377",
-              fontWeight: "bold",
-              fontSize: "14px",
-              lineHeight: 1.2,
-              letterSpacing: "0.5px",
-              textAlign: "center",
-            }}
-          >
-            {company?.company_name || "HEALTHCARE"}
-          </Typography>
-        )} */}
+    <Typography ...>{company?.company_name || "HEALTHCARE"}</Typography>
+  )} */}
       </Box>
 
       {/* Blue Section */}
@@ -268,7 +267,7 @@ export default function Sidebar({ isOpen, onToggle, company }) {
                 key={item.text}
                 component={isLogout ? "div" : NavLink}
                 to={!isLogout ? item.path : undefined}
-                end={!isLogout && item.path === "/receptionist/dashboard"}
+                end={!isLogout && item.path === "/doctor/dashboard"}
                 onClick={isLogout ? item.onClick : undefined}
                 sx={{
                   cursor: "pointer",

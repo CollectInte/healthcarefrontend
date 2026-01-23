@@ -77,7 +77,7 @@ const AppointmentsPage = () => {
         {
           params: { search: query },
           withCredentials: true,
-        }
+        },
       );
 
       const list = res.data.appointments.map((a) => ({
@@ -140,16 +140,9 @@ const AppointmentsPage = () => {
       const q = search.toLowerCase();
 
       data = data.filter((a) =>
-        [
-          a.id,
-          a.client_name,
-          a.client_id,
-          a.doctor_name,
-          a.selected_branch,
-          a.status,
-        ]
+        [a.id, a.client_name, a.client_id, a.doctor_name, a.status]
           .filter(Boolean)
-          .some((field) => String(field).toLowerCase().includes(q))
+          .some((field) => String(field).toLowerCase().includes(q)),
       );
     }
 
@@ -169,14 +162,14 @@ const AppointmentsPage = () => {
         `${process.env.REACT_APP_URL}/appointment/appointment/${appointmentId}/status`,
         {
           status: newStatus,
-        }
+        },
       );
       setAppointments((prev) =>
         prev.map((appt) =>
           appt.appointment_id === appointmentId
             ? { ...appt, status: newStatus }
-            : appt
-        )
+            : appt,
+        ),
       );
     } catch (error) {
       console.error("Failed to update status", error);
@@ -197,7 +190,7 @@ const AppointmentsPage = () => {
 
   const paginatedAppointments = filteredAppointments.slice(
     (page - 1) * rowsPerPage,
-    page * rowsPerPage
+    page * rowsPerPage,
   );
 
   /* ---------------- CANCEL ---------------- */
@@ -207,7 +200,7 @@ const AppointmentsPage = () => {
     await axios.put(
       `${process.env.REACT_APP_URL}/appointment/client/appointment/cancel`,
       { appointmentId }, // ✅ MATCH backend
-      { withCredentials: true }
+      { withCredentials: true },
     );
 
     fetchAppointments();
@@ -262,6 +255,19 @@ const AppointmentsPage = () => {
       </Box>
 
       {/* ================= HEADING ================= */}
+      <Box
+        sx={{
+          bgcolor: COLORS.primary,
+          color: "#fff",
+          fontSize: { xs: "14px", md: "18px" },
+          px: 1,
+          py: 1,
+          width: { xs: "70%", md: "20%" },
+          borderTopRightRadius: 60,
+        }}
+      >
+        AllAppointment
+      </Box>
 
       {/* ================= FILTERS (UNCHANGED) ================= */}
       {/* 👉 KEEP YOUR EXISTING FILTER CODE HERE (MOBILE + DESKTOP) */}
@@ -351,7 +357,7 @@ const AppointmentsPage = () => {
         >
           <TextField
             size="small"
-            label="Search"
+            label="Search by name, ID, doctor, status..."
             placeholder="Search by name, ID, doctor, status..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -409,7 +415,7 @@ const AppointmentsPage = () => {
           sx={{
             borderRadius: 2,
             overflowY: "auto",
-            maxHeight: 400,
+            maxHeight: 380,
 
             /* ===== Scrollbar Styling ===== */
             scrollbarColor: Colors.primary,
@@ -554,7 +560,7 @@ const AppointmentsPage = () => {
                             setAnchorEl(e.currentTarget);
                             setSelectedAppointment(row);
                           }}
-                          disabled={row.status === "cancelled"}
+                          disabled={row.status === "cancelled" || row.status === "completed"}
                         >
                           <EditIcon fontSize="small" />
                         </IconButton>

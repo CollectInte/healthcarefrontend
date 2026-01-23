@@ -45,6 +45,7 @@ import LeaveStatusPopup from "./LeaveStatus";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import TimeToLeaveIcon from "@mui/icons-material/TimeToLeave";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import FreeCancellationIcon from "@mui/icons-material/FreeCancellation"; // cancel / leave
 
 const now = new Date();
 
@@ -230,120 +231,192 @@ const handleLeaveStatusClose = () => setLeaveStatusOpen(false);
     }
   };
 
-  if (loading) return <Typography>Loading...</Typography>;
-  if (!staff) return <Typography>No Staff Data</Typography>;
+if (loading) {
+  return (
+    <Box
+      sx={{
+        minHeight: "60vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Typography fontSize={18} color="text.secondary">
+        Loading attendance...
+      </Typography>
+    </Box>
+  );
+}
+
+  
 
   return (
-    <Box sx={{ width: "97%", maxWidth: "100%", p: { xs: 1, sm: 3, md: 3 }, backgroundColor: "#f5f8fb" }}>
+    <Box sx={{ width: "100%", maxWidth: "100%", p: { xs: 1, sm: 3, md: 3,lg:3 }, backgroundColor: "#f5f8fb" }}>
 
       {/* Top Cards */}
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={12} md={3} sx={{ display: { xs: "none", md: "block", sm: "block" } }}>
-          <Paper sx={{ ...cardStyle, backgroundColor: "#CCE0E1", width: 200, height: 55, borderTopLeftRadius: 20, borderBottomRightRadius: 20, bordeTopRightRadius: 0, borderBottomLeftRadius: 0 }}>
-            <IconButton
-              sx={{
-                width: 40,
-                height: 40,
-                borderRadius: "50%",       // makes it a circle
-                bgcolor: "#0F3B3C",        // background color
-                color: "white",          // icon color
-                "&:hover": {
-                  bgcolor: "#b7d3d4",
-                  color: "#0F3B3C"
-                },
-              }}
-            >
-              <DoctorProfile width={20} height={20} />
-            </IconButton>
-            <Typography fontSize={18} fontWeight={500}>{self.name}</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={3} sx={{ display: { xs: "none", md: "block", sm: "block" } }}>
-          <Paper sx={{ ...cardStyle, backgroundColor: "#CCE0E1", width: 200, height: 55, borderTopLeftRadius: 20, borderBottomRightRadius: 20, bordeTopRightRadius: 0, borderBottomLeftRadius: 0 }}>
-            <IconButton
-              sx={{
-                width: 40,
-                height: 40,
-                borderRadius: "50%",       // makes it a circle
-                bgcolor: "#0F3B3C",        // background color
-                color: "white",          // icon color
-                "&:hover": {
-                  bgcolor: "#b7d3d4",
-                  color: "#0F3B3C"
-                },
-              }}
-            >
-              <EmployeeId width={30} height={30} />
-            </IconButton>
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <Typography fontSize={18} fontWeight={500}>EmployeeId</Typography>
-              <Typography fontSize={18} fontWeight={500}>{self.id}</Typography>
-            </Box>
+  <Paper
+    sx={{
+      ...cardStyle,
+      backgroundColor: "#CCE0E1",
+      width: { xs: "100%", sm: "100%", md: 220, lg: 220, xl: 300 },
+      height: { xs: 55, sm: 60, md: 65, lg: 70, xl: 75 },
+      borderTopLeftRadius: 20,
+      borderBottomRightRadius: 20,
+      bordeTopRightRadius: 0,
+      borderBottomLeftRadius: 0,
+    }}
+  >
+    <IconButton
+      sx={{
+        width: { xs: 36, md: 40, lg: 44 },
+        height: { xs: 36, md: 40, lg: 44 },
+        borderRadius: "50%",
+        bgcolor: "#0F3B3C",
+        color: "white",
+        "&:hover": {
+          bgcolor: "#b7d3d4",
+          color: "#0F3B3C",
+        },
+      }}
+    >
+      <DoctorProfile width={20} height={20} />
+    </IconButton>
 
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={3} sx={{ display: { xs: "none", md: "block", sm: "block" } }}>
-          <Paper sx={{ ...cardStyle, backgroundColor: "#CCE0E1", width: 200, height: 55, borderTopLeftRadius: 20, borderBottomRightRadius: 20, bordeTopRightRadius: 0, borderBottomLeftRadius: 0 }}>
-            <IconButton
-              sx={{
-                width: 40,
-                height: 40,
-                borderRadius: "50%",       // makes it a circle
-                bgcolor: "#0F3B3C",        // background color
-                color: "white",          // icon color
-                "&:hover": {
-                  bgcolor: "#b7d3d4",
-                  color: "#0F3B3C"
-                },
-              }}
-            >
-              <EmployeeDate width={30} height={30} />
-            </IconButton>
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <Typography fontSize={18} fontWeight={500}>DOJ</Typography>
-              <Typography fontSize={18} fontWeight={500}>{new Date(self.date_of_joining).toLocaleDateString("en-GB")}</Typography>
+    <Typography fontSize={{ xs: 14, md: 15, lg: 15}} fontWeight={700}>
+      {self.name}
+    </Typography>
+  </Paper>
+       </Grid>
 
-            </Box>
-          </Paper>
+       <Grid item xs={12} md={3} sx={{ display: { xs: "none", md: "block", sm: "block" } }}>
+  <Paper
+    sx={{
+      ...cardStyle,
+      backgroundColor: "#CCE0E1",
+      width: { xs: "100%", sm: "100%", md: 220, lg: 220, xl: 300 },
+      height: { xs: 55, sm: 60, md: 65, lg: 70, xl: 75 },
+      borderTopLeftRadius: 20,
+      borderBottomRightRadius: 20,
+      bordeTopRightRadius: 0,
+      borderBottomLeftRadius: 0,
+    }}
+  >
+    <IconButton
+      sx={{
+        width: { xs: 36, md: 40, lg: 44 },
+        height: { xs: 36, md: 40, lg: 44 },
+        borderRadius: "50%",
+        bgcolor: "#0F3B3C",
+        color: "white",
+        "&:hover": {
+          bgcolor: "#b7d3d4",
+          color: "#0F3B3C",
+        },
+      }}
+    >
+      <EmployeeId width={30} height={30} />
+    </IconButton>
+
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <Typography fontSize={{ xs: 14, md: 15, lg: 15}} fontWeight={700}>
+        EmployeeId
+      </Typography>
+    <Typography fontSize={{ xs: 14, md: 15, lg: 15}} fontWeight={700}>
+        {self.id}
+      </Typography>
+    </Box>
+  </Paper>
         </Grid>
+
+       <Grid item xs={12} md={3} sx={{ display: { xs: "none", md: "block", sm: "block" } }}>
+  <Paper
+    sx={{
+      ...cardStyle,
+      backgroundColor: "#CCE0E1",
+      width: { xs: "100%", sm: "100%", md: 220, lg: 220, xl: 300 },
+      height: { xs: 55, sm: 60, md: 65, lg: 70, xl: 75 },
+      borderTopLeftRadius: 20,
+      borderBottomRightRadius: 20,
+      bordeTopRightRadius: 0,
+      borderBottomLeftRadius: 0,
+    }}
+  >
+    <IconButton
+      sx={{
+        width: { xs: 36, md: 40, lg: 44 },
+        height: { xs: 36, md: 40, lg: 44 },
+        borderRadius: "50%",
+        bgcolor: "#0F3B3C",
+        color: "white",
+        "&:hover": {
+          bgcolor: "#b7d3d4",
+          color: "#0F3B3C",
+        },
+      }}
+    >
+      <EmployeeDate width={30} height={30} />
+    </IconButton>
+
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <Typography fontSize={{ xs: 14, md: 15, lg: 15}} fontWeight={700}>
+        DOJ
+      </Typography>
+    <Typography fontSize={{ xs: 14, md: 15, lg: 15}} fontWeight={700}>
+        {new Date(self.date_of_joining).toLocaleDateString("en-GB")}
+      </Typography>
+    </Box>
+  </Paper>
+      </Grid>
+
 
         {/* Leave Button */}
-        <Grid item xs={12} md={3}>
-          <Box display="flex" flexDirection="column" justifyContent="flex-end" gap={2} sx={{ mt: { xs: 2, md: -3 }, ml: { xs: 0, md: 2 } }}>
-           <Button
-  variant="contained"
-  startIcon={<EventAvailableIcon />}
-  sx={{
-    height: 45,
-    textTransform: "none",
-    borderTopLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    backgroundColor: "#437986",
-  }}
-  onClick={handleAttendanceRequest}
->
-  Attendance Update Request
-</Button>
+       <Grid item xs={12} md={3}>
+  <Box
+    display="flex"
+    flexDirection="column"
+    justifyContent="flex-end"
+    gap={2}
+    sx={{ mt: { xs: 2, md: -3 }, ml: { xs: 0, md: 2 } }}
+  >
+    <Button
+      variant="contained"
+      startIcon={<EventAvailableIcon />}
+      sx={{
+        height: { xs: 42, md: 45, lg: 48 },
+        textTransform: "none",
+        borderTopLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        backgroundColor: "#437986",
+        fontSize: { xs: 13, md: 14, lg: 15 },
+      }}
+      onClick={handleAttendanceRequest}
+    >
+      Attendance Update Request
+    </Button>
 
-<Button
-  variant="contained"
-  startIcon={<TimeToLeaveIcon />}
-  sx={{
-    height: 45,
-    textTransform: "none",
-    borderTopLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    backgroundColor: "#437986",
-  }}
-  onClick={handleLeaveToggle}
->
-  Leave Request
-</Button>
- <LeaveRequestDialog open={openLeave} onClose={handleLeaveToggle} />
+    <Button
+      variant="contained"
+      startIcon={<FreeCancellationIcon />}
+      sx={{
+        height: { xs: 42, md: 45, lg: 48 },
+        textTransform: "none",
+        borderTopLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        backgroundColor: "#437986",
+        fontSize: { xs: 13, md: 14, lg: 15 },
+      }}
+      onClick={handleLeaveToggle}
+    >
+      Leave Request
+    </Button>
 
-            <AttendanceRequestDialog open={openAttendanceRequest} onClose={handleAttendanceRequest} />
-          </Box>
-        </Grid>
+    <LeaveRequestDialog open={openLeave} onClose={handleLeaveToggle} />
+    <AttendanceRequestDialog open={openAttendanceRequest} onClose={handleAttendanceRequest} />
+  </Box>
+</Grid>
+
       </Grid>
 
       {/* Time Cards */}

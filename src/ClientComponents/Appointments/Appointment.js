@@ -581,7 +581,7 @@ const AppointmentsPage = () => {
                         <b>App ID:</b> {row.id}
                       </Typography>
 
-                      <Typography fontSize="12px">
+                      <Typography component="span" fontSize="12px">
                         <b>Status:</b>{" "}
                         <Chip
                           size="small"

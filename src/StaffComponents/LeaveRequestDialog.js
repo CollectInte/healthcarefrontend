@@ -38,32 +38,60 @@ const LEAVE_TYPES = [
   "Other",
 ];
 
-export default function LeaveRequestDialog({ open, onClose, initialData }) {
+export default function LeaveRequestDialog({
+  open,
+  onClose,
+  initialData,
+  onUpdate,
+}) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [formData, setFormData] = useState(initialState);
   const [loading, setLoading] = useState(false);
-  const [activeDateField, setActiveDateField] = useState("");
+  const [activeDateField, setActiveDateField] = useState("fromDate");
   const [snack, setSnack] = useState({
     open: false,
     message: "",
     severity: "success",
   });
 
-  // Populate form if editing
+  // ✅ Robust data mapping for ANY backend response shape
   useEffect(() => {
+    if (!open) return;
+
     if (initialData) {
+      const leaveType =
+        initialData.leave_type ||
+        initialData.leaveType ||
+        initialData.type ||
+        "";
+
+      const fromDateRaw =
+        initialData.start_date ||
+        initialData.fromDate ||
+        initialData.startDate ||
+        "";
+
+      const toDateRaw =
+        initialData.end_date ||
+        initialData.toDate ||
+        initialData.endDate ||
+        "";
+
       setFormData({
-        leaveType: initialData.leave_type || "",
-        fromDate: initialData.start_date || "",
-        toDate: initialData.end_date || "",
+        leaveType,
+        fromDate: fromDateRaw ? dayjs(fromDateRaw).format("YYYY-MM-DD") : "",
+        toDate: toDateRaw ? dayjs(toDateRaw).format("YYYY-MM-DD") : "",
         reason: initialData.reason || "",
       });
+
+      setActiveDateField("fromDate");
     } else {
       setFormData(initialState);
+      setActiveDateField("fromDate");
     }
-  }, [initialData, open]);
+  }, [open, initialData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -85,25 +113,28 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
       };
 
       if (initialData?.id) {
-        // Edit existing leave request
         await api.put(`/api/leave/update/${initialData.id}`, payload);
         setSnack({
           open: true,
           message: "Leave request updated successfully!",
           severity: "success",
         });
+
+        if (onUpdate) onUpdate();
+        onClose();
       } else {
-        // Create new leave request
         await api.post("/api/leave/create/", payload);
         setSnack({
           open: true,
           message: "Leave request submitted successfully!",
           severity: "success",
         });
-      }
 
-      setFormData(initialState);
-      setTimeout(onClose, 900);
+        setTimeout(() => {
+          setFormData(initialState);
+          onClose();
+        }, 1000);
+      }
     } catch (error) {
       setSnack({
         open: true,
@@ -180,18 +211,16 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DateCalendar
                     value={
-                      activeDateField === "fromDate"
-                        ? formData.fromDate
-                          ? dayjs(formData.fromDate)
-                          : null
-                        : activeDateField === "toDate"
+                      activeDateField === "toDate"
                         ? formData.toDate
                           ? dayjs(formData.toDate)
                           : null
+                        : formData.fromDate
+                        ? dayjs(formData.fromDate)
                         : null
                     }
                     onChange={(newValue) => {
-                      if (!newValue) return;
+                      if (!newValue || !activeDateField) return;
                       const formatted = newValue.format("YYYY-MM-DD");
                       setFormData((prev) => ({
                         ...prev,
@@ -222,18 +251,15 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
                 gap={2}
                 mb={2}
               >
-                {/* Start Date */}
                 <TextField
                   label="Start Date"
                   name="fromDate"
+                  type="date"
                   value={formData.fromDate}
                   onChange={handleChange}
                   onFocus={() => setActiveDateField("fromDate")}
-                  InputProps={{
-                    endAdornment: (
-                      <CalendarMonthIcon sx={{ color: "#01636B" }} />
-                    ),
-                  }}
+                  InputLabelProps={{ shrink: true }}
+                 
                   size="small"
                   fullWidth
                   sx={{
@@ -248,18 +274,15 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
                   }}
                 />
 
-                {/* End Date */}
                 <TextField
                   label="End Date"
                   name="toDate"
+                  type="date"
                   value={formData.toDate}
                   onChange={handleChange}
                   onFocus={() => setActiveDateField("toDate")}
-                  InputProps={{
-                    endAdornment: (
-                      <CalendarMonthIcon sx={{ color: "#01636B" }} />
-                    ),
-                  }}
+                  InputLabelProps={{ shrink: true }}
+                 
                   size="small"
                   fullWidth
                   sx={{
@@ -275,7 +298,6 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
                 />
               </Box>
 
-              {/* Leave Type Dropdown */}
               <TextField
                 label="Leave Type"
                 name="leaveType"
@@ -302,7 +324,6 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
                 ))}
               </TextField>
 
-              {/* Reason */}
               <TextField
                 label="Comment (Optional)"
                 name="reason"
@@ -334,6 +355,9 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
                     px: 4,
                     mt: 2,
                     textTransform: "none",
+                    "&:hover": {
+                      bgcolor: "#024e52",
+                    },
                   }}
                 >
                   {loading
@@ -350,7 +374,6 @@ export default function LeaveRequestDialog({ open, onClose, initialData }) {
         </DialogContent>
       </Dialog>
 
-      {/* Snackbar */}
       <Snackbar
         open={snack.open}
         autoHideDuration={3000}

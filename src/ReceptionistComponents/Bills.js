@@ -63,10 +63,10 @@ const Bills = () => {
       const list = Array.isArray(res.data)
         ? res.data
         : Array.isArray(res.data?.data)
-        ? res.data.data
-        : Array.isArray(res.data?.bills)
-        ? res.data.bills
-        : [];
+          ? res.data.data
+          : Array.isArray(res.data?.bills)
+            ? res.data.bills
+            : [];
 
       setBills(list);
     } catch (err) {
@@ -80,7 +80,7 @@ const Bills = () => {
 
   const paginatedBills = filteredBills.slice(
     (page - 1) * rowsPerPage,
-    page * rowsPerPage
+    page * rowsPerPage,
   );
 
   const handleDownload = async (id) => {
@@ -95,7 +95,7 @@ const Bills = () => {
         {
           withCredentials: true, // ✅ send auth cookie
           responseType: "blob", // ✅ receive PDF
-        }
+        },
       );
 
       // ✅ Create downloadable file
@@ -169,14 +169,14 @@ const Bills = () => {
           bill.bill_status,
         ]
           .filter(Boolean)
-          .some((value) => String(value).toLowerCase().includes(searchText))
+          .some((value) => String(value).toLowerCase().includes(searchText)),
       );
     }
 
     // 📅 Date filter
     if (filters.date) {
       data = data.filter(
-        (bill) => dayjs(bill.created_at).format("YYYY-MM-DD") === filters.date
+        (bill) => dayjs(bill.created_at).format("YYYY-MM-DD") === filters.date,
       );
     }
 
@@ -233,6 +233,20 @@ const Bills = () => {
         >
           Add Bill
         </Button>
+      </Box>
+      {/* ================= HEADING ================= */}
+      <Box
+        sx={{
+          bgcolor: COLORS.primary,
+          color: "#fff",
+          fontSize: { xs: "14px", md: "18px" },
+          px: 1,
+          py: 1,
+          width: { xs: "70%", md: "20%" },
+          borderTopRightRadius: 60,
+        }}
+      >
+        View All Bills
       </Box>
 
       {/* ================= FILTER BAR (UNCHANGED) ================= */}
@@ -419,16 +433,6 @@ const Bills = () => {
                 >
                   Patient ID
                 </TableCell>
-                <TableCell
-                  align="center"
-                  sx={{
-                    color: COLORS.texWhite,
-                    bgcolor: COLORS.primary,
-                    fontWeight: 600,
-                  }}
-                >
-                  Doctor Name
-                </TableCell>
 
                 <TableCell
                   align="center"
@@ -505,10 +509,8 @@ const Bills = () => {
                     },
                   }}
                 >
+                  <TableCell align="center">ID {b.bill_id}</TableCell>
                   <TableCell align="center" sx={colBg(0)}>
-                    ID {b.bill_id}
-                  </TableCell>
-                  <TableCell align="center">
                     <Stack
                       direction="row"
                       spacing={0.5}
@@ -518,7 +520,7 @@ const Bills = () => {
                     >
                       <Typography
                         sx={{
-                          color: "#0F7C7C",
+                          color: COLORS.primary,
                           fontWeight: 500,
                           fontSize: { xs: 10, md: 12 },
                         }}
@@ -537,14 +539,14 @@ const Bills = () => {
 
                   <TableCell
                     align="center"
-                    sx={{
-                      bgcolor: colBg(2),
-                    }}
+                    sx={
+                      {
+                        // bgcolor: colBg(2),
+                      }
+                    }
                   >
                     {b.client_id}
                   </TableCell>
-
-                  <TableCell align="center">{b.doctor_name}</TableCell>
 
                   <TableCell align="center" sx={colBg(2)}>
                     {b.subtotal}
@@ -709,7 +711,6 @@ const Bills = () => {
                     />
                   </Box>
 
-                  <Typography>Doctor Name : {b.doctor_name}</Typography>
                   <Typography>Client : {b.client_id}</Typography>
                   <Box
                     sx={{

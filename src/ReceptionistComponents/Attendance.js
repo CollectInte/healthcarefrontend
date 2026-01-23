@@ -46,6 +46,9 @@ import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import TimeToLeaveIcon from "@mui/icons-material/TimeToLeave";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import DoctorAttendanceDialog from "./DoctorsAttendanceDialog";
+import FactCheckIcon from "@mui/icons-material/FactCheck"; // attendance list / approval
+import FreeCancellationIcon from "@mui/icons-material/FreeCancellation"; // cancel / leave
+
 const now = new Date();
 
 export default function Attendance() {
@@ -257,7 +260,9 @@ const handleLeaveStatusClose = () => setLeaveStatusOpen(false);
             >
               <DoctorProfile width={20} height={20} />
             </IconButton>
-            <Typography fontSize={18} fontWeight={500}>{self.name}</Typography>
+                
+            
+            <Typography fontSize={{ xs: 14, md: 15, lg: 15}} fontWeight={700}>{self.name}</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} md={3} sx={{ display: { xs: "none", md: "block", sm: "block" } }}>
@@ -278,8 +283,8 @@ const handleLeaveStatusClose = () => setLeaveStatusOpen(false);
               <EmployeeId width={30} height={30} />
             </IconButton>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <Typography fontSize={18} fontWeight={500}>EmployeeId</Typography>
-              <Typography fontSize={18} fontWeight={500}>{self.id}</Typography>
+             <Typography fontSize={{ xs: 14, md: 15, lg: 15}} fontWeight={700}>EmployeeId</Typography>
+             <Typography fontSize={{ xs: 14, md: 15, lg: 15}} fontWeight={700}>{self.id}</Typography>
             </Box>
 
           </Paper>
@@ -302,8 +307,8 @@ const handleLeaveStatusClose = () => setLeaveStatusOpen(false);
               <EmployeeDate width={30} height={30} />
             </IconButton>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <Typography fontSize={18} fontWeight={500}>DOJ</Typography>
-              <Typography fontSize={18} fontWeight={500}>{new Date(self.date_of_joining).toLocaleDateString("en-GB")}</Typography>
+             <Typography fontSize={{ xs: 14, md: 15, lg: 15}} fontWeight={700}>DOJ</Typography>
+             <Typography fontSize={{ xs: 14, md: 15, lg: 15}} fontWeight={700}>{new Date(self.date_of_joining).toLocaleDateString("en-GB")}</Typography>
 
             </Box>
           </Paper>
@@ -477,7 +482,7 @@ const handleLeaveStatusClose = () => setLeaveStatusOpen(false);
 >
   <Button
     variant="contained"
-    startIcon={<TimeToLeaveIcon />}
+    startIcon={<FreeCancellationIcon />}
     sx={{
       height: 45,
       width: { md: 220, xs: 200 },
@@ -498,7 +503,7 @@ const handleLeaveStatusClose = () => setLeaveStatusOpen(false);
 
  <Button
   variant="contained"
-  startIcon={<TimeToLeaveIcon />}
+  startIcon={<FactCheckIcon />}
   sx={{
     height: 45,
     width: { md: 220, xs: 200 },
