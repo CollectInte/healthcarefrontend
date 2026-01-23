@@ -174,13 +174,13 @@ function ClientDocuments({ client, onBack }) {
                                 </CardContent>
 
                                 <CardActions sx={{ justifyContent: "flex-end" }}>
-                                    <IconButton onClick={() => setPreviewFile(doc.file_url)}>
+                                    <IconButton onClick={() => setPreviewFile(doc.file)}>
                                         <VisibilityIcon />
                                     </IconButton>
 
                                     <IconButton
                                         component="a"
-                                        href={doc.file_url}
+                                        href={doc.file}
                                         download
                                         target="_blank"
                                         rel="noopener noreferrer"
