@@ -34,6 +34,24 @@ function ClientDocuments({ client, onBack }) {
     const filteredDocs = client.documents.filter(
         (doc) => doc.uploaded_by === activeType
     );
+    console.log("Client Documents:", filteredDocs);
+
+    const getPreviewSrc = (url) => {
+        if (!url) return null;
+
+        const lower = url.toLowerCase();
+
+        // DOCX → Google Docs Viewer
+        if (lower.endsWith(".docx")) {
+            return `https://docs.google.com/gview?url=${encodeURIComponent(
+                url
+            )}&embedded=true`;
+        }
+
+        // PDF / images → direct preview
+        return url;
+    };
+
 
 
 
@@ -75,7 +93,7 @@ function ClientDocuments({ client, onBack }) {
                                             borderColor: "#355f69",
                                             backgroundColor: "rgba(63, 111, 122, 0.08)",
                                         },
-                                         textTransform: "none",
+                                        textTransform: "none",
                                     }),
                             }}
                         >
@@ -90,13 +108,13 @@ function ClientDocuments({ client, onBack }) {
                         variant="contained"
                         component="label"
                         startIcon={<UploadFileIcon />}
-                        sx={{backgroundColor:"#3f6f7a",textTransform:"none"}}
+                        sx={{ backgroundColor: "#3f6f7a", textTransform: "none" }}
                     >
                         Upload Document
                         <input
                             type="file"
                             hidden
-                            accept="application/pdf,image/*"
+                            accept="application/pdf,image/*,.docx,.doc"
                             onChange={async (e) => {
                                 const file = e.target.files[0];
                                 if (!file) return;
@@ -149,7 +167,7 @@ function ClientDocuments({ client, onBack }) {
                                         }}
                                     >
                                         <FolderIcon
-                                            sx={{ mr: 1 ,color:"#3f6f7a"}}
+                                            sx={{ mr: 1, color: "#3f6f7a" }}
                                         />
 
                                         <Typography variant="subtitle1" noWrap>
@@ -174,19 +192,18 @@ function ClientDocuments({ client, onBack }) {
                                 </CardContent>
 
                                 <CardActions sx={{ justifyContent: "flex-end" }}>
-                                    <IconButton onClick={() => setPreviewFile(doc.file)}>
+                                    <IconButton onClick={() => setPreviewFile(doc.file_url)}>
                                         <VisibilityIcon />
                                     </IconButton>
 
                                     <IconButton
                                         component="a"
-                                        href={doc.file}
-                                        download
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                                        href={`${process.env.REACT_APP_URL}/api/documents/${doc.id}`}
+                                        target="_self"
                                     >
                                         <DownloadIcon />
                                     </IconButton>
+
 
                                     {(doc.uploaded_by === "admin" ||
                                         doc.uploaded_by === "staff") && (
@@ -229,8 +246,8 @@ function ClientDocuments({ client, onBack }) {
                 <DialogContent sx={{ height: "80vh", p: 0 }}>
                     {previewFile && (
                         <iframe
-                            src={previewFile}
-                            title="PDF Preview"
+                            src={getPreviewSrc(previewFile)}
+                            title="Document Preview"
                             width="100%"
                             height="100%"
                             style={{ border: "none" }}
@@ -238,6 +255,7 @@ function ClientDocuments({ client, onBack }) {
                     )}
                 </DialogContent>
             </Dialog>
+
         </>
     );
 }
