@@ -155,7 +155,7 @@ export default function Dashboard() {
             setClients(clientData.data || []);
             // setBills(billsData || []);
             setAttendance(attendanceData.data || []);
-            setAppointmentsdata(appointmentData.data || []);
+            setAppointmentsdata(appointmentData.appointments || []);
             setDoctorpresentcount(doctorAttendanceData.presentCount || 0);
             setDoctorabsentcount(doctorAttendanceData.leaveCount || 0);
         } catch (error) {
