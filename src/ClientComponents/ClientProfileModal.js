@@ -34,17 +34,23 @@ const ClientProfileModal = ({ open, onClose }) => {
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openReset, setOpenReset] = useState(false);
-
+  
   useEffect(() => {
-    if (open) fetchProfile();
+    if (!open) {
+      setEdit(false);
+      return;
+    }
+    fetchProfile();
   }, [open]);
+
+  useEffect(() => {}, [open]);
 
   const fetchProfile = async () => {
     try {
       setLoading(true);
       const res = await axios.get(
         `${process.env.REACT_APP_URL}/api/client/self`,
-        { withCredentials: true }
+        { withCredentials: true },
       );
       setProfile(res.data.data ?? res.data);
     } catch (err) {
@@ -64,7 +70,7 @@ const ClientProfileModal = ({ open, onClose }) => {
       await axios.put(
         `${process.env.REACT_APP_URL}/api/client/update/${clientId}`,
         profile,
-        { withCredentials: true }
+        { withCredentials: true },
       );
       setEdit(false);
       fetchProfile();
@@ -219,7 +225,9 @@ const ClientProfileModal = ({ open, onClose }) => {
                       fullWidth
                     />
                     <TextField
+                      onChange={handleChange}
                       label="Email"
+                      name="email"
                       value={profile.email}
                       disabled={!edit}
                       fullWidth

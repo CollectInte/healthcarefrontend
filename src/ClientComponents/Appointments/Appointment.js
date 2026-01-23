@@ -313,7 +313,7 @@ const AppointmentsPage = () => {
             width: "100%",
             display: "flex",
             gap: 2,
-            my: 2,
+            my: 1,
             alignItems: "center",
           }}
         >
@@ -470,6 +470,7 @@ const AppointmentsPage = () => {
                       "& td": {
                         borderBottom: "1px dotted #9ECACA",
                         fontSize: 13,
+                        py: 1,
                         backgroundColor:
                           index % 2 === 0 ? ROW_COLORS.odd : ROW_COLORS.even,
                       },

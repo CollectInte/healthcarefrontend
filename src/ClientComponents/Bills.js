@@ -541,6 +541,7 @@ const Bills = () => {
                     "& td": {
                       borderBottom: "1px dotted #9ECACA",
                       fontSize: 13,
+                      py: 1,
                     },
                   }}
                 >

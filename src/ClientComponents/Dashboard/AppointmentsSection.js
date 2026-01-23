@@ -23,7 +23,7 @@ const AppointmentsSection = () => {
     const fetchAppointments = async () => {
       const res = await axios.get(
         `${process.env.REACT_APP_URL}/appointment/appointments`,
-        { withCredentials: true }
+        { withCredentials: true },
       );
       setAppointments(res.data.appointments);
     };
@@ -43,10 +43,10 @@ const AppointmentsSection = () => {
 
     return {
       upcoming: upcoming.sort(
-        (a, b) => dayjs(a.appointment_date) - dayjs(b.appointment_date)
+        (a, b) => dayjs(a.appointment_date) - dayjs(b.appointment_date),
       ),
       past: past.sort(
-        (a, b) => dayjs(b.appointment_date) - dayjs(a.appointment_date)
+        (a, b) => dayjs(b.appointment_date) - dayjs(a.appointment_date),
       ),
     };
   }, [appointments]);
@@ -94,8 +94,8 @@ const AppointmentsSection = () => {
             color: COLORS.primary,
           },
 
-          "& .Mui-selected": {
-            color: COLORS.primary,
+          "& .MuiTab-root.Mui-selected": {
+            color: COLORS.primary, // ✅ selected tab color
           },
         }}
       >
@@ -121,14 +121,13 @@ const AppointmentsSection = () => {
               <Box
                 sx={{
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  flexWrap: "wrap",
-                  gap: 1.5,
+                  flexDirection: { xs: "column", md: "row" },
+                  gap: { xs: 1.5, md: 3 },
+                  alignItems: { xs: "flex-start", md: "center" },
                 }}
               >
                 {/* Date & Time */}
-                <Box>
+                <Box sx={{ minWidth: { md: 140 } }}>
                   <Typography fontWeight={600} fontSize={13}>
                     {dayjs(a.appointment_date).format("DD MMM YYYY")}
                   </Typography>
@@ -137,18 +136,32 @@ const AppointmentsSection = () => {
                   </Typography>
                 </Box>
 
-                {/* Service */}
-                <Box>
+                {/* Purpose */}
+                <Box
+                  sx={{
+                    flex: 1,
+                    minWidth: 0, // 🔑 allows wrapping
+                    maxWidth: { md: "40%" },
+                  }}
+                >
                   <Typography fontSize={11} color="text.secondary">
                     Purpose
                   </Typography>
-                  <Typography fontWeight={600} fontSize={13}>
+                  <Typography
+                    fontWeight={600}
+                    fontSize={13}
+                    sx={{
+                      whiteSpace: "normal",
+                      wordBreak: "break-word",
+                      overflowWrap: "anywhere",
+                    }}
+                  >
                     {a.purpose}
                   </Typography>
                 </Box>
 
                 {/* Doctor */}
-                <Box>
+                <Box sx={{ minWidth: { md: 140 } }}>
                   <Typography fontSize={11} color="text.secondary">
                     Doctor
                   </Typography>
@@ -157,14 +170,10 @@ const AppointmentsSection = () => {
                   </Typography>
                 </Box>
 
-                {/* Status Pill */}
+                {/* Status */}
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: { xs: "center", md: "start" },
-                    alignItems: { xs: "center", md: "start" },
-                    flexDirection: { xs: "row", md: "column" },
-                    gap: 1,
+                    minWidth: { md: 120 },
                   }}
                 >
                   <Typography fontSize={11} color="text.secondary">
@@ -176,11 +185,10 @@ const AppointmentsSection = () => {
                       py: 0.4,
                       fontSize: 11,
                       fontWeight: 600,
-                      borderTopRightRadius: 10,
-                      borderBottomRightRadius: 10,
+                      borderRadius: 10,
                       color: "#fff",
-                      textAlign: "center",
                       bgcolor: statusColors[a.status] || "#9e9e9e",
+                      display: "inline-block",
                     }}
                   >
                     {a.status}
@@ -200,6 +208,7 @@ const AppointmentsSection = () => {
           sx={{
             fontSize: { xs: 11, md: 13 },
             textTransform: "capitalize",
+            color: COLORS.primary,
           }}
         >
           See All

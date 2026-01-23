@@ -157,7 +157,42 @@ const Documents = () => {
       fetchDocuments();
       showAlert("File uploaded successfully", "success");
     } catch (err) {
-      showAlert("Upload failed. Please try again.", "error");
+      console.error(err);
+
+      const status = err.response?.status;
+
+      if (status === 413) {
+        showAlert("File too large. Maximum allowed size is 20 MB.", "error");
+        return;
+      }
+
+      if (status === 400) {
+        showAlert(
+          err.response?.data?.message ||
+            "Invalid request. Please check your input.",
+          "warning",
+        );
+        return;
+      }
+
+      if (status === 401 || status === 403) {
+        showAlert("Session expired. Please login again.", "error");
+        // navigate("/login");
+        return;
+      }
+
+      if (status === 404) {
+        showAlert("Requested resource not found.", "info");
+        return;
+      }
+
+      if (status === 500) {
+        showAlert("Server error. Please try again later.", "error");
+        return;
+      }
+
+      // Network / unknown error
+      showAlert("Network error. Please check your connection.", "error");
     }
   };
 

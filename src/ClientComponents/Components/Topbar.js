@@ -40,7 +40,7 @@ export default function Topbar() {
       elevation={0}
       sx={{
         backgroundColor: COLORS.primary,
-        width: { xs: "100%", md: "92%" },
+        width: { xs: "100%", md: "94%" },
         borderRadius: { xs: 0, md: 2 },
         mt: { xs: 0, md: 3 },
         ml: { xs: 0, md: 6 },

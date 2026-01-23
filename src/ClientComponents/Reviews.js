@@ -265,7 +265,7 @@ const Reviews = () => {
           <Box
             sx={{
               pr: 3,
-              py: 2,
+              py: 1.2,
             }}
           >
             <Typography fontSize={20} mb={2}>

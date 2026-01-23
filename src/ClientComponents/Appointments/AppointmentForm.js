@@ -59,7 +59,7 @@ const AppointmentForm = ({ open, onClose, onSuccess }) => {
       try {
         const res = await axios.get(
           `${process.env.REACT_APP_URL}/api/staff/doctors/client`,
-          { withCredentials: true }
+          { withCredentials: true },
         );
         console.log();
 
@@ -68,7 +68,7 @@ const AppointmentForm = ({ open, onClose, onSuccess }) => {
 
         const uniqueBranches = [
           ...new Set(
-            staffData.filter((s) => s.branch).map((s) => s.branch.trim())
+            staffData.filter((s) => s.branch).map((s) => s.branch.trim()),
           ),
         ];
         setBranches(uniqueBranches);
@@ -93,7 +93,7 @@ const AppointmentForm = ({ open, onClose, onSuccess }) => {
       (s) =>
         s.role === "doctor" &&
         s.status === 1 &&
-        s.branch?.toLowerCase() === selectedBranch.toLowerCase()
+        s.branch?.toLowerCase() === selectedBranch.toLowerCase(),
     );
 
     setDoctorsByBranch(doctors);
@@ -123,7 +123,7 @@ const AppointmentForm = ({ open, onClose, onSuccess }) => {
             doctorId,
           },
           withCredentials: true,
-        }
+        },
       );
 
       const slotList = Array.isArray(res?.data?.slots) ? res.data.slots : [];
@@ -155,7 +155,7 @@ const AppointmentForm = ({ open, onClose, onSuccess }) => {
 
     if (selectedDate.isSame(dayjs(), "day")) {
       return dayjs(
-        `${selectedDate.format("YYYY-MM-DD")} ${slot.slot_time_from}`
+        `${selectedDate.format("YYYY-MM-DD")} ${slot.slot_time_from}`,
       ).isBefore(dayjs());
     }
     return false;
@@ -164,8 +164,8 @@ const AppointmentForm = ({ open, onClose, onSuccess }) => {
   const slotInstructionText = !selectedBranch
     ? "Please select a branch to continue"
     : !doctorId
-    ? "Please select a doctor to view available slots"
-    : "";
+      ? "Please select a doctor to view available slots"
+      : "";
 
   /* ---------------- VALIDATION ---------------- */
   const validateForm = () => {
@@ -197,7 +197,7 @@ const AppointmentForm = ({ open, onClose, onSuccess }) => {
           purpose: purpose.trim(),
           selected_branch: selectedBranch.trim(),
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       // CLOSE MODAL FIRST
@@ -250,27 +250,27 @@ const AppointmentForm = ({ open, onClose, onSuccess }) => {
               color: COLORS.danger,
               position: "absolute",
               right: 12,
-              bgcolor: COLORS.activeBg,
               top: { xs: 0, md: 12 },
             }}
           >
             <CloseIcon />
           </IconButton>
 
-          <Box p={isMobile ? 1 : 4}>
+          <Box p={isMobile ? 1 : 1}>
             <Box
               display="flex"
+              my={2}
               flexDirection={isMobile ? "column" : "row"}
               gap={3}
+              justifyContent={"center"}
             >
               {/* LEFT */}
               <Box
-                flex={1}
                 sx={{
-                  width: "100%",
+                  flex: 0.4,
                 }}
               >
-                <Typography fontWeight={600} mb={1}>
+                <Typography fontWeight={600} mb={1} textAlign={"center"}>
                   Select Date
                 </Typography>
 
@@ -278,7 +278,7 @@ const AppointmentForm = ({ open, onClose, onSuccess }) => {
                   value={selectedDate}
                   onChange={setSelectedDate}
                   sx={{
-                    width: "100%", // ✅ IMPORTANT
+                    width: "100%",
                   }}
                 />
                 <Typography variant="body2" color={COLORS.danger} mt={2}>
@@ -347,14 +347,13 @@ const AppointmentForm = ({ open, onClose, onSuccess }) => {
               <Box
                 p={isMobile ? 2 : 0}
                 sx={{
-                  flex: 0.5,
+                  flex: 0.4,
                   backgroundColor: "#c7ded8",
                   borderRadius: 4,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   width: { xs: "100%", md: "100px" },
-                  px: 2,
                 }}
               >
                 <Stack spacing={2}>

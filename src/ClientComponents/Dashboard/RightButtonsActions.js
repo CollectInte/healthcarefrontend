@@ -36,8 +36,8 @@ const RightButtonsActions = () => {
       >
         <Box
           sx={{
-            width: { xs: 40, md: 75 },
-            height: { xs: 40, md: 90 },
+            width: { xs: 40, md: 70 },
+            height: { xs: 40, md: 70 },
             bgcolor: COLORS.primary,
             borderRadius: 100,
             mx: "auto",
@@ -48,7 +48,7 @@ const RightButtonsActions = () => {
             color: "#fff",
           }}
         >
-          <EventIcon sx={{ fontSize: { xs: 18, md: 45 } }} />
+          <EventIcon sx={{ fontSize: { xs: 18, md: 40 } }} />
         </Box>
 
         <Typography fontWeight={450} fontSize={{ xs: 8, md: 18 }}>
@@ -76,8 +76,8 @@ const RightButtonsActions = () => {
       >
         <Box
           sx={{
-            width: { xs: 40, md: 75 },
-            height: { xs: 40, md: 90 },
+            width: { xs: 40, md: 70 },
+            height: { xs: 40, md: 70 },
             bgcolor: COLORS.primary,
             borderRadius: 100,
             mx: "auto",
@@ -88,7 +88,7 @@ const RightButtonsActions = () => {
             color: "#fff",
           }}
         >
-          <UploadFileIcon sx={{ fontSize: { xs: 18, md: 45 } }} />
+          <UploadFileIcon sx={{ fontSize: { xs: 18, md: 40 } }} />
         </Box>
 
         <Typography fontWeight={450} fontSize={{ xs: 8, md: 18 }}>
