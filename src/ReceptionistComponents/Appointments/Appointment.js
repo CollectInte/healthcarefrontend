@@ -266,7 +266,7 @@ const AppointmentsPage = () => {
           borderTopRightRadius: 60,
         }}
       >
-        AllAppointment
+        All Appointments
       </Box>
 
       {/* ================= FILTERS (UNCHANGED) ================= */}

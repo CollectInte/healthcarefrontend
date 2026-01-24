@@ -190,15 +190,26 @@ export default function Sidebar({ isOpen, onToggle }) {
       >
         {companyLogo ? (
           <Box
-            component="img"
-            src={`${process.env.REACT_APP_URL}/Images/${companyLogo}`}
-            alt="Company Logo"
             sx={{
-              width: isOpen ? 80 : 40,
-              height: "auto",
-              transition: "0.3s",
+              width: "100%",
+              height: "80px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "start",
             }}
-          />
+          >
+            <Box
+              component="img"
+              src={`${process.env.REACT_APP_URL}/Images/${companyLogo}`}
+              alt="Logo"
+              sx={{
+                width: 200,
+                height: 100,
+                objectFit: "contain",
+                borderRadius: 4,
+              }}
+            />
+          </Box>
         ) : (
           <Typography
             sx={{

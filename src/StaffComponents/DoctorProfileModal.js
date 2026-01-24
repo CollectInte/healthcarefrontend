@@ -34,32 +34,32 @@ const DoctorProfileModal = ({ open, onClose }) => {
 
   // 🔹 fetch logged-in user's profile (works for admin/staff)
 
-const fetchProfile = async () => {
-  try {
-    setLoading(true);
+  const fetchProfile = async () => {
+    try {
+      setLoading(true);
 
-    const res = await api.get("/api/staff/self");
-    const data = res.data.data ?? res.data;
+      const res = await api.get("/api/staff/self");
+      const data = res.data.data ?? res.data;
 
-    setProfile(data);
+      setProfile(data);
 
-    if (data.profile_photo) {
-      // Get the base URL from your api instance
-      const baseURL =process.env.REACT_APP_SITE_URL;
-      const fullUrl = `${baseURL}/Images/${data.profile_photo}`;
-      
-      console.log("Final URL:", fullUrl); // Debug
-      setPreviewUrl(fullUrl);
-    } else {
-      setPreviewUrl(null);
+      if (data.profile_photo) {
+        // Get the base URL from your api instance
+        const baseURL = process.env.REACT_APP_SITE_URL;
+        const fullUrl = `${baseURL}/Images/${data.profile_photo}`;
+
+        console.log("Final URL:", fullUrl); // Debug
+        setPreviewUrl(fullUrl);
+      } else {
+        setPreviewUrl(null);
+      }
+
+    } catch (err) {
+      console.error("Profile fetch error:", err);
+    } finally {
+      setLoading(false);
     }
-
-  } catch (err) {
-    console.error("Profile fetch error:", err);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
 
   const handleChange = (e) => {
@@ -83,6 +83,7 @@ const fetchProfile = async () => {
       const fd = new FormData();
 
       fd.append("name", profile.name || "");
+      fd.append("email", profile.email || "");   // ✅ ADD THIS
       fd.append("mobile", profile.mobile || "");
       fd.append("address", profile.address || "");
       fd.append("branch", profile.branch || "");
@@ -92,19 +93,20 @@ const fetchProfile = async () => {
         fd.append("profile_photo", photoFile);
       }
 
-      // ⚠️ DO NOT SET CONTENT-TYPE (axios does it)
       await api.put("/api/staff/self/edit", fd);
 
       setEdit(false);
       setPhotoFile(null);
-
       await fetchProfile();
+      onClose();
+
     } catch (err) {
       console.error("Update error:", err);
     } finally {
       setLoading(false);
     }
   };
+
 
   const getAvatarLetters = (name = "") => {
     if (!name) return "?";
@@ -178,7 +180,8 @@ const fetchProfile = async () => {
                   disabled={!edit}
                 />
 
-                <TextField label="Email" value={profile.email || ""} disabled />
+                <TextField label="Email" name="email" value={profile.email || ""} onChange={handleChange}
+                  disabled={!edit} />
 
                 <TextField
                   label="Mobile"

@@ -40,13 +40,31 @@
 .doctor-card {
   display: flex;
   gap: 12px;
-  padding: 12px; /* reduced padding */
+  padding: 12px;
   margin-bottom: 12px;
-  background: rgb(127, 138, 133);
+  background-color: #e9f1f1;
   border: 2px solid #01636B;
   border-radius: 12px;
+  color: #ffffff !important;
+
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+/* FORCE TEXT COLOR */
+.doctor-card,
+.doctor-card * {
+  color: #437986 !important;
+}
+
+.doctor-card.selected {
+  background-color: #01636B;
+}
+
+/* force white text when selected */
+.doctor-card.selected,
+.doctor-card.selected * {
+  color: #ffffff !important;
 }
 
 .doctor-card:hover {
@@ -54,9 +72,21 @@
   transform: translateX(4px);
 }
 
+/* FORCE WHITE TEXT ON HOVER */
+.doctor-card:hover,
+.doctor-card:hover * {
+  color: #ffffff !important;
+}
+
+/* FORCE ICON COLOR */
+.doctor-card:hover svg {
+  color: #ffffff !important;
+}
+
+
 .doctor-card.selected {
   background: #01636B;
-  color:white !important
+  color: white !important
 }
 
 .doctor-avatar {
@@ -101,7 +131,7 @@
 .doctor-specialization {
   margin: 0 0 8px 0;
   font-size: 13px;
-   color: white;
+  color: white;
 }
 
 .availability-indicator {
@@ -145,7 +175,7 @@
   padding: 20px;
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
-  flex-wrap: wrap;  
+  flex-wrap: wrap;
 }
 
 .filter-group {
@@ -162,7 +192,8 @@
 }
 
 .filter-group select {
-  padding: 6px 10px; /* reduced padding */
+  padding: 6px 10px;
+  /* reduced padding */
   border: 1px solid #d1d5db;
   border-radius: 8px;
   font-size: 14px;
@@ -181,7 +212,8 @@
 /* Schedule Table */
 .schedule-table-wrapper {
   flex: 1;
-  overflow: auto; /* scroll both x and y */
+  overflow: auto;
+  /* scroll both x and y */
   padding: 12px;
   max-width: 100vw;
   max-height: 70vh;
@@ -190,7 +222,8 @@
 
 .schedule-table {
   width: 100%;
-  min-width: 600px; /* ensure table doesn't shrink too much */
+  min-width: 600px;
+  /* ensure table doesn't shrink too much */
   border-collapse: collapse;
   background: white;
   border-radius: 12px;
@@ -199,14 +232,15 @@
 }
 
 .schedule-table thead {
-  color:white;
+  color: white;
   position: sticky;
   top: 0;
   z-index: 5;
 }
 
 .schedule-table th {
-  padding: 8px 6px; /* reduced padding */
+  padding: 8px 6px;
+  /* reduced padding */
   text-align: center;
   font-size: 13px;
   font-weight: 600;
@@ -235,7 +269,8 @@
 }
 
 .schedule-table td {
-  padding: 6px 4px; /* reduced padding */
+  padding: 6px 4px;
+  /* reduced padding */
   border-bottom: 1px solid #f3f4f6;
 }
 
@@ -256,7 +291,8 @@
 
 /* Slot Cards */
 .slot-card {
-  padding: 8px; /* reduced padding */
+  padding: 8px;
+  /* reduced padding */
   border-radius: 6px;
   font-size: 12px;
   min-height: 60px;
@@ -298,7 +334,8 @@
 .slot-client-name {
   font-weight: 600;
   color: #1f2937;
-  margin-bottom: 4px; /* reduced margin */
+  margin-bottom: 4px;
+  /* reduced margin */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -306,14 +343,17 @@
 
 .slot-time,
 .slot-action {
-  font-size: 11px; /* smaller font */
+  font-size: 11px;
+  /* smaller font */
   color: #6b7280;
-  margin-bottom: 4px; /* reduced margin */
+  margin-bottom: 4px;
+  /* reduced margin */
 }
 
 .slot-status {
   display: inline-block;
-  padding: 3px 6px; /* reduced padding */
+  padding: 3px 6px;
+  /* reduced padding */
   border-radius: 4px;
   font-size: 10px;
   font-weight: 600;
@@ -321,12 +361,35 @@
 }
 
 /* Status colors remain the same */
-.status-pending { background: #fef3c7; color: #92400e; }
-.status-assigned { background: #dbeafe; color: #1e40af; }
-.status-approved { background: #d1fae5; color: #065f46; }
-.status-completed { background: #e0e7ff; color: #3730a3; }
-.status-cancelled { background: #fee2e2; color: #991b1b; }
-.status-delayed { background: #fde68a; color: #78350f; }
+.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-assigned {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-approved {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-completed {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.status-cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.status-delayed {
+  background: #fde68a;
+  color: #78350f;
+}
 
 /* Loading & No Data */
 .loading,
@@ -340,21 +403,30 @@
 }
 
 /* Mobile Popup remains same */
-.mobile-popup-overlay { display: none; }
-.mobile-popup { max-height: 80vh; overflow-y: auto; }
+.mobile-popup-overlay {
+  display: none;
+}
+
+.mobile-popup {
+  max-height: 80vh;
+  overflow-y: auto;
+}
 
 /* Scrollbar Styling */
 .schedule-table-wrapper::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
+
 .schedule-table-wrapper::-webkit-scrollbar-track {
   background: #f3f4f6;
 }
+
 .schedule-table-wrapper::-webkit-scrollbar-thumb {
   background: #d1d5db;
   border-radius: 4px;
 }
+
 .schedule-table-wrapper::-webkit-scrollbar-thumb:hover {
   background: #9ca3af;
 }

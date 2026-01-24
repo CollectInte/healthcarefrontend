@@ -41,7 +41,8 @@ import { ReactComponent as WorkingTime } from "./doctorimages/working-time.svg";
 import { ReactComponent as ClockIn } from "./doctorimages/clock-6.svg";
 import { ReactComponent as ClockOut } from "./doctorimages/clock-9.svg";
 import { ReactComponent as Leave } from "./doctorimages/leave.svg";
-import LeaveStatusPopup from "./LeaveStatus";
+// import LeaveStatusPopup from "./LeaveStatus";
+import LeaveRequestStatusDialog from "./LeaveRequestStatusDialog";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import TimeToLeaveIcon from "@mui/icons-material/TimeToLeave";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
@@ -547,21 +548,21 @@ if (loading) {
     {/* Leave Status Button */}
     <Box flexShrink={0}>
       <Button
-  variant="contained"
-  startIcon={<AssignmentTurnedInIcon />}
-  sx={{
-    height: 45,
-    textTransform: "none",
-    borderTopLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    backgroundColor: "#437986",
-    width: isMobile ? "100%" : "auto",
-    mb: isMobile ? 1 : 0,
-  }}
-  onClick={handleLeaveStatusOpen}
->
-  Leave Status
-</Button>
+      variant="contained"
+      startIcon={<AssignmentTurnedInIcon />}
+      sx={{
+        height: 45,
+        textTransform: "none",
+        borderTopLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        backgroundColor: "#437986",
+        width: isMobile ? "100%" : "auto",
+        mb: isMobile ? 1 : 0,
+      }}
+      onClick={handleLeaveStatusOpen}
+    >
+      Leave Status
+    </Button>
     </Box>
 
     {/* Filters */}
@@ -633,7 +634,7 @@ if (loading) {
   </Box>
 
   {/* Leave Status Popup */}
-  <LeaveStatusPopup open={leaveStatusOpen} onClose={handleLeaveStatusClose} />
+  <LeaveRequestStatusDialog open={leaveStatusOpen} onClose={handleLeaveStatusClose} />
 </Box>
 
 
@@ -651,64 +652,75 @@ if (loading) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {paginatedData.map((row) => (
-                <TableRow key={row.id} >
-                  <TableCell sx={{ textAlign: "center" }}>{new Date(row.date).toLocaleDateString("en-IN")}</TableCell>
-                  <TableCell sx={{ textAlign: "center", backgroundColor: '#CCE0E1' }}>{row.clock_in || "—"}</TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>{row.clock_out || "—"}</TableCell>
-                  <TableCell sx={{ textAlign: "center", backgroundColor: '#CCE0E1' }}>
-                    {row.total_hours || "—"}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    <Chip
-                      size="small"
-                      label={row.status}
-                      sx={{
-                        px: 1,
-                        fontWeight: 600,
-                        textTransform: "capitalize",
+             {paginatedData.length === 0 ? (
+  <TableRow>
+    <TableCell
+      colSpan={5}   // 👈 number of columns in your table
+      align="center"
+      sx={{
+        py: 4,
+        color: "text.secondary",
+        fontWeight: 500,
+      }}
+    >
+      No attendance records found
+    </TableCell>
+  </TableRow>
+) : (
+  paginatedData.map((row) => (
+    <TableRow key={row.id}>
+      <TableCell sx={{ textAlign: "center" }}>
+        {new Date(row.date).toLocaleDateString("en-IN")}
+      </TableCell>
 
-                        // dynamic colors
-                        backgroundColor:
-                          row.status === "present"
-                            ? "#80BECD"      // bg blue
-                            : row.status === "absent"
-                              ? "#FDE0DF"      // bg light red
-                              : "#FFE8CC",     // bg light orange
+      <TableCell sx={{ textAlign: "center", backgroundColor: "#CCE0E1" }}>
+        {row.clock_in || "—"}
+      </TableCell>
 
-                        color:
-                          row.status === "present"
-                            ? "#0F3B3C"      // text dark teal/blue
-                            : row.status === "absent"
-                              ? "#B71C1C"      // text dark red
-                              : "#E65100",     // text dark orange
+      <TableCell sx={{ textAlign: "center" }}>
+        {row.clock_out || "—"}
+      </TableCell>
 
-                        border: "1px solid",
-                        borderColor:
-                          row.status === "present"
-                            ? "#0F3B3C"      // border blue
-                            : row.status === "absent"
-                              ? "#F44336"      // border red
-                              : "#FF9800",     // border orange
+      <TableCell sx={{ textAlign: "center", backgroundColor: "#CCE0E1" }}>
+        {row.total_hours || "—"}
+      </TableCell>
 
-                        borderRadius: 10,
-                        fontSize: 12
-                      }}
-                    />
+      <TableCell sx={{ textAlign: "center" }}>
+        <Chip
+          size="small"
+          label={row.status}
+          sx={{
+            px: 1,
+            fontWeight: 600,
+            textTransform: "capitalize",
+            backgroundColor:
+              row.status === "present"
+                ? "#80BECD"
+                : row.status === "absent"
+                ? "#FDE0DF"
+                : "#FFE8CC",
+            color:
+              row.status === "present"
+                ? "#0F3B3C"
+                : row.status === "absent"
+                ? "#B71C1C"
+                : "#E65100",
+            border: "1px solid",
+            borderColor:
+              row.status === "present"
+                ? "#0F3B3C"
+                : row.status === "absent"
+                ? "#F44336"
+                : "#FF9800",
+            borderRadius: 10,
+            fontSize: 12,
+          }}
+        />
+      </TableCell>
+    </TableRow>
+  ))
+)}
 
-                  </TableCell>
-
-                  {/* <TableCell align="center">
-                    {row.clock_in && !row.clock_out ? (
-                      <Button size="small" variant="outlined" color="primary" onClick={() => sendAttendanceRequest(row)}>
-                        Request Update
-                      </Button>
-                    ) : (
-                      <Typography fontSize={12} color="text.secondary">—</Typography>
-                    )}
-                  </TableCell> */}
-                </TableRow>
-              ))}
             </TableBody>
           </Table>
         </TableContainer>

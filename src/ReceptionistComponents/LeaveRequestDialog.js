@@ -97,15 +97,19 @@ export default function LeaveRequestDialog({
         reason: formData.reason,
       };
 
-      if (initialData?.id) {
-        await api.put(`/api/leave/update/${initialData.id}`, payload);
-        setSnack({
-          open: true,
-          message: "Leave request updated successfully!",
-          severity: "success",
-        });
-        if (onSuccess) onSuccess(); // ✅ notify parent
-      } else {
+     if (initialData?.id) {
+  await api.put(`/api/leave/update/${initialData.id}`, payload);
+
+  setSnack({
+    open: true,
+    message: "Leave request updated successfully!",
+    severity: "success",
+  });
+
+  if (onSuccess) onSuccess(); // notify parent
+  onClose(); // ✅ CLOSE EDIT DIALOG
+}
+else {
         await api.post("/api/leave/create/", payload);
         setSnack({
           open: true,
@@ -230,32 +234,28 @@ export default function LeaveRequestDialog({
                 gap={2}
                 mb={2}
               >
-                <TextField
-                  label="Start Date"
-                  name="fromDate"
-                  type="date"
-                  value={formData.fromDate}
-                  onChange={handleChange}
-                  onFocus={() => setActiveDateField("fromDate")}
-                  InputLabelProps={{ shrink: true }}
-                  InputProps={{
-                    endAdornment: (
-                      <CalendarMonthIcon sx={{ color: "#01636B" }} />
-                    ),
-                  }}
-                  size="small"
-                  fullWidth
-                  sx={{
-                    mb: 2,
-                    "& .MuiInputLabel-root": { color: "#01636B" },
-                    "& .MuiInputBase-input": { color: "#01636B" },
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": { borderColor: "#01636B" },
-                      "&:hover fieldset": { borderColor: "#01636B" },
-                      "&.Mui-focused fieldset": { borderColor: "#01636B" },
-                    },
-                  }}
-                />
+               <TextField
+  label="Start Date"
+  name="fromDate"
+  type="date"
+  value={formData.fromDate}
+  onChange={handleChange}
+  onFocus={() => setActiveDateField("fromDate")}
+  InputLabelProps={{ shrink: true }}
+  size="small"
+  fullWidth
+  sx={{
+    mb: 2,
+    "& .MuiInputLabel-root": { color: "#01636B" },
+    "& .MuiInputBase-input": { color: "#01636B" },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": { borderColor: "#01636B" },
+      "&:hover fieldset": { borderColor: "#01636B" },
+      "&.Mui-focused fieldset": { borderColor: "#01636B" },
+    },
+  }}
+/>
+
 
                 <TextField
                   label="End Date"
@@ -265,11 +265,6 @@ export default function LeaveRequestDialog({
                   onChange={handleChange}
                   onFocus={() => setActiveDateField("toDate")}
                   InputLabelProps={{ shrink: true }}
-                  InputProps={{
-                    endAdornment: (
-                      <CalendarMonthIcon sx={{ color: "#01636B" }} />
-                    ),
-                  }}
                   size="small"
                   fullWidth
                   sx={{

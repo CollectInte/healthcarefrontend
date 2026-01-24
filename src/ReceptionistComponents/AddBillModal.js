@@ -52,7 +52,7 @@ const AddBillModal = ({ open, onClose, bills = [], onBillAdded }) => {
       })
       .then((res) => {
         const completed = res.data.appointments.filter(
-          (a) => a.status === "completed" && !billedAppointmentIds.has(a.id)
+          (a) => a.status === "completed" && !billedAppointmentIds.has(a.id),
         );
 
         setAppointments(completed);
@@ -69,14 +69,13 @@ const AddBillModal = ({ open, onClose, bills = [], onBillAdded }) => {
   /* ================= AUTO TOTAL ================= */
   useEffect(() => {
     const subtotal = Number(form.subtotal) || 0;
-    const taxPercent = Number(form.tax) || 0;
+    const tax = Number(form.tax) || 0;
 
-    const taxAmount = (subtotal * taxPercent) / 100;
-    const total = subtotal + taxAmount;
+    const total = subtotal + tax;
 
     setForm((prev) => ({
       ...prev,
-      total_amount: total.toFixed(2), // optional decimal precision
+      total_amount: total.toFixed(2),
     }));
   }, [form.subtotal, form.tax]);
 
@@ -101,7 +100,7 @@ const AddBillModal = ({ open, onClose, bills = [], onBillAdded }) => {
           total_amount: form.total_amount,
           notes: form.notes,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       // 👇 REFRESH BILLS LIST
@@ -148,8 +147,8 @@ const AddBillModal = ({ open, onClose, bills = [], onBillAdded }) => {
       appointments.map((a) => [
         a.client_id,
         { id: a.client_id, name: a.client_name },
-      ])
-    ).values()
+      ]),
+    ).values(),
   );
 
   const billedAppointmentIds = new Set(bills.map((b) => b.appointment_id));
@@ -158,7 +157,6 @@ const AddBillModal = ({ open, onClose, bills = [], onBillAdded }) => {
     : appointments;
 
   const labelSx = {
-    fontWeight: 600,
     color: COLORS.primary,
     mb: 0.8,
   };
@@ -166,10 +164,8 @@ const AddBillModal = ({ open, onClose, bills = [], onBillAdded }) => {
   const fieldSx = {
     "& .MuiInputBase-root": {
       height: 35,
-      backgroundColor: "#fff",
       paddingX: 0.3,
-      borderBottom: `3px solid ${COLORS.primary}`,
-      borderLeft: `3px solid ${COLORS.primary}`,
+      border: `2px solid ${COLORS.primary}`,
     },
 
     "& fieldset": {
@@ -177,13 +173,11 @@ const AddBillModal = ({ open, onClose, bills = [], onBillAdded }) => {
     },
 
     "& .MuiInputBase-root:hover": {
-      borderBottomColor: COLORS.primary,
-      borderLeftColor: COLORS.primary,
+      borderColor: COLORS.primary,
     },
 
     "& .MuiInputBase-root.Mui-focused": {
-      borderBottomColor: COLORS.primary,
-      borderLeftColor: COLORS.primary,
+      borderColor: COLORS.primary,
     },
   };
 
@@ -191,9 +185,7 @@ const AddBillModal = ({ open, onClose, bills = [], onBillAdded }) => {
     "& .MuiInputBase-root": {
       height: 35,
       width: 180,
-      backgroundColor: "#fff",
-      borderBottom: `3px solid ${COLORS.primary}`,
-      borderLeft: `3px solid ${COLORS.primary}`,
+      border: `2px solid ${COLORS.primary}`,
     },
 
     "& fieldset": {
@@ -201,13 +193,11 @@ const AddBillModal = ({ open, onClose, bills = [], onBillAdded }) => {
     },
 
     "& .MuiInputBase-root:hover": {
-      borderBottomColor: COLORS.primary,
-      borderLeftColor: COLORS.primary,
+      borderColor: COLORS.primary,
     },
 
     "& .MuiInputBase-root.Mui-focused": {
-      borderBottomColor: COLORS.primary,
-      borderLeftColor: COLORS.primary,
+      borderColor: COLORS.primary,
     },
   };
 
@@ -223,7 +213,6 @@ const AddBillModal = ({ open, onClose, bills = [], onBillAdded }) => {
         {/* HEADER */}
         <DialogTitle
           sx={{
-            bgcolor: COLORS.activeBg,
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
@@ -231,7 +220,13 @@ const AddBillModal = ({ open, onClose, bills = [], onBillAdded }) => {
             py: 2,
           }}
         >
-          <Typography fontWeight={600} fontSize={18}>
+          <Typography
+            sx={{
+              fontWeight: 600,
+              fontSize: 18,
+              color: COLORS.primary,
+            }}
+          >
             Add Bill
           </Typography>
           <IconButton onClick={onClose}>
@@ -244,7 +239,6 @@ const AddBillModal = ({ open, onClose, bills = [], onBillAdded }) => {
           sx={{
             px: 4,
             py: 1,
-            backgroundColor: COLORS.activeBg,
           }}
         >
           <Stack spacing={1.5}>
@@ -325,26 +319,13 @@ const AddBillModal = ({ open, onClose, bills = [], onBillAdded }) => {
 
               {/* TAX */}
               <Box>
-                <Typography sx={labelSx}>Tax (%)</Typography>
+                <Typography sx={labelSx}>Tax Amount</Typography>
                 <TextField
+                  type="number"
                   value={form.tax}
-                  onChange={(e) => {
-                    let value = e.target.value.replace(/\D/g, ""); // numbers only
-
-                    if (value.length > 2) value = value.slice(0, 2); // max 2 digits
-
-                    setForm({ ...form, tax: value });
-                  }}
+                  onChange={(e) => setForm({ ...form, tax: e.target.value })}
                   fullWidth
-                  placeholder="Tax (%)"
-                  inputProps={{
-                    inputMode: "numeric",
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">%</InputAdornment>
-                    ),
-                  }}
+                  placeholder="Enter tax amount"
                   sx={amountSx}
                 />
               </Box>

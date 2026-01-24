@@ -32,6 +32,8 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import AppointmentDetailsModal from "./Appointments/AppointmentViewModal";
 import InvoicePreviewModal from "./InvoiceModalPreview";
 import AddBillModal from "./AddBillModal";
+import EditIcon from "@mui/icons-material/Edit";
+import EditBillModal from "./EditBillModal";
 
 const Bills = () => {
   const isMobile = useMediaQuery("(max-width:768px)");
@@ -206,7 +208,19 @@ const Bills = () => {
     setPage(1);
   };
 
+  // ---------------- Open Add Modal ----------------
+
   const [openAddBill, setOpenAddBill] = useState(false);
+
+  // ---------------- Edit Modal ----------------
+
+  const [openEdit, setOpenEdit] = useState(false);
+  const [editBill, setEditBill] = useState(null);
+
+  const handleEdit = (bill) => {
+    setEditBill(bill);
+    setOpenEdit(true);
+  };
 
   return (
     <Box
@@ -569,31 +583,67 @@ const Bills = () => {
 
                   <TableCell align="center" sx={colBg(8)}>
                     <Stack direction="row" spacing={1} justifyContent="center">
-                      {/* VIEW */}
-                      <IconButton
-                        size="small"
-                        sx={{
-                          background: "#1976d2",
-                          color: "#fff",
-                          "&:hover": { background: "#115293" },
-                        }}
-                        onClick={() => handlePreview(b.bill_id)}
+                      {/* EDIT */}
+                      <Tooltip
+                        title={
+                          b.bill_status === "Paid"
+                            ? "Paid bills cannot be edited"
+                            : "Edit bill"
+                        }
                       >
-                        <VisibilityIcon fontSize="small" />
-                      </IconButton>
+                        <span>
+                          <IconButton
+                            size="small"
+                            disabled={b.bill_status === "Paid"}
+                            sx={{
+                              background:
+                                b.bill_status === "Paid"
+                                  ? "#bdbdbd"
+                                  : "#ed6c02",
+                              color: "#fff",
+                              "&:hover": {
+                                background:
+                                  b.bill_status === "Paid"
+                                    ? "#bdbdbd"
+                                    : "#c45a00",
+                              },
+                            }}
+                            onClick={() => handleEdit(b)}
+                          >
+                            <EditIcon fontSize="small" />
+                          </IconButton>
+                        </span>
+                      </Tooltip>
+
+                      {/* VIEW */}
+                      <Tooltip title="View bill details">
+                        <IconButton
+                          size="small"
+                          sx={{
+                            background: "#1976d2",
+                            color: "#fff",
+                            "&:hover": { background: "#115293" },
+                          }}
+                          onClick={() => handlePreview(b.bill_id)}
+                        >
+                          <VisibilityIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
 
                       {/* DOWNLOAD */}
-                      <IconButton
-                        size="small"
-                        sx={{
-                          background: "#0F7C7C",
-                          color: "#fff",
-                          "&:hover": { background: "#0B5F5F" },
-                        }}
-                        onClick={() => handleDownload(b.bill_id)}
-                      >
-                        <DownloadForOfflineIcon fontSize="small" />
-                      </IconButton>
+                      <Tooltip title="Download invoice">
+                        <IconButton
+                          size="small"
+                          sx={{
+                            background: "#0F7C7C",
+                            color: "#fff",
+                            "&:hover": { background: "#0B5F5F" },
+                          }}
+                          onClick={() => handleDownload(b.bill_id)}
+                        >
+                          <DownloadForOfflineIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
                     </Stack>
                   </TableCell>
                 </TableRow>
@@ -651,31 +701,67 @@ const Bills = () => {
                     <Typography fontWeight={600}>ID - {b.bill_id}</Typography>
 
                     <Stack direction="row" spacing={1} justifyContent="center">
-                      {/* VIEW */}
-                      <IconButton
-                        size="small"
-                        sx={{
-                          background: "#1976d2",
-                          color: "#fff",
-                          "&:hover": { background: "#115293" },
-                        }}
-                        onClick={() => handlePreview(b.bill_id)}
+                      {/* EDIT */}
+                      <Tooltip
+                        title={
+                          b.bill_status === "Paid"
+                            ? "Paid bills cannot be edited"
+                            : "Edit bill"
+                        }
                       >
-                        <VisibilityIcon fontSize="small" />
-                      </IconButton>
+                        <span>
+                          <IconButton
+                            size="small"
+                            disabled={b.bill_status === "Paid"}
+                            sx={{
+                              background:
+                                b.bill_status === "Paid"
+                                  ? "#bdbdbd"
+                                  : "#ed6c02",
+                              color: "#fff",
+                              "&:hover": {
+                                background:
+                                  b.bill_status === "Paid"
+                                    ? "#bdbdbd"
+                                    : "#c45a00",
+                              },
+                            }}
+                            onClick={() => handleEdit(b)}
+                          >
+                            <EditIcon fontSize="small" />
+                          </IconButton>
+                        </span>
+                      </Tooltip>
+
+                      {/* VIEW */}
+                      <Tooltip title="View bill details">
+                        <IconButton
+                          size="small"
+                          sx={{
+                            background: "#1976d2",
+                            color: "#fff",
+                            "&:hover": { background: "#115293" },
+                          }}
+                          onClick={() => handlePreview(b.bill_id)}
+                        >
+                          <VisibilityIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
 
                       {/* DOWNLOAD */}
-                      <IconButton
-                        size="small"
-                        sx={{
-                          background: "#0F7C7C",
-                          color: "#fff",
-                          "&:hover": { background: "#0B5F5F" },
-                        }}
-                        onClick={() => handleDownload(b.bill_id)}
-                      >
-                        <DownloadForOfflineIcon fontSize="small" />
-                      </IconButton>
+                      <Tooltip title="Download invoice">
+                        <IconButton
+                          size="small"
+                          sx={{
+                            background: "#0F7C7C",
+                            color: "#fff",
+                            "&:hover": { background: "#0B5F5F" },
+                          }}
+                          onClick={() => handleDownload(b.bill_id)}
+                        >
+                          <DownloadForOfflineIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
                     </Stack>
                   </Box>
 
@@ -762,6 +848,14 @@ const Bills = () => {
         bills={bills}
         onBillAdded={fetchBills}
       />
+
+      <EditBillModal
+        open={openEdit}
+        bill={editBill}
+        onClose={() => setOpenEdit(false)}
+        onUpdated={fetchBills}
+      />
+
       <InvoicePreviewModal
         open={openPreview}
         billId={previewBillId}

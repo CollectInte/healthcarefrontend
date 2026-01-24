@@ -6,7 +6,7 @@ import TodayIcon from "@mui/icons-material/Today";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import PersonIcon from "@mui/icons-material/Person";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import DescriptionIcon from "@mui/icons-material/Description";
+// import DescriptionIcon from "@mui/icons-material/DescriptionIcon";
 
 import AppointmentDetailsPopover from "./AppointmentDetailsPopover";
 
@@ -33,6 +33,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { Pagination } from "@mui/material";
+
 const headerChipStyle = {
   fontSize: "12px",
   fontWeight: 600,
@@ -50,7 +51,7 @@ export default function Appointments() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedAppointment, setSelectedAppointment] = useState(null);
+const [selectedAppointmentId, setSelectedAppointmentId] = useState(null);
   const rowsPerPage = 5;
   const today = new Date().toISOString().slice(0, 10);
   const [reviewPercentage, setReviewPercentage] = useState(0);
@@ -68,6 +69,12 @@ export default function Appointments() {
     clientId: "",
     status: "all",
   });
+
+const selectedAppointment = selectedAppointmentId
+  ? appointments.find((a) => a._id === selectedAppointmentId)
+  : null;
+
+
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -147,7 +154,12 @@ export default function Appointments() {
     const fetchAppointments = async () => {
       try {
         const res = await api.get("/appointment/appointments");
-        setAppointments(res.data.appointments);
+       const normalized = res.data.appointments.map((a) => ({
+  ...a,
+  _id: a.id ?? a.appointment_id, // ✅ single source id
+}));
+
+setAppointments(normalized);
       } catch (err) {
         console.error(err);
       } finally {
@@ -157,22 +169,17 @@ export default function Appointments() {
     fetchAppointments();
   }, []);
 
-  const handleStatusChange = async (appointmentId, newStatus) => {
-    try {
-      await api.put(`/appointment/appointment/${appointmentId}/status`, {
-        status: newStatus,
-      });
-      setAppointments((prev) =>
-        prev.map((appt) =>
-          appt.appointment_id === appointmentId
-            ? { ...appt, status: newStatus }
-            : appt
-        )
-      );
-    } catch (error) {
-      console.error("Failed to update status", error);
-    }
-  };
+const handleStatusChange = (appointmentId, newStatus) => {
+  setAppointments((prev) =>
+    prev.map((appt) =>
+      appt._id === appointmentId
+        ? { ...appt, status: newStatus }
+        : appt
+    )
+  );
+};
+
+
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -233,7 +240,7 @@ export default function Appointments() {
         flexWrap="wrap"
         gap={2}
       >
-        <Typography fontWeight={600} fontSize={{ xs: 18, md: 20 }} sx={{mb:0}}>
+        <Typography fontWeight={600} fontSize={{ xs: 18, md: 20 }} sx={{mb:2}}>
           Appointment List
         </Typography>
       </Stack>
@@ -349,9 +356,7 @@ export default function Appointments() {
       <Box
         sx={{
           p: 1,
-          
-          position: { xs: "sticky", sm: "static" }, // ⬅️ sticky only for mobile
-
+          position: { xs: "sticky", sm: "static" },
           "& .MuiOutlinedInput-root": {
             "& fieldset": { borderColor: "#437986" },
             "&:hover fieldset": { borderColor: "#437986" },
@@ -371,7 +376,6 @@ export default function Appointments() {
           direction={{ xs: "column", sm: "row" }}
           spacing={1}
           alignItems="flex-start"
-
         >
           <TextField
             size="small"
@@ -437,7 +441,7 @@ export default function Appointments() {
                 width: { xs: "50%", sm: "auto", md: 150 },
                 color: "#437986",
                 borderColor: "#437986",
-                 textTransform:"none"
+                textTransform:"none"
               }}
             >
               Clear
@@ -458,93 +462,62 @@ export default function Appointments() {
             padding: 2,
           }}
         >
-          <Typography sx={{  fontSize: "20px", fontWeight: 600,m:1}}>
+          <Typography sx={{ fontSize: "20px", fontWeight: 600, m: 1 }}>
             New Appointments
           </Typography>
           <TableContainer
             sx={{
-              background:
-                "linear-gradient(180deg, #a5d0d4ff 0%, #ffffff 100%)",
-              borderRadius: 5,maxHeight: "55vh", overflowY: "auto"
+              background: "linear-gradient(180deg, #a5d0d4ff 0%, #ffffff 100%)",
+              borderRadius: 5,
+              maxHeight: "55vh",
+              overflowY: "auto"
             }}
           >
             <Table sx={{ borderCollapse: "collapse" }}>
               <TableHead sx={{
-    position: "sticky",
-    top: 0,
-    zIndex: 4,
-     background:"#a5d0d4ff"
-  }}>
+                position: "sticky",
+                top: 0,
+                zIndex: 4,
+                background:"#a5d0d4ff"
+              }}>
                 <TableRow sx={{fontSize:"5px"}}>
-                  <TableCell
-                    sx={{ fontWeight: 600, color: "#01636B" }}
-                  >
-                    <Typography
-                     sx={headerChipStyle}
-                    >
+                  <TableCell sx={{ fontWeight: 600, color: "#01636B" }}>
+                    <Typography sx={headerChipStyle}>
                       Appointment Id
                     </Typography>
                   </TableCell>
-                  <TableCell
-                    sx={{ fontWeight: 600, color: "#01636B" }}
-                  >
-                    <Typography
-                     sx={headerChipStyle}
-                    >
+                  <TableCell sx={{ fontWeight: 600, color: "#01636B" }}>
+                    <Typography sx={headerChipStyle}>
                       Patient Id
                     </Typography>
                   </TableCell>
-                  <TableCell
-                    sx={{ fontWeight: 600,  color: "#01636B" }}
-                  >
-                    <Typography
-                     sx={headerChipStyle}
-                    >
+                  <TableCell sx={{ fontWeight: 600, color: "#01636B" }}>
+                    <Typography sx={headerChipStyle}>
                       Patient Name
                     </Typography>
                   </TableCell>
-                  <TableCell
-                    sx={{ fontWeight: 600,  color: "#01636B" }}
-                  >
-                    <Typography
-                      sx={headerChipStyle}
-                    >
+                  <TableCell sx={{ fontWeight: 600, color: "#01636B" }}>
+                    <Typography sx={headerChipStyle}>
                       Date
                     </Typography>
                   </TableCell>
-                  <TableCell
-                    sx={{ fontWeight: 600, color: "#01636B" }}
-                  >
-                    <Typography
-                      sx={headerChipStyle}
-                    >
+                  <TableCell sx={{ fontWeight: 600, color: "#01636B" }}>
+                    <Typography sx={headerChipStyle}>
                       Time Slots
                     </Typography>
                   </TableCell>
-                  <TableCell
-                    sx={{ fontWeight: 600, color: "#01636B" }}
-                  >
-                    <Typography
-                      sx={headerChipStyle}
-                    >
+                  <TableCell sx={{ fontWeight: 600, color: "#01636B" }}>
+                    <Typography sx={headerChipStyle}>
                       Purpose
                     </Typography>
                   </TableCell>
-                  <TableCell
-                    sx={{ fontWeight: 600,  color: "#01636B" }}
-                  >
-                    <Typography
-                      sx={headerChipStyle}
-                    >
+                  <TableCell sx={{ fontWeight: 600, color: "#01636B" }}>
+                    <Typography sx={headerChipStyle}>
                       Status
                     </Typography>
                   </TableCell>
-                  <TableCell
-                    sx={{ fontWeight: 600, color: "#01636B" }}
-                  >
-                    <Typography
-                      sx={headerChipStyle}
-                    >
+                  <TableCell sx={{ fontWeight: 600, color: "#01636B" }}>
+                    <Typography sx={headerChipStyle}>
                       Details
                     </Typography>
                   </TableCell>
@@ -559,7 +532,7 @@ export default function Appointments() {
                   </TableRow>
                 ) : (
                   paginatedAppointments.map((row) => (
-                    <TableRow key={row.appointment_id} hover sx={{ fontSize: "10px" }}>
+                    <TableRow key={row._id} hover sx={{ fontSize: "10px" }}>
                       <TableCell align="center">{row.id}</TableCell>
                       <TableCell>{row.client_id}</TableCell>
                       <TableCell>{row.client_name}</TableCell>
@@ -603,7 +576,7 @@ export default function Appointments() {
                           }}
                           onClick={(e) => {
                             setAnchorEl(e.currentTarget);
-                            setSelectedAppointment(row);
+setSelectedAppointmentId(row._id);
                           }}
                         >
                           View Details
@@ -650,7 +623,6 @@ export default function Appointments() {
               <Typography>No appointments found</Typography>
             </Paper>
           ) : (
-
             <Stack spacing={2}>
               {paginatedAppointments.map((row) => (
                 <Card
@@ -659,8 +631,7 @@ export default function Appointments() {
                     borderRadius: 3,
                     overflow: "hidden",
                     boxShadow: "0 4px 12px rgba(1, 99, 107, 0.15)",
-                    background:
-                      "linear-gradient(180deg, #a5d0d4ff 0%, #ffffff 100%)",
+                    background: "linear-gradient(180deg, #a5d0d4ff 0%, #ffffff 100%)",
                     width: "96%"
                   }}
                 >
@@ -673,7 +644,6 @@ export default function Appointments() {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
-
                     }}
                   >
                     <Box>
@@ -822,27 +792,14 @@ export default function Appointments() {
                           textAlign: "center",
                           display: "flex",
                           flexDirection: "column",
-                          alignItems: "center", // ✅ horizontal center
+                          alignItems: "center",
                         }}
                       >
-
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center", // ✅ center icon + text
-                            gap: 1,
-                            mb: 0.8,
-                          }}
-                        >
-
-                        </Box>
                         <Typography fontSize={13} color="#01636B" lineHeight={1.6}>
                           {row.purpose}
                         </Typography>
                       </Box>
                     )}
-
 
                     {/* View Details Button */}
                     <Button
@@ -850,7 +807,7 @@ export default function Appointments() {
                       variant="outlined"
                       onClick={(e) => {
                         setAnchorEl(e.currentTarget);
-                        setSelectedAppointment(row);
+setSelectedAppointmentId(row._id);
                       }}
                       sx={{
                         borderRadius: 2,
@@ -902,15 +859,20 @@ export default function Appointments() {
         </Box>
       )}
 
-      <AppointmentDetailsPopover
-        anchorEl={anchorEl}
-        appointment={selectedAppointment}
-        onClose={() => {
-          setAnchorEl(null);
-          setSelectedAppointment(null);
-        }}
-        onStatusUpdate={handleStatusChange}
-      />
+     {selectedAppointment && (
+  <AppointmentDetailsPopover
+    anchorEl={anchorEl}
+    appointment={selectedAppointment}
+    onClose={() => {
+      setAnchorEl(null);
+      setSelectedAppointmentId(null);
+    }}
+    onStatusUpdate={handleStatusChange}
+  />
+)}
+
+
+    
     </Box>
-  )
+  );
 }

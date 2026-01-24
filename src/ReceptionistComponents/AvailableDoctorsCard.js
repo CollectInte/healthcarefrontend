@@ -60,7 +60,7 @@ const AvailableDoctorsCard = () => {
                 fontWeight: 600,
                 cursor: "pointer",
               }}
-              onClick={() => navigate('/dashboard/schedule')}
+              onClick={() => navigate('/receptionist/dashboard/schedule')}
             >
               See All &gt;
             </Typography>

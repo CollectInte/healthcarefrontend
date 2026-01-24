@@ -260,9 +260,9 @@ const handleUploadFromDocView = async () => {
       </Button>
     </Box>
 
-    <Divider sx={{ width: "100%", my: 3, backgroundColor: "#5A9BA5", height: 2 }} />
+    <Divider sx={{ width: "100%", my: 2, backgroundColor: "#5A9BA5", height: 2 }} />
 
-    <Stack spacing={2} width="80%" maxHeight="100vh" sx={{ backgroundColor: "none" }}>
+    <Stack spacing={1} width="80%" maxHeight="100vh" sx={{ backgroundColor: "none" }}>
       {/* SEARCHABLE PATIENT DROPDOWN */}
       <Autocomplete
         options={clients}
@@ -313,7 +313,7 @@ const handleUploadFromDocView = async () => {
           bgcolor: "#5A9BA5",
           textTransform: "lowercase",
           borderRadius: 2,
-          py: 1.2,
+          py: 0.5,
           fontSize: "0.95rem",
           "&:hover": { bgcolor: "#4A8A94" },
           "&:disabled": { bgcolor: "#B0BEC5" },
@@ -369,7 +369,7 @@ const handleUploadFromDocView = async () => {
         />
       </Button>
 
-      <Divider sx={{ width: "100%", mb: 3 }} />
+      <Divider sx={{ width: "100%", mb: 3, height: "100vh" }} />
 
       <Stack spacing={2.5} width="100%">
         <TextField

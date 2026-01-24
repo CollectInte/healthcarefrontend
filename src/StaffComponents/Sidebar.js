@@ -30,7 +30,7 @@ export const drawerWidthClosed = 70;
 
 export default function Sidebar({ isOpen, onToggle, company }) {
   const staffRole = localStorage.getItem('role');
-  const staffName = localStorage.getItem('name');
+  const staffName = localStorage.getItem('userName');
   const [openProfile, setOpenProfile] = useState(false);
   const [staff, setStaff] = useState(null);
 
@@ -180,7 +180,7 @@ export default function Sidebar({ isOpen, onToggle, company }) {
               height: "100%",
               objectFit: "contain",
               display: "block",
-              border: "1px solid black",
+              border: "0px solid black",
             }}
           />
         </Box>
@@ -241,7 +241,7 @@ export default function Sidebar({ isOpen, onToggle, company }) {
           </Avatar>
 
 
-          <Typography fontWeight="bold" sx={{ color: "white", fontSize: { md: "14px", xs: "10px" } }}>
+          <Typography fontWeight="bold" sx={{ color: "white", fontSize: { md: "14px", xs: "10px" }, textAlign: "center" }}>
             {staffName}
           </Typography>
 

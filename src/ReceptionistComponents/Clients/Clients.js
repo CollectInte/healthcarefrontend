@@ -23,6 +23,8 @@ import axios from "axios";
 import { COLORS } from "../Themes";
 import AddBillModal from "../AddBillModal";
 import AddClientModal from "./AddClientModal";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Tooltip from "@mui/material/Tooltip";
 
 const Clients = () => {
   const isMobile = useMediaQuery("(max-width:768px)");
@@ -102,6 +104,40 @@ const Clients = () => {
     setSearch("");
     setFilteredClients(clients);
     setPage(1);
+  };
+
+  const handleDeleteClient = async (clientId) => {
+    // 1️⃣ First alert – explain what will be deleted
+    const firstConfirm = window.confirm(
+      "⚠️ WARNING!\n" +
+        "Deleting this patient will permanently delete:\n" +
+        "All appointments &  bills & invoices & documents....\n",
+    );
+
+    if (!firstConfirm) return;
+
+    // 2️⃣ Second alert – final confirmation
+    const secondConfirm = window.confirm(
+      "❗ FINAL CONFIRMATION ❗\n" +
+        "This action CANNOT be undone.\n" +
+        "Click OK to permanently delete the patient.",
+    );
+
+    if (!secondConfirm) return;
+
+    // 3️⃣ Delete API call
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_URL}/api/client/delete/${clientId}`,
+        { withCredentials: true },
+      );
+
+      fetchClients();
+      alert("✅ Patient deleted successfully");
+    } catch (error) {
+      console.error("Delete patient failed:", error);
+      alert("❌ Failed to delete patient");
+    }
   };
 
   return (
@@ -211,7 +247,7 @@ const Clients = () => {
                   "Address",
                   "Mobile No",
                   "Status",
-                  // "Action",
+                  "Action",
                 ].map((h) => (
                   <TableCell
                     align="center"
@@ -279,11 +315,20 @@ const Clients = () => {
                       }}
                     />
                   </TableCell>
-                  {/* <TableCell align="center">
-                    <IconButton size="small">
-                      <VisibilityIcon />
-                    </IconButton>
-                  </TableCell> */}
+                  <TableCell align="center">
+                    <Tooltip title="Delete client">
+                      <IconButton
+                        size="small"
+                        sx={{
+                          color: "#d32f2f",
+                          "&:hover": { background: "#e3cdcd" },
+                        }}
+                        onClick={() => handleDeleteClient(c.id)}
+                      >
+                        <DeleteIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

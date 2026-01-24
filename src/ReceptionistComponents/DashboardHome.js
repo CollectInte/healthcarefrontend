@@ -488,7 +488,7 @@ export default function Dashboard() {
                   height: 22,
                 }}
               />
-              <IconButton sx={{ color: "white", p: 0.5 }}   onClick={() => navigate("/dashboard/clients")}
+              <IconButton sx={{ color: "white", p: 0.5 }}   onClick={() => navigate("/receptionist/dashboard/clients")}
 > 
                 ↗
               </IconButton>
@@ -534,7 +534,7 @@ export default function Dashboard() {
                   </Box>
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <IconButton sx={{ color: "white", p: 0.5 }}  onClick={() => navigate("/dashboard/schedule")}>
+                  <IconButton sx={{ color: "white", p: 0.5 }}  onClick={() => navigate("/receptionist/dashboard/schedule")}>
                     ↗
                   </IconButton>
                 </Box>
@@ -579,7 +579,7 @@ export default function Dashboard() {
                   </Box>
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <IconButton sx={{ color: "white", p: 0.5 }} onClick={() => navigate("/dashboard/appointments")}> 
+                  <IconButton sx={{ color: "white", p: 0.5 }} onClick={() => navigate("/receptionist/dashboard/appointments")}> 
                     ↗
                   </IconButton>
                 </Box>

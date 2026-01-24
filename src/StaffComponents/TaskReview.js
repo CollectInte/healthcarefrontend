@@ -275,64 +275,87 @@ const Reviews = () => {
         </Box>
 
         {/* ROWS */}
-        {paginatedReviews.map((review, index) => (
-          <Box
-            key={index}
+       {/* ROWS */}
+{paginatedReviews.length === 0 ? (
+  <Box
+    sx={{
+      display: "grid",
+      gridTemplateColumns: "repeat(4, 1fr)",
+      py: 4,
+    }}
+  >
+    <Box
+      sx={{
+        gridColumn: "1 / -1",
+        textAlign: "center",
+        color: "gray",
+        fontWeight: 500,
+      }}
+    >
+      No reviews are there
+    </Box>
+  </Box>
+) : (
+  paginatedReviews.map((review, index) => (
+    <Box
+      key={index}
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        py: 2.5,
+        borderBottom:
+          index !== paginatedReviews.length - 1
+            ? "1px dashed rgba(6,95,91,0.25)"
+            : "none",
+        "&:hover": {
+          backgroundColor: "rgba(6,95,91,0.05)",
+        },
+      }}
+    >
+      {[
+        review.client_name || review.admin_name,
+        <Stack
+          direction="row"
+          spacing={1}
+          alignItems="center"
+          key="rating"
+        >
+          <Typography fontWeight={700}>
+            {Number(review.rating).toFixed(1)}
+          </Typography>
+          <Rating
+            value={Number(review.rating)}
+            readOnly
+            size="small"
             sx={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              py: 2.5,
-              borderBottom:
-                index !== paginatedReviews.length - 1
-                  ? "1px dashed rgba(6,95,91,0.25)"
-                  : "none",
-              "&:hover": {
-                backgroundColor: "rgba(6,95,91,0.05)",
+              "& .MuiRating-iconFilled": {
+                color: getRatingColor(Number(review.rating)),
               },
             }}
-          >
-            {[
-              review.client_name || review.admin_name,
-              <Stack
-                direction="row"
-                spacing={1}
-                alignItems="center"
-                key="rating"
-              >
-                <Typography fontWeight={700}>
-                  {Number(review.rating).toFixed(1)}
-                </Typography>
-                <Rating
-                  value={Number(review.rating)}
-                  readOnly
-                  size="small"
-                  sx={{
-                    "& .MuiRating-iconFilled": {
-                      color: getRatingColor(Number(review.rating)),
-                    },
-                  }}
-                />
-              </Stack>,
-              review.review,
-              new Date(review.created_at).toLocaleDateString("en-GB"),
-            ].map((cell, i) => (
-              <Box
-                key={i}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  px: 2,
-                  textAlign: "center",
-                  borderRight:
-                    i !== 3 ? "1px solid rgba(6,95,91,0.3)" : "none",
-                }}
-              >
-                {cell}
-              </Box>
-            ))}
-          </Box>
-        ))}
+          />
+        </Stack>,
+        review.review,
+        new Date(review.created_at).toLocaleDateString("en-GB"),
+      ].map((cell, i) => (
+        <Box
+          key={i}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            px: 2,
+            textAlign: "center",
+            borderRight:
+              i !== 3 ? "1px solid rgba(6,95,91,0.3)" : "none",
+          }}
+        >
+          {cell}
+        </Box>
+      ))}
+    </Box>
+  ))
+)}
+
       </Box>
     )}
 

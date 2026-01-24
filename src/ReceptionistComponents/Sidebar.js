@@ -36,7 +36,7 @@ export const drawerWidthClosed = 70;
 
 export default function Sidebar({ isOpen, onToggle, company }) {
   const staffRole = localStorage.getItem('role');
-  const staffName = localStorage.getItem('name');
+  const staffName = localStorage.getItem('userName');
   const [openProfile, setOpenProfile] = useState(false);
   const [staff, setStaff] = useState(null);
 

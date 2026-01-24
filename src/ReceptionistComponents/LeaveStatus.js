@@ -81,16 +81,19 @@ export default function LeaveStatusPopup({ open, onClose }) {
   };
 
   // Called after successful update
-  const handleEditSuccess = () => {
-    fetchLeaveData(); // refresh list
-    setEditOpen(false);
-    setEditLeave(null);
-    setSnack({
-      open: true,
-      message: "Leave updated successfully!",
-      severity: "success",
-    });
-  };
+ const handleEditSuccess = () => {
+  fetchLeaveData();       // refresh data
+  setEditOpen(false);     // close edit dialog
+  setEditLeave(null);
+  onClose();              // ✅ CLOSE LEAVE STATUS POPUP
+
+  setSnack({
+    open: true,
+    message: "Leave updated successfully!",
+    severity: "success",
+  });
+};
+
 
   // Pagination logic
   const totalPages = Math.ceil(leaveData.length / RECORDS_PER_PAGE);

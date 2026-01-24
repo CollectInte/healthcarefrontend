@@ -80,6 +80,7 @@ const fetchProfile = async () => {
       const fd = new FormData();
 
       fd.append("name", profile.name || "");
+      fd.append("email", profile.email || "");
       fd.append("mobile", profile.mobile || "");
       fd.append("address", profile.address || "");
       fd.append("branch", profile.branch || "");
@@ -176,7 +177,8 @@ const fetchProfile = async () => {
                   disabled={!edit}
                 />
 
-                <TextField label="Email" value={profile.email || ""} disabled />
+                <TextField label="Email" name="email" value={profile.email || ""}   onChange={handleChange}
+                  disabled={!edit} />
 
                 <TextField
                   label="Mobile"

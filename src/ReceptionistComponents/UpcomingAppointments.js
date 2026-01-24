@@ -257,7 +257,7 @@ export default function UpcomingAppointments() {
 
         <Box sx={{ textAlign: 'center', mt: 2 }}>
           <Typography
-            onClick={() => navigate('/dashboard/appointments')}
+            onClick={() => navigate('/receptionist/dashboard/appointments')}
             sx={{
               cursor: 'pointer',
               fontSize: '0.8rem',

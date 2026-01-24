@@ -121,7 +121,7 @@ export default function LeaveRequestDialog({
         });
 
         if (onUpdate) onUpdate();
-        onClose();
+        
       } else {
         await api.post("/api/leave/create/", payload);
         setSnack({
