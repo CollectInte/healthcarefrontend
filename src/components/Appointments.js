@@ -397,7 +397,7 @@ const Appointments = () => {
                                             <Table stickyHeader size="small">
                                                 <TableHead>
                                                     <TableRow>
-                                                        {["App Id", "Client", "Doctor", "Date", "Time", "Status", "Purpose"].map(
+                                                        {["App Id", "Client", "Doctor", "Date", "Time", "Branch", "Status", "Purpose"].map(
                                                             (head) => (
                                                                 <TableCell
                                                                     key={head}
@@ -452,6 +452,10 @@ const Appointments = () => {
 
                                                                 <TableCell>
                                                                     {row.from_time} - {row.to_time}
+                                                                </TableCell>
+
+                                                                <TableCell sx={{ backgroundColor: "#D6E9E8" }}>
+                                                                    {row.selected_branch}
                                                                 </TableCell>
 
                                                                 <TableCell>

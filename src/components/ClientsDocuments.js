@@ -34,7 +34,7 @@ function ClientDocuments({ client, onBack }) {
     const filteredDocs = client.documents.filter(
         (doc) => doc.uploaded_by === activeType
     );
-    console.log("Client Documents:", filteredDocs);
+    // console.log("Client Documents:", filteredDocs);
 
     const getPreviewSrc = (url) => {
         if (!url) return null;

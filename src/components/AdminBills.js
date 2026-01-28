@@ -42,7 +42,7 @@ const AdminBills = () => {
       }));
 
       setRows(formatted);
-      console.log("Fetched bills:", formatted);
+      // console.log("Fetched bills:", formatted);
     } catch (err) {
       console.error("Fetch bills error", err);
     } finally {
@@ -91,7 +91,7 @@ const AdminBills = () => {
     { field: "client_name", headerName: "Client", flex: 1.2, minWidth: 140 },
     { field: "staff_name", headerName: "Staff", flex: 1.1, minWidth: 130 },
     { field: "staff_role", headerName: "Role", flex: 0.9, minWidth: 110 },
-    { field: "branch", headerName: "Branch", flex: 0.7, minWidth: 90 },
+    { field: "selected_branch", headerName: "Branch", flex: 0.7, minWidth: 90 },
     { field: "total_amount", headerName: "Total", flex: 0.8, minWidth: 110 },
     { field: "bill_status", headerName: "Status", flex: 0.8, minWidth: 110 },
     { field: "created_at", headerName: "Created", flex: 1, minWidth: 130 },
