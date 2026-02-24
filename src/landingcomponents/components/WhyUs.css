@@ -1,0 +1,61 @@
+.why-us { padding: 80px 0; background: white; }
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 60px;
+}
+.why-card {
+  padding: 28px;
+  border: 1px solid #e0e8f5;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+.why-card:hover {
+  border-color: var(--blue-primary);
+  box-shadow: 0 8px 24px rgba(30,111,207,0.1);
+  transform: translateY(-3px);
+}
+.why-icon { font-size: 28px; margin-bottom: 14px; }
+.why-title { font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+.why-desc { font-size: 14px; color: var(--gray-text); line-height: 1.6; }
+.process-section {
+  background: var(--gray-light);
+  border-radius: 12px;
+  padding: 36px;
+  border: 1px solid #e0e8f5;
+}
+.process-heading { font-size: 20px; font-weight: 700; color: var(--text-dark); text-align: center; margin-bottom: 28px; }
+.process-steps {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.process-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.step-num {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--blue-primary); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 13px; flex-shrink: 0;
+  font-family: var(--font-heading);
+}
+.step-content { min-width: 80px; }
+.step-label { font-weight: 700; font-size: 13px; color: var(--text-dark); }
+.step-desc { font-size: 11px; color: var(--gray-text); line-height: 1.3; margin-top: 2px; }
+.step-arrow { font-size: 18px; color: #b0c8e8; margin: 0 8px; flex-shrink: 0; }
+@media (max-width: 900px) {
+  .why-grid { grid-template-columns: repeat(2, 1fr); }
+  .process-steps { gap: 8px; }
+  .step-arrow { display: none; }
+}
+@media (max-width: 600px) {
+  .why-grid { grid-template-columns: 1fr; }
+  .process-steps { flex-direction: column; align-items: stretch; }
+  .process-step { background: white; padding: 12px; border-radius: 8px; border: 1px solid #e0e8f5; }
+}

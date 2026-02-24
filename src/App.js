@@ -26,9 +26,6 @@ import { SocketProvider } from "./context/SocketContext";
 import NotificationListener from "./NotificationListener";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Landingpage from './Marketing/Landingpage';
-import ContactForm from './Marketing/Contactform';
-import BookDemo from './Marketing/BookDemo';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AppRoutes from './Routes/AppRoutes'; // or Routes/AppRoutes
 import ReceptionistAppRoutes from './Routes/ReceptionistAppRoutes';
@@ -38,11 +35,45 @@ import Documents from "./ClientComponents/Documents";
 import Reviews from "./ClientComponents/Reviews";
 import Bills from "./ClientComponents/Bills";
 import AppointmentsPage from "./ClientComponents/Appointments/Appointment";
+import Navbar from "./landingcomponents/components/Navbar";
+import Hero from "./landingcomponents/components/Hero";
+import FeaturesStrip from "./landingcomponents/components/FeaturesStrip";
+import FeatureSections from "./landingcomponents/components/FeatureSections";
+import CTABanner from "./landingcomponents/components/CTABanner";
+import Comparison from "./landingcomponents/components/Comparison";
+import WhyUs from "./landingcomponents/components/WhyUs";
+import Footer from "./landingcomponents/components/Footer";
+import './Styles/global.css';
+import SuperAdminLogin from "./Pages/Login";
+import SuperAdminDashboard from './Pages/SuperAdminDashboard';
+
+
 function App() {
   const userId =
     localStorage.getItem("adminId") ||
     localStorage.getItem("userId") ||
     localStorage.getItem("id");
+
+    function LandingPage() {
+  return (
+    <div>
+      <Navbar />
+      <Hero />
+      <FeaturesStrip />
+      <FeatureSections />
+      <CTABanner />
+      <Comparison />
+      <WhyUs />
+      <Footer />
+    </div>
+  );
+}
+
+function ProtectedRoute({ children }) {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/admin" />;
+}
+
 
   return (
     <BrowserRouter>
@@ -53,10 +84,17 @@ function App() {
       <ToastContainer position="top-right" autoClose={5000} />
       <SocketProvider userId={userId}>
         <Routes>
-          <Route path="/landing" element={<Landingpage />} />
-          <Route path='/contact' element={<ContactForm />} />
-          <Route path='/demo' element={<BookDemo />} />
-          <Route path='/' element={<Login />} />
+          <Route path="/" element={<LandingPage />} />
+        <Route path="/admin" element={<SuperAdminLogin />} />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute>
+              <SuperAdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+          <Route path='/login' element={<Login />} />
           <Route path='/otp-verify' element={<OtpVerification />} />
           <Route path='/AdminDashboard' element={<AdminDashboard />} />
           <Route path="/doctor/*" element={<AppRoutes />} />

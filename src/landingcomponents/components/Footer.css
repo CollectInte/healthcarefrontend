@@ -1,0 +1,131 @@
+.footer {
+  background: var(--navy);
+  color: rgba(255, 255, 255, 0.75);
+}
+.footer-top {
+  padding: 60px 0 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.footer-top-inner {
+  display: grid;
+  grid-template-columns: 0.85fr 1fr;
+  gap: 60px;
+}
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 18px;
+  color: white;
+  margin-bottom: 14px;
+}
+.footer-brand p {
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.footer-socials {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.social-link {
+
+  border-radius: 6px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: background 0.2s;
+}
+
+.footer-certs {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.footer-certs span {
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, 0.85fr);
+  gap: 32px;
+}
+.footer-col h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 14px;
+  grid-template-columns: repeat(3, 1.4fr);
+
+}
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.footer-col li {
+  font-size: 13px;
+}
+.footer-col a {
+  color: rgba(255, 255, 255, 0.65);
+  transition: color 0.2s;
+}
+.footer-col a:hover {
+  color: white;
+}
+.footer-bottom {
+  padding: 18px 0;
+}
+.footer-bottom-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-bottom p {
+  font-size: 13px;
+}
+.footer-legal {
+  display: flex;
+  gap: 20px;
+}
+.footer-legal a {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+.footer-legal a:hover {
+  color: white;
+}
+@media (max-width: 900px) {
+  .footer-top-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .footer-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 500px) {
+  .footer-links {
+    grid-template-columns: 1fr;
+  }
+  .footer-bottom-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+}

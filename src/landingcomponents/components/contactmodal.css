@@ -1,0 +1,68 @@
+.modal-wrapper {
+  display: flex;
+  min-height: 550px;
+}
+
+/* LEFT SIDE */
+.modal-left {
+  flex: 1;
+  background: linear-gradient(135deg, #1f2937, #111827);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+/* RIGHT SIDE */
+.modal-right {
+  flex: 1.5;
+  padding: 40px;
+  position: relative;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form area */
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  flex: 1;
+}
+
+/* Two column row */
+.row {
+  display: flex;
+  gap: 16px;
+}
+
+.row .field {
+  flex: 1;
+}
+
+/* Button area */
+.button-wrapper {
+  margin-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .modal-wrapper {
+    flex-direction: column;
+  }
+
+  .modal-left {
+    display: none;
+  }
+
+  .modal-right {
+    padding: 24px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+}

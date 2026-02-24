@@ -1,0 +1,146 @@
+.cta-banner {
+  background: linear-gradient(135deg, #0d2550 0%, #1a3a6e 50%, #1e6fcf 100%);
+  padding: 72px 0;
+  position: relative;
+  overflow: hidden;
+}
+.cta-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.cta-inner {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+}
+.cta-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.cta-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+.cta-sub {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 28px;
+  line-height: 1.7;
+}
+.cta-buttons {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.cta-btn-white {
+  display: inline-block;
+  background: white;
+  color: var(--blue-primary);
+  padding: 13px 28px;
+  border-radius: 4px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+.cta-btn-white:hover {
+  background: var(--blue-bg);
+  color: var(--blue-dark);
+}
+.cta-btn-outline {
+  display: inline-block;
+  background: transparent;
+  color: white;
+  padding: 12px 26px;
+  border-radius: 4px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 13px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  transition: all 0.2s;
+}
+.cta-btn-outline:hover {
+  border-color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+.cta-icons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.cta-icon-item {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 600;
+}
+.cta-form-card {
+  background: white;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+.cta-form-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+.cta-form-card p {
+  font-size: 13px;
+  color: var(--gray-text);
+  margin-bottom: 20px;
+}
+.form-group {
+  margin-bottom: 12px;
+}
+.form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #d0e0f0;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-dark);
+  background: white;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--blue-primary);
+}
+.full-width {
+  width: 100%;
+  text-align: center;
+  padding: 13px;
+  font-size: 14px;
+}
+@media (max-width: 960px) {
+  .cta-inner {
+    grid-template-columns: 1fr;
+  }
+  .cta-title {
+    font-size: 24px;
+  }
+}
+
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
