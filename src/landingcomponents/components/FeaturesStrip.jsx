@@ -2,12 +2,16 @@ import React from "react";
 import "./FeaturesStrip.css";
 
 const features = [
+  { animation: "/animations/marketing.json", label: "Marketing" },
+  { animation: "/animations/branding.json", label: "Branding" },
+  { animation: "/animations/content.json", label: "Content Creation" },
   { animation: "/animations/wired-gradient-970-video-conference-hover-pinch.json", label: "Scheduling" },
   { animation: "/animations/patient.json", label: "Patient Portal" },
   { animation: "/animations/documents.json", label: "Documnets" },
   { animation: "/animations/prescription.json", label: "e-Prescribing" },
   { animation: "/animations/billing.json", label: "Medical Billing" },
   { animation: "/animations/admin.json", label: "Admin Portal" },
+  
 ];
 
 const FeaturesStrip = () => (

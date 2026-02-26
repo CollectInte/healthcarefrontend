@@ -32,6 +32,21 @@ const reasons = [
     title: "Faster Service, Better Care",
     desc: "Reduce waiting times, improve coordination, and deliver seamless care — enhancing overall patient satisfaction.",
   },
+  {
+   icon: "/animations/Why/marketing.json",
+    title: "Marketing & Growth",
+    desc: "Drive visibility and reach with strategic digital marketing. From social media and campaigns to performance tracking, we help attract the right audience and convert attention into measurable growth.",
+  },
+  {
+   icon: "/animations/Why/branding.json",
+    title: "Brand Identity",
+    desc: "Build a consistent and recognizable brand presence. We help define your brand voice, visuals, and messaging to ensure your organization stands out with clarity, credibility, and professionalism.",
+  },
+  {
+   icon: "/animations/Why/content.json",
+    title: "Content Creation",
+    desc: "Engage your audience with high-quality content tailored for Hospitals/Clinics. From visuals to messaging, we create meaningful content that builds trust and communicates value clearly across platforms.",
+  },
 ];
 
 const WhyUs = () => (

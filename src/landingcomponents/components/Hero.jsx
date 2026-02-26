@@ -65,6 +65,14 @@ const Hero = () => {
               <span className="stars">✔</span>
               <span> Smart billing & administration</span>
             </div>
+            <div className="rating-badge">
+              <span className="stars">✔</span>
+              <span> Branding & Marketing</span>
+            </div>
+            <div className="rating-badge">
+              <span className="stars">✔</span>
+              <span> Content Creation</span>
+            </div>
           </div>
           <p className="strip-title">
             Take full control of your healthcare operations — anytime, anywhere.

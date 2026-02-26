@@ -1,5 +1,7 @@
 import React from "react";
 import "./FeatureSections.css";
+import branding from '../../images/Brandingimage.png';
+import content from '../../images/content.png';
 
 const MockScheduler = () => (
   <div className="mock-ui">
@@ -405,6 +407,21 @@ const MockAttendance = () => (
     </div>
   </div>
 );
+
+const Branding = () => (
+  <div className="mock-ui">
+    <img src={branding} alt="Branding&Marketing"/>
+  </div>
+);
+
+
+const Content = () => (
+  <div className="mock-ui">
+    <img src={content} alt="Content Creation"/>
+  </div>
+);
+
+
 const sections = [
   {
     id: "Patient Appointment Scheduling",
@@ -479,6 +496,34 @@ const sections = [
       "Automated attendance records",
     ],
     Visual: MockAttendance,
+    reverse: true,
+  },
+  {
+    id: "Branding And Marketing",
+    tag: "BRANDING & MARKETING",
+    title:
+      "Build brand visibility and drive growth with smart marketing tools.",
+    bullets: [
+      "Unified brand identity management",
+      "Campaign planning and execution",
+      "Social media and digital marketing support",
+      "Performance tracking and insights",
+      "Consistent branding across all touchpoints",
+    ],
+    Visual: Branding,
+    reverse: false,
+  },
+  {
+    id: "Content Creation",
+    tag: "CONTENT CREATION",
+    title:
+      "Create, manage, and publish content effortlessly.",
+    bullets: [
+      "Centralized content creation and editing",
+      "Manage blogs, posts, creatives, and media assets",
+      "Consistent messaging across platforms",
+    ],
+    Visual: Content,
     reverse: true,
   },
 ];
