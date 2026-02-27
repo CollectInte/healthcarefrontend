@@ -46,6 +46,7 @@ import Footer from "./landingcomponents/components/Footer";
 import './Styles/global.css';
 import SuperAdminLogin from "./Pages/Login";
 import SuperAdminDashboard from './Pages/SuperAdminDashboard';
+import ClientPrescriptions from './ClientComponents/ClientPrescriptions';
 
 
 function App() {
@@ -107,6 +108,7 @@ function ProtectedRoute({ children }) {
             <Route path="appointment" element={<AppointmentsPage />} />
             <Route path="reviews" element={<Reviews />} />
             <Route path="bills" element={<Bills />} />
+            <Route path="prescriptions" element={<ClientPrescriptions />} />
           </Route>
         </Routes>
 

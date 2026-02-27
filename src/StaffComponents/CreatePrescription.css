@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700&display=swap');
+
+.rx-wrap *, .rx-wrap *::before, .rx-wrap *::after { box-sizing: border-box; }
+
+.rx-wrap {
+  --blue:       #1a56db;
+  --blue-dark:  #1341b0;
+  --blue-light: #eff4ff;
+  --blue-mid:   #dbeafe;
+  --black:      #3f6f7a;
+  --dark:       #1e293b;
+  --text:       #0f172a;
+  --muted:      #64748b;
+  --border:     #e2e8f0;
+  --surface:    #ffffff;
+  --bg:         #f8fafc;
+  --radius:     10px;
+  --shadow:     0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.12);
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+/* ── Top header ── */
+.rx-header {
+  background: var(--black);
+  padding: 0 32px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.rx-header-logo {
+  width: 32px; height: 32px;
+  background: var(--blue);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.rx-header h1 {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.rx-header-pill {
+  margin-left: auto;
+  background: rgba(26,86,219,0.25);
+  color: #93b4f8;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ── Two-column layout ── */
+.rx-body {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  min-height: calc(100vh - 60px);
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .rx-body { grid-template-columns: 1fr; }
+  .rx-header { padding: 0 16px; }
+}
+
+/* ── LEFT PANEL ── */
+.rx-left {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 24px 18px;
+  position: sticky;
+  top: 60px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+@media (max-width: 860px) {
+  .rx-left { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+}
+
+/* … continue copying all styles exactly as in your STYLES constant … */
+
+/* ── History ── */
+.rx-history { padding: 0 32px 40px; background: var(--bg); }
+@media (max-width: 860px) { .rx-history { padding: 0 16px 40px; } }
+
+.rx-history-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 0 16px;
+  border-top: 1px solid var(--border);
+}
+.rx-history-bar h3 {
+  font-family: 'Sora', sans-serif;
+  font-size: 1rem; font-weight: 600;
+  color: var(--text); margin: 0;
+}
+.rx-history-badge {
+  font-size: 0.74rem;
+  background: var(--blue-light);
+  color: var(--blue);
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--blue-mid);
+}

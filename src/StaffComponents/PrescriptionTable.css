@@ -1,0 +1,178 @@
+/* ================== SCREEN ================== */
+.preview-container {
+  background: #f3f4f6;
+  padding: 12px;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.preview-actions button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: white;
+  cursor: pointer;
+}
+
+.preview-actions .primary {
+  background: #2563eb;
+  color: white;
+  border: none;
+}
+
+/* ================== A4 PAPER ================== */
+.rx-paper {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 15mm;
+  background: white;
+  margin: auto;
+  position: relative;
+  font-family: "Inter", sans-serif;
+  color: #111;
+}
+
+/* ================== HEADER ================== */
+.rx-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rx-logo {
+  height: 50px;
+}
+
+.rx-logo-placeholder {
+  height: 50px;
+  width: 50px;
+  border-radius: 6px;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.rx-header-center {
+  flex: 1;
+  text-align: center;
+}
+
+.rx-clinic-name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.rx-branch {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.rx-header-right {
+  text-align: right;
+  font-size: 12px;
+}
+
+/* ================== META ================== */
+.rx-divider {
+  border-bottom: 2px solid #e5e7eb;
+  margin: 10px 0;
+}
+
+.rx-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.rx-label {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.rx-meta-val {
+  font-weight: 600;
+}
+
+/* ================== TABLE ================== */
+.rx-section-title {
+  margin-top: 14px;
+  font-weight: 700;
+}
+
+.rx-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.rx-table th,
+.rx-table td {
+  border: 1px solid #e5e7eb;
+  padding: 6px;
+}
+
+.rx-table th {
+  background: #f3f4f6;
+}
+
+.rx-table tr {
+  page-break-inside: avoid;
+}
+
+/* ================== NOTES ================== */
+.rx-notes {
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+/* ================== FOOTER ================== */
+.rx-footer {
+  position: absolute;
+  bottom: 15mm;
+  left: 15mm;
+  right: 15mm;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 6px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.rx-footer-name {
+  font-weight: 600;
+}
+
+.rx-footer-right {
+  text-align: right;
+}
+
+/* ================== PRINT ================== */
+@media print {
+  body {
+    margin: 0;
+    background: white;
+  }
+
+  .preview-actions {
+    display: none !important;
+  }
+
+  .rx-paper {
+    margin: 0;
+    box-shadow: none;
+    page-break-after: always;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+}

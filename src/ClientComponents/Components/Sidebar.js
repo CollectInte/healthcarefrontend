@@ -47,6 +47,8 @@ const menuItems = [
 
   { text: "Reviews", icon: <StarBorderIcon />, path: "reviews" },
   { text: "Bills", icon: <ReceiptIcon />, path: "bills" },
+    { text: "Prescriptions", icon: <ReceiptIcon />, path: "prescriptions" },
+
 ];
 
 export default function Sidebar({ isOpen, onToggle }) {

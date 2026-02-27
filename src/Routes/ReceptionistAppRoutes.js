@@ -14,6 +14,10 @@ import Appointmentdoctorschedule from '../ReceptionistComponents/Appointmentdoct
 import Bills from "../ReceptionistComponents/Bills";
 import Clients from '../ReceptionistComponents/Clients/Clients';
 import Slots from '../ReceptionistComponents/TimeSlots/TimeSlots';
+import Prescription from '../ReceptionistComponents/AddPrescription';
+import AddMedicine from '../ReceptionistComponents/AddMedicine';
+import AddTests from '../ReceptionistComponents/AddTests';
+
 export default function ReceptionistAppRoutes() {
   return (
     <>
@@ -33,12 +37,15 @@ export default function ReceptionistAppRoutes() {
         <Route path="service-request" element={<ServiceRequest />} />
         <Route path="documents" element={<Document />} />
         <Route path="schedule" element={<Appointmentdoctorschedule />} />
-         <Route path="bills" element={<Bills />} />1
+         <Route path="bills" element={<Bills />} />
          <Route path="clients" element={<Clients />} />
         <Route path="add-slots" element={<Slots />} />
 
 
         <Route path="profile" element={<Profile />} />
+        <Route path="medicine" element={<AddMedicine />} />
+        <Route path="medicaltests" element={<AddTests />} />
+        <Route path="prescription" element={<Prescription />} />
         {/* <Route path="calculator" element={<Calculator />} /> */}
       </Route>
 

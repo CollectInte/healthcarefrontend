@@ -43,6 +43,11 @@ import ArticleIcon from '@mui/icons-material/Article';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import GroupsIcon from '@mui/icons-material/Groups';
+import MedicationIcon from "@mui/icons-material/Medication";
+import AddMedicine from './AddMedicine';
+import BiotechIcon from "@mui/icons-material/Biotech";
+import AddMedicalTests from './AddMedicalTests';
+import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import {
   Avatar,
   Menu,
@@ -61,7 +66,7 @@ import NotificationListener from "../NotificationListener";
 import NotificationBell from '../NotificationBell';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
-
+import ConsultationTypes from './Consultationtypes';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -375,29 +380,30 @@ export default function AdminDashboard() {
           aria-label="mailbox folders"
         >
           <Drawer
-            variant="permanent"
-            open
-            sx={{
-              '& .MuiDrawer-paper': {
-                width: drawerWidth,
-                background: 'linear-gradient(180deg, #3f6f7a, #5f9aa6)',
-                color: '#fff',
-                borderTopRightRadius: '40px',
-                borderBottomRightRadius: '40px',
-                marginTop: '140px',
-                paddingTop: 1,
-              },
-            }}
-          >
-            {/* <DrawerHeader>
-              <IconButton onClick={handleDrawerClose}>
-                {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-              </IconButton>
-            </DrawerHeader>
-            <Divider /> */}
+        variant="permanent"
+        open
+        sx={{
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            background: 'linear-gradient(180deg, #3f6f7a, #5f9aa6)',
+            color: '#fff',
+            borderTopRightRadius: '40px',
+            borderBottomRightRadius: '\]40px',
+            marginTop: '140px',
+
+            // ✅ Important changes
+            height: 'calc(100vh - 140px)',   // Full remaining screen height
+            overflowY: 'auto',               // Enable vertical scroll
+            overflowX: 'hidden',             // Prevent horizontal scroll
+            scrollbarWidth: 'thin',          // Firefox
+          },
+        }}
+      >
+
+            
             <List>
               {['Home', 'Employees', 'Clients', 'Documents', 'Profile'].map((text) => {
-                // Define the icon mapping
+               
                 const iconMapping = {
                   Home: <HomeIcon />,
                   Employees: <BadgeIcon />,
@@ -409,28 +415,28 @@ export default function AdminDashboard() {
                 return (
                   <ListItem key={text} disablePadding sx={{ marginTop: "5px" }}>
                     <ListItemButton
-                      onClick={() => setContent(text)} // Update content on click
+                      onClick={() => setContent(text)} 
                       sx={{
                         maxHeight: 38,
                         justifyContent: open ? 'initial' : 'center',
                         px: 2.5,
-                        backgroundColor: content === text ? '#5f9aa6' : 'transparent', // Change background color
+                        backgroundColor: content === text ? '#5f9aa6' : 'transparent', 
                         color: content === text ? '#fff' : 'inherit',
                       }}
                     >
                       <ListItemIcon
                         sx={{ color: '#fff', minWidth: 36 }}
                       >
-                        {iconMapping[text]} {/* Render icon based on text */}
+                        {iconMapping[text]} 
                       </ListItemIcon>
                       <ListItemText primary={text} />
                     </ListItemButton>
                   </ListItem>
                 );
               })}
-              {/* <hr /> */}
-              {['Appointments', 'Attendance', 'Leave Requests', 'Reviews', 'Bills', 'Notifications'].map((text) => {
-                // Define the icon mapping
+             
+              {['Appointments', 'Attendance', 'Leave Requests', 'Reviews', 'Bills', 'Notifications','Add Medicine',"Add Medical Tests","Add Consultation Types"].map((text) => {
+               
                 const iconMapping = {
                   Appointments: <CalendarMonthIcon />,
                   Attendance: <PendingActionsIcon />,
@@ -438,24 +444,27 @@ export default function AdminDashboard() {
                   Reviews: <ReviewsIcon />,
                   Bills: <ReceiptIcon />,
                   Notifications: <ContactSupportIcon />,
+                  'Add Medicine': <MedicationIcon sx={{color:"white"}} />,
+                  'Add Medical Tests': <BiotechIcon />,
+                  'Add Consultation Types': <MedicalServicesIcon />
                 };
 
                 return (
                   <ListItem key={text} disablePadding >
                     <ListItemButton
-                      onClick={() => setContent(text)} // Update content on click
+                      onClick={() => setContent(text)} 
                       sx={{
                         maxHeight: 38,
                         justifyContent: open ? 'initial' : 'center',
                         px: 2.5,
-                        backgroundColor: content === text ? '#5f9aa6' : 'transparent', // Change background color
+                        backgroundColor: content === text ? '#5f9aa6' : 'transparent', 
                         color: content === text ? 'white' : 'inherit',
                       }}
                     >
                       <ListItemIcon
                           sx={{ color: '#fff', minWidth: 36 }}
                       >
-                        {iconMapping[text]} {/* Render icon based on text */}
+                        {iconMapping[text]} 
                       </ListItemIcon>
                       <ListItemText primary={text} />
                     </ListItemButton>
@@ -568,6 +577,25 @@ export default function AdminDashboard() {
                 <SendNotification />
               </>
             )}
+            {content === 'Add Medicine' && (
+              <>
+                <AddMedicine />
+              </>
+            )}
+            {
+              content === 'Add Medical Tests' && ( 
+                <>
+                   <AddMedicalTests />
+                </>
+              )
+            }
+            {
+              content === 'Add Consultation Types' && (
+                <>
+                <ConsultationTypes />
+                </>
+              )
+            }
           </Box>
         </Box>
       </Box >

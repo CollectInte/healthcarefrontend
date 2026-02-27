@@ -11,6 +11,7 @@ import Calculator from '../StaffComponents/Calculator';
 import ProtectedRoute from '../StaffComponents/ProtectedRoute';
 import Document from '../StaffComponents/Documents';
 import Profile from '../StaffComponents/Profile';
+import AddPrescription from "../StaffComponents/CreatePrescription";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -30,6 +31,7 @@ export default function AppRoutes() {
         <Route path="service-request" element={<ServiceRequest />} />
         <Route path="documents" element={<Document />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="prescription" element={<AddPrescription />} />
         {/* <Route path="calculator" element={<Calculator />} /> */}
       </Route>
 

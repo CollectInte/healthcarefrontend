@@ -22,8 +22,10 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DescriptionIcon from "@mui/icons-material/Description";
 import DoctorProfileModal from "./DoctorProfileModal";
+import MedicationIcon from "@mui/icons-material/Medication";
 import React, { useState } from "react";
-
+import AddPrescription from "./AddPrescription";
+import CreatePrescription from "./CreatePrescription";
 export const drawerWidth = 240;
 export const drawerWidthClosed = 70;
 
@@ -40,6 +42,7 @@ export default function Sidebar({ isOpen, onToggle, company }) {
     { text: "Attendance", icon: <AccessTimeIcon />, path: "/doctor/dashboard/attendance" },
     { text: "Appointment Review", icon: <AssignmentIcon />, path: "/doctor/dashboard/task-review" },
     { text: "Documents", icon: <DescriptionIcon />, path: "/doctor/dashboard/documents" },
+    {text:"Add Prescription",icon: <MedicationIcon />, path: "/doctor/dashboard/prescription"},
     {
       text: "Logout", icon: <LogoutIcon />, onClick: () => {
         handleLogout();
