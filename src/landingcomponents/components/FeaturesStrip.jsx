@@ -7,7 +7,7 @@ const features = [
   { animation: "/animations/content.json", label: "Content Creation" },
   { animation: "/animations/wired-gradient-970-video-conference-hover-pinch.json", label: "Scheduling" },
   { animation: "/animations/patient.json", label: "Patient Portal" },
-  { animation: "/animations/documents.json", label: "Documnets" },
+  { animation: "/animations/documents.json", label: "Documents" },
   { animation: "/animations/prescription.json", label: "e-Prescribing" },
   { animation: "/animations/billing.json", label: "Medical Billing" },
   { animation: "/animations/admin.json", label: "Admin Portal" },
