@@ -35,20 +35,90 @@ export default function Sidebar({ isOpen, onToggle, company }) {
   const staffName = localStorage.getItem('userName');
   const [openProfile, setOpenProfile] = useState(false);
   const [staff, setStaff] = useState(null);
+  
+  const moduleAccessMap = {
+  appointments: ["appointments", "reviews","add_slots"],
+  attendance: ["attendance", "leave_requests"],
+  prescriptions: [
+    "medicine",
+    "medical_tests",
+    "consultation_types",
+    "prescriptions",
+  ],
+  documents: ["documents"],
+  bills: ["bills"],
+  notifications: ["notifications"],
+  clients: ["clients"],
+  employees: ["employees"],
+};
 
-  const menuItems = [
-    { text: "Dashboard", icon: <DashboardIcon />, path: "/doctor/dashboard" },
-    { text: "Appointment", icon: <EventIcon />, path: "/doctor/dashboard/appointments" },
-    { text: "Attendance", icon: <AccessTimeIcon />, path: "/doctor/dashboard/attendance" },
-    { text: "Appointment Review", icon: <AssignmentIcon />, path: "/doctor/dashboard/task-review" },
-    { text: "Documents", icon: <DescriptionIcon />, path: "/doctor/dashboard/documents" },
-    {text:"Add Prescription",icon: <MedicationIcon />, path: "/doctor/dashboard/prescription"},
-    {
-      text: "Logout", icon: <LogoutIcon />, onClick: () => {
-        handleLogout();
-      }
-    },
-  ];
+const hasAccess = (itemKey) => {
+  return allowedModules.some((module) => {
+    const children = moduleAccessMap[module];
+
+    // if module has child mapping
+    if (children) {
+      return children.includes(itemKey);
+    }
+
+    // fallback direct match
+    return module === itemKey;
+  });
+};
+        const menuItems = [
+        {
+          text: "Dashboard",
+          module_key: "dashboard",
+          icon: <DashboardIcon />,
+          path: "/doctor/dashboard",
+        },
+        {
+          text: "Appointment",
+          module_key: "appointments",
+          icon: <EventIcon />,
+          path: "/doctor/dashboard/appointments",
+        },
+        {
+          text: "Attendance",
+          module_key: "attendance",
+          icon: <AccessTimeIcon />,
+          path: "/doctor/dashboard/attendance",
+        },
+        {
+          text: "Appointment Review",
+          module_key: "reviews",
+          icon: <AssignmentIcon />,
+          path: "/doctor/dashboard/task-review",
+        },
+        {
+          text: "Documents",
+          module_key: "documents",
+          icon: <DescriptionIcon />,
+          path: "/doctor/dashboard/documents",
+        },
+        {
+          text: "Add Prescription",
+          module_key: "prescriptions",
+          icon: <MedicationIcon />,
+          path: "/doctor/dashboard/prescription",
+        },
+        {
+          text: "Logout",
+          module_key: "logout",
+          icon: <LogoutIcon />,
+          onClick: () => handleLogout(),
+        },
+      ];
+
+  const storedModules = localStorage.getItem("modules");
+  const allowedModules = storedModules ? JSON.parse(storedModules) : [];
+
+  const defaultModules = ["dashboard", "profile", "logout"];
+
+  const filteredMenu = menuItems.filter(
+  (item) =>
+    defaultModules.includes(item.module_key) || hasAccess(item.module_key)
+  );
 
   const handleLogout = async () => {
     try {
@@ -262,7 +332,7 @@ export default function Sidebar({ isOpen, onToggle, company }) {
 
         {/* Menu */}
         <List sx={{ px: 2 }}>
-          {menuItems.map((item) => {
+          {filteredMenu.map((item) => {
             const isLogout = item.text === "Logout";
 
             return (

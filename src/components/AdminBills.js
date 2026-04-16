@@ -25,30 +25,36 @@ const AdminBills = () => {
   const [selectedBill, setSelectedBill] = useState(null);
 
   /* ---------------- FETCH ALL BILLS ---------------- */
-  const fetchBills = async () => {
-    try {
-      setLoading(true);
-      const res = await axios.get(`${process.env.REACT_APP_URL}/bill/bills`, {
-        withCredentials: true,
-      });
+const fetchBills = async () => {
+  try {
+    setLoading(true);
 
-      const formatted = res.data.bills.map((b) => ({
-        ...b,
-        id: b.id,
-        due_date: b.due_date
-          ? new Date(b.due_date).toISOString().split("T")[0] // YYYY-MM-DD
-          : null,
-        created_at: new Date(b.created_at).toISOString().split("T")[0],
-      }));
+    const res = await axios.get(
+      `${process.env.REACT_APP_URL}/bill/bills`,
+      { withCredentials: true }
+    );
 
-      setRows(formatted);
-      // console.log("Fetched bills:", formatted);
-    } catch (err) {
-      console.error("Fetch bills error", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    console.log("API Response:", res.data); // keep this once
+
+    const billsData = res.data?.data || []; // ✅ FIXED
+
+    const formatted = billsData.map((b) => ({
+      ...b,
+      id: b.bill_id,
+      created_at: new Date(b.created_at).toISOString().split("T")[0],
+
+      // map fields properly
+      selected_branch: b.branch,
+      doctor_name: b.doctor_name,
+    }));
+
+    setRows(formatted);
+  } catch (err) {
+    console.error("Fetch bills error", err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchBills();
@@ -71,9 +77,17 @@ const AdminBills = () => {
   /* ---------------- UPDATE BILL ---------------- */
   const handleUpdate = async () => {
     try {
+      const payload = {
+        subtotal: selectedBill.subtotal,
+        tax: selectedBill.tax,
+        total_amount: selectedBill.total_amount,
+        bill_status: selectedBill.bill_status,
+        notes: selectedBill.notes,
+      };
+
       await axios.put(
         `${process.env.REACT_APP_URL}/bill/bills/${selectedBill.bill_id}`,
-        selectedBill,
+        payload,
         { withCredentials: true }
       );
 
@@ -86,29 +100,26 @@ const AdminBills = () => {
 
   /* ---------------- COLUMNS ---------------- */
   const columns = [
-    { field: "bill_id", headerName: "Bill ID", flex: 0.6, minWidth: 80 },
-    { field: "appointment_id", headerName: "Appt ID", flex: 0.8, minWidth: 100 },
-    { field: "client_name", headerName: "Client", flex: 1.2, minWidth: 140 },
-    { field: "staff_name", headerName: "Staff", flex: 1.1, minWidth: 130 },
-    { field: "staff_role", headerName: "Role", flex: 0.9, minWidth: 110 },
-    { field: "selected_branch", headerName: "Branch", flex: 0.7, minWidth: 90 },
-    { field: "total_amount", headerName: "Total", flex: 0.8, minWidth: 110 },
-    { field: "bill_status", headerName: "Status", flex: 0.8, minWidth: 110 },
-    { field: "created_at", headerName: "Created", flex: 1, minWidth: 130 },
+    { field: "bill_id", headerName: "Bill ID", flex: 0.6 },
+    { field: "appointment_id", headerName: "Appt ID", flex: 0.8 },
+    { field: "client_name", headerName: "Client", flex: 1.2 },
+    { field: "doctor_name", headerName: "Doctor", flex: 1.2 }, // ✅ NEW
+    // { field: "staff_name", headerName: "Staff", flex: 1.1 },
+    // { field: "staff_role", headerName: "Role", flex: 0.9 },
+    { field: "selected_branch", headerName: "Branch", flex: 0.8 }, // ✅ FIXED
+    { field: "total_amount", headerName: "Total", flex: 0.8 },
+    { field: "bill_status", headerName: "Status", flex: 0.8 },
+    { field: "created_at", headerName: "Created", flex: 1 },
     {
       field: "actions",
       headerName: "Actions",
       flex: 1,
-      minWidth: 140,
       sortable: false,
       renderCell: (params) => (
         <Button
           size="small"
           variant="contained"
-          sx={{
-            backgroundColor: "#3f6f7a",
-            textTransform: "none",
-          }}
+          sx={{ backgroundColor: "#3f6f7a", textTransform: "none" }}
           onClick={() => handleView(params.row.bill_id)}
         >
           View / Edit
@@ -137,23 +148,23 @@ const AdminBills = () => {
           loading={loading}
           getRowId={(row) => row.bill_id}
           initialState={{
-                pagination: { paginationModel: { pageSize: 6, page: 0 } },
-              }}
+            pagination: { paginationModel: { pageSize: 6, page: 0 } },
+          }}
           pageSizeOptions={[10, 20, 50]}
           disableRowSelectionOnClick
           columnBuffer={2}
           disableColumnResize
           sx={{
-                "& .MuiDataGrid-columnHeaderTitle": {
-                  color: "#3f6f7a",
-                  fontWeight: 600,
-                },
-              }}
+            "& .MuiDataGrid-columnHeaderTitle": {
+              color: "#3f6f7a",
+              fontWeight: 600,
+            },
+          }}
         />
       </Box>
 
       {/* ---------------- VIEW / EDIT DIALOG ---------------- */}
-      <Dialog open={open} onClose={() => setOpen(false)} sx={{borderRadius:"20px"}} maxWidth="md" fullWidth>
+      <Dialog open={open} onClose={() => setOpen(false)} sx={{ borderRadius: "20px" }} maxWidth="md" fullWidth>
         <DialogTitle>Bill Details</DialogTitle>
 
         {selectedBill && (
@@ -175,20 +186,6 @@ const AdminBills = () => {
 
               <Grid item size={4}>
                 <TextField
-                  label="Penalty"
-                  fullWidth
-                  value={selectedBill.penalty || ""}
-                  onChange={(e) =>
-                    setSelectedBill({
-                      ...selectedBill,
-                      penalty: e.target.value,
-                    })
-                  }
-                />
-              </Grid>
-
-              <Grid item size={4}>
-                <TextField
                   label="Tax"
                   fullWidth
                   value={selectedBill.tax || ""}
@@ -200,6 +197,22 @@ const AdminBills = () => {
                   }
                 />
               </Grid>
+
+              <Grid item size={4}>
+                <TextField
+                  label="Generated By"
+                  fullWidth
+                  value={selectedBill.staff_name || ""}
+                  onChange={(e) =>
+                    setSelectedBill({
+                      ...selectedBill,
+                      staff_name: e.target.value,
+                    })
+                  }
+                />
+              </Grid>
+
+              
 
               <Grid item size={4}>
                 <TextField
@@ -269,13 +282,59 @@ const AdminBills = () => {
                   }
                 />
               </Grid>
+              <Grid item size={12}>
+                <Typography variant="subtitle1" fontWeight={600} mt={2}>
+                  Bill Breakdown
+                </Typography>
+              </Grid>
+
+              {/* CONSULTATIONS */}
+              <Grid item size={12}>
+                <Typography variant="body2" fontWeight={600}>
+                  Consultations:
+                </Typography>
+                {selectedBill.consultations?.map((c, i) => (
+                  <Typography key={i} variant="body2">
+                    • {c.name} - ₹{c.cost}
+                  </Typography>
+                ))}
+              </Grid>
+
+              {/* MEDICINES */}
+              <Grid item size={12}>
+                <Typography variant="body2" fontWeight={600}>
+                  Medicines:
+                </Typography>
+                {selectedBill.medicines?.map((m, i) => (
+                  <Typography key={i} variant="body2">
+                    • {m.medicine_name} ({m.strength}{m.unit}) {"- "}
+                    {m.amount}₹ × {m.quantity} → ₹{m.total_amount}
+                  </Typography>
+                ))}
+              </Grid>
+
+              {/* TESTS */}
+              <Grid item size={12}>
+                <Typography variant="body2" fontWeight={600}>
+                  Tests:
+                </Typography>
+                {selectedBill.tests?.length === 0 ? (
+                  <Typography variant="body2">No tests</Typography>
+                ) : (
+                  selectedBill.tests.map((t, i) => (
+                    <Typography key={i} variant="body2">
+                      • {t.name}
+                    </Typography>
+                  ))
+                )}
+              </Grid>
             </Grid>
           </DialogContent>
         )}
 
         <DialogActions>
-          <Button sx={{color:"#3f6f7a"}} onClick={() => setOpen(false)}>Cancel</Button>
-          <Button variant="contained" sx={{backgroundColor:"#3f6f7a"}} onClick={handleUpdate}>
+          <Button sx={{ color: "#3f6f7a" }} onClick={() => setOpen(false)}>Cancel</Button>
+          <Button variant="contained" sx={{ backgroundColor: "#3f6f7a" }} onClick={handleUpdate}>
             Update Bill
           </Button>
         </DialogActions>

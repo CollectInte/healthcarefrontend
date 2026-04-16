@@ -9,14 +9,30 @@ import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import { useNavigate } from "react-router-dom";
 import ForgotPassword from "../Pages/ForgotPassword";
+import CircularProgress from "@mui/material/CircularProgress";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import logo from '../images/caredesk360.png';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [openForgot, setOpenForgot] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success", // success | error | warning | info
+  });
+
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
   const submitdetails = async () => {
+    setLoading(true);
     try {
       const response = await fetch(process.env.REACT_APP_LOGIN, {
         method: "POST",
@@ -31,7 +47,11 @@ const Login = () => {
       console.log("Login response data:", data);
 
       if (!response.ok) {
-        alert(data.message || "Login failed");
+        setSnackbar({
+          open: true,
+          message: data.message || "Login failed",
+          severity: "error",
+        });
         return;
       }
 
@@ -64,11 +84,24 @@ const Login = () => {
       //   navigate("/");
       // }
       // navigate("/otp-verify");
-      navigate("/otp-verify");
-      alert("Login successful");
+      setSnackbar({
+        open: true,
+        message: "Login successful",
+        severity: "success",
+      });
+
+      setTimeout(() => {
+        navigate("/otp-verify");
+      }, 3000);
     } catch (error) {
       console.error("Network error:", error);
-      alert("Server not reachable");
+      setSnackbar({
+        open: true,
+        message: "Server not reachable",
+        severity: "error",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -98,11 +131,11 @@ const Login = () => {
         >
           {/* Left Image Section */}
           <Box
-          onClick={() => window.open("https://ridgeveda.com", "_blank")}
+            onClick={() => window.open("https://caredesk360.com", "_blank")}
             sx={{
               flex: 1,
               position: "relative",
-              backgroundImage: "url(https://ridgeveda.com/favicon.png)",
+              backgroundImage: `url(${logo})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               minHeight: 300,
@@ -131,9 +164,9 @@ const Login = () => {
             >
               <Typography
                 variant="h6"
-                sx={{ color: "#fff", fontWeight: 700,textDecoration: 'underline',cursor:'pointer', fontFamily: "Inter, sans-serif" }}
+                sx={{ color: "#fff", fontWeight: 700, textDecoration: 'underline', cursor: 'pointer', fontFamily: "Inter, sans-serif" }}
               >
-              caredesk360
+                caredesk360
               </Typography>
               <Typography
                 variant="body2"
@@ -213,6 +246,7 @@ const Login = () => {
               onClick={submitdetails}
               variant="contained"
               size="large"
+              disabled={loading}
               sx={{
                 mt: 3,
                 py: 1.2,
@@ -224,7 +258,11 @@ const Login = () => {
                 },
               }}
             >
-              Login
+              {loading ? (
+                <CircularProgress size={24} sx={{ color: "#fff" }} />
+              ) : (
+                "Login"
+              )}
             </Button>
           </Box>
         </Paper>
@@ -257,6 +295,20 @@ const Login = () => {
 
 
       <ForgotPassword open={openForgot} onClose={() => setOpenForgot(false)} />
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

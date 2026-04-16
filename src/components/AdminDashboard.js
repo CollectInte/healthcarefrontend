@@ -15,6 +15,7 @@ import SendNotification from './UpdatedNotifications';
 import PaymentsTable from './Payments';
 import Passwordrepository from './Passwordrepository';
 import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency';
+import LockPersonIcon from '@mui/icons-material/LockPerson';
 import logo from '../images/RVlogo.png';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -67,6 +68,7 @@ import NotificationBell from '../NotificationBell';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import ConsultationTypes from './Consultationtypes';
+import RoleModuleManager from './RoleModuleManager';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -136,7 +138,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 
-
 export default function AdminDashboard() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -145,6 +146,7 @@ export default function AdminDashboard() {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const profileopen = Boolean(anchorEl);
+  // const allowedModules = JSON.parse(localStorage.getItem("modules") || "[]");
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -232,8 +234,77 @@ export default function AdminDashboard() {
   const ProfileName = localStorage.getItem("adminName");
   const drawerWidth = 250;
 
+  const moduleAccessMap = {
+    appointments: ["appointments", "reviews"],
+    attendance: ["attendance", "leave_requests"],
+    prescriptions: [
+      "medicine",
+      "medical_tests",
+      "consultation_types",
+      "prescriptions",
+    ],
+    documents: ["documents"],
+    bills: ["bills"],
+    notifications: ["notifications"],
+    clients: ["clients"],
+    employees: ["employees"],
+  };
 
+  const hasAccess = (itemKey) => {
+    return allowedModules.some((module) => {
+      const children = moduleAccessMap[module];
 
+      // if module has child mapping
+      if (children) {
+        return children.includes(itemKey);
+      }
+
+      // fallback direct match
+      return module === itemKey;
+    });
+  };
+  // safer parsing
+  const storedModules = localStorage.getItem("modules");
+  const allowedModules = storedModules ? JSON.parse(storedModules) : [];
+
+  // Sidebar Menu Configuration
+  const menuItems = [
+    { text: "Home", module_key: "home", icon: <HomeIcon /> },
+
+    { text: "Employees", module_key: "employees", icon: <BadgeIcon /> },
+
+    { text: "Clients", module_key: "clients", icon: <GroupsIcon /> },
+
+    { text: "Documents", module_key: "documents", icon: <ArticleIcon /> },
+
+    { text: "Profile", module_key: "profile", icon: <ContactEmergencyIcon /> },
+
+    { text: "Appointments", module_key: "appointments", icon: <CalendarMonthIcon /> },
+
+    { text: "Attendance", module_key: "attendance", icon: <PendingActionsIcon /> },
+
+    { text: "Leave Requests", module_key: "leave_requests", icon: <DirectionsRunIcon /> },
+
+    { text: "Reviews", module_key: "reviews", icon: <ReviewsIcon /> },
+
+    { text: "Bills", module_key: "bills", icon: <ReceiptIcon /> },
+
+    { text: "Payments", module_key: "payments", icon: <PaymentIcon /> },
+
+    { text: "Add Medicine", module_key: "medicine", icon: <MedicationIcon sx={{ color: "white" }} /> },
+
+    { text: "Add Medical Tests", module_key: "medical_tests", icon: <BiotechIcon /> },
+
+    { text: "Add Consultation Types", module_key: "consultation_types", icon: <MedicalServicesIcon /> },
+    { text: "Role-Based Permissions", module_key: "role_module_manager", icon: <LockPersonIcon /> },
+    { text: "Notifications", module_key: "notifications", icon: <ContactSupportIcon /> },
+
+  ];
+
+  // filter menu based on permissions
+  const filteredMenu = menuItems.filter(
+    (item) => item.module_key === "home" || hasAccess(item.module_key)
+  );
 
   return (
     <>
@@ -270,7 +341,7 @@ export default function AdminDashboard() {
               src={`${process.env.REACT_APP_URL}/Images/${companyLogo}`}   // 🔁 replace with your image
               alt="Logo"
               sx={{
-                width:200,
+                width: 200,
                 height: 100,
                 objectFit: "contain",
                 borderRadius: 4,
@@ -317,7 +388,7 @@ export default function AdminDashboard() {
                     },
                   }}
                 >
-                  <NotificationBell  setAdminContent={setContent} />
+                  <NotificationBell setAdminContent={setContent} />
                 </IconButton>
 
                 <Stack
@@ -380,28 +451,26 @@ export default function AdminDashboard() {
           aria-label="mailbox folders"
         >
           <Drawer
-        variant="permanent"
-        open
-        sx={{
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            background: 'linear-gradient(180deg, #3f6f7a, #5f9aa6)',
-            color: '#fff',
-            borderTopRightRadius: '40px',
-            borderBottomRightRadius: '\]40px',
-            marginTop: '140px',
+            variant="permanent"
+            open
+            sx={{
+              '& .MuiDrawer-paper': {
+                width: drawerWidth,
+                background: '#3f6f7a',
+                color: '#fff',
+                borderTopRightRadius: '40px',
+                borderBottomRightRadius: '\]40px',
+                marginTop: '140px',
 
-            // ✅ Important changes
-            height: 'calc(100vh - 140px)',   // Full remaining screen height
-            overflowY: 'auto',               // Enable vertical scroll
-            overflowX: 'hidden',             // Prevent horizontal scroll
-            scrollbarWidth: 'thin',          // Firefox
-          },
-        }}
-      >
+                // ✅ Important changes
+                height: 'calc(100vh - 140px)',   // Full remaining screen height
+                // Firefox
+              },
+            }}
+          >
 
-            
-            <List>
+
+            {/* <List>
               {['Home', 'Employees', 'Clients', 'Documents', 'Profile'].map((text) => {
                
                 const iconMapping = {
@@ -471,6 +540,51 @@ export default function AdminDashboard() {
                   </ListItem>
                 );
               })}
+            </List> */}
+
+            <List sx={{
+              overflowY: 'auto',
+              overflowX: 'hidden',
+
+              // Firefox
+              scrollbarWidth: 'thin',
+              scrollbarColor: '#cce0e1 transparent',
+
+              // Chrome, Edge, Safari
+              '&::-webkit-scrollbar': {
+                width: '6px',
+              },
+              '&::-webkit-scrollbar-track': {
+                background: 'transparent',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: '#cce0e1',
+                borderRadius: '10px',
+              },
+              '&::-webkit-scrollbar-thumb:hover': {
+                backgroundColor: '#5f9aa6',
+              },
+            }}>
+              {filteredMenu.map((item) => (
+                <ListItem key={item.text} disablePadding sx={{ marginTop: "5px" }}>
+                  <ListItemButton
+                    onClick={() => setContent(item.text)}
+                    sx={{
+                      maxHeight: 25,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                      backgroundColor: content === item.text ? "#5f9aa6" : "transparent",
+                      color: content === item.text ? "#fff" : "inherit",
+                    }}
+                  >
+                    <ListItemIcon sx={{ color: "#fff", minWidth: 36 }}>
+                      {item.icon}
+                    </ListItemIcon>
+
+                    <ListItemText primary={item.text} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
             </List>
           </Drawer>
         </Box>
@@ -488,7 +602,7 @@ export default function AdminDashboard() {
             sx={{
               backgroundColor: '#fff',
               borderRadius: '20px',
-              p:2,
+              p: 2,
               minHeight: '80vh',
             }}
           >
@@ -537,7 +651,7 @@ export default function AdminDashboard() {
                 </>
               )} */}
 
-              {content === 'Leave Requests' &&
+            {content === 'Leave Requests' &&
               (
                 <>
                   <LeaveRequest />
@@ -583,19 +697,24 @@ export default function AdminDashboard() {
               </>
             )}
             {
-              content === 'Add Medical Tests' && ( 
+              content === 'Add Medical Tests' && (
                 <>
-                   <AddMedicalTests />
+                  <AddMedicalTests />
                 </>
               )
             }
             {
               content === 'Add Consultation Types' && (
                 <>
-                <ConsultationTypes />
+                  <ConsultationTypes />
                 </>
               )
             }
+            {content === 'Role-Based Permissions' && (
+              <>
+                <RoleModuleManager />
+              </>
+            )}
           </Box>
         </Box>
       </Box >

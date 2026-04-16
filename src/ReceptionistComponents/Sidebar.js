@@ -42,21 +42,122 @@ export default function Sidebar({ isOpen, onToggle, company }) {
 
 
 
-  const menuItems = [
-    { text: "Dashboard", icon: <DashboardIcon />, path: "/receptionist/dashboard" },
-    { text: "Appointment", icon: <EventAvailableIcon />, path: "/receptionist/dashboard/appointments" },
-    { text: "Doctor Schedule", icon: <CalendarMonthIcon />, path: "/receptionist/dashboard/schedule" },
-    { text: "Attendance", icon: <AccessTimeIcon />, path: "/receptionist/dashboard/attendance" },
-    { text: "Documents", icon: <DescriptionIcon />, path: "/receptionist/dashboard/documents" },
-    { text: "Bills", icon: <ReceiptLongIcon />, path: "/receptionist/dashboard/bills" },
-    { text: "Clients", icon: <PeopleAltIcon />, path: "/receptionist/dashboard/clients" },
-    { text: "Add Slot", icon: <AddCircleOutlineIcon />, path: "/receptionist/dashboard/add-slots" },
-    {
-      text: "Logout", icon: <LogoutIcon />, onClick: () => {
-        handleLogout();
-      }
-    },
-  ];
+  // const menuItems = [
+  //   { text: "Dashboard", icon: <DashboardIcon />, path: "/receptionist/dashboard" },
+  //   { text: "Appointment", icon: <EventAvailableIcon />, path: "/receptionist/dashboard/appointments" },
+  //   { text: "Doctor Schedule", icon: <CalendarMonthIcon />, path: "/receptionist/dashboard/schedule" },
+  //   { text: "Attendance", icon: <AccessTimeIcon />, path: "/receptionist/dashboard/attendance" },
+  //   { text: "Documents", icon: <DescriptionIcon />, path: "/receptionist/dashboard/documents" },
+  //   { text: "Bills", icon: <ReceiptLongIcon />, path: "/receptionist/dashboard/bills" },
+  //   { text: "Clients", icon: <PeopleAltIcon />, path: "/receptionist/dashboard/clients" },
+  //   { text: "Add Slot", icon: <AddCircleOutlineIcon />, path: "/receptionist/dashboard/add-slots" },
+  //   {
+  //     text: "Logout", icon: <LogoutIcon />, onClick: () => {
+  //       handleLogout();
+  //     }
+  //   },
+  // ];
+
+
+  // ✅ GET MODULES FROM STORAGE
+    const storedModules = localStorage.getItem("modules");
+    const allowedModules = storedModules ? JSON.parse(storedModules) : [];
+
+    const moduleAccessMap = {
+  appointments: ["appointments", "reviews","doctor schedule","add slots"],
+  attendance: ["attendance", "leave_requests"],
+  prescriptions: [
+    "medicine",
+    "medical_tests",
+    "consultation_types",
+    "prescriptions",
+  ],
+  documents: ["documents"],
+  bills: ["bills"],
+  notifications: ["notifications"],
+  clients: ["clients"],
+  employees: ["employees"],
+};
+
+const hasAccess = (itemKey) => {
+  return allowedModules.some((module) => {
+    const children = moduleAccessMap[module];
+
+    // if module has child mapping
+    if (children) {
+      return children.includes(itemKey);
+    }
+
+    // fallback direct match
+    return module === itemKey;
+  });
+};
+
+    // ✅ MASTER MENU (WITH module_key)
+    const menuItems = [
+      {
+        text: "Dashboard",
+        module_key: "dashboard",
+        icon: <DashboardIcon />,
+        path: "/receptionist/dashboard",
+      },
+      {
+        text: "Appointment",
+        module_key: "appointments",
+        icon: <EventAvailableIcon />,
+        path: "/receptionist/dashboard/appointments",
+      },
+      {
+        text: "Doctor Schedule",
+        module_key: "appointments",
+        icon: <CalendarMonthIcon />,
+        path: "/receptionist/dashboard/schedule",
+      },
+      {
+        text: "Attendance",
+        module_key: "attendance",
+        icon: <AccessTimeIcon />,
+        path: "/receptionist/dashboard/attendance",
+      },
+      {
+        text: "Documents",
+        module_key: "documents",
+        icon: <DescriptionIcon />,
+        path: "/receptionist/dashboard/documents",
+      },
+      {
+        text: "Bills",
+        module_key: "bills",
+        icon: <ReceiptLongIcon />,
+        path: "/receptionist/dashboard/bills",
+      },
+      {
+        text: "Clients",
+        module_key: "clients",
+        icon: <PeopleAltIcon />,
+        path: "/receptionist/dashboard/clients",
+      },
+      {
+        text: "Add Slot",
+        module_key: "appointments",
+        icon: <AddCircleOutlineIcon />,
+        path: "/receptionist/dashboard/add-slots",
+      },
+      {
+        text: "Logout",
+        module_key: "logout",
+        icon: <LogoutIcon />,
+        onClick: () => handleLogout(),
+      },
+    ];
+
+   
+const defaultModules = ["dashboard", "profile", "logout"];
+
+const filteredMenu = menuItems.filter(
+  (item) =>
+    defaultModules.includes(item.module_key) || hasAccess(item.module_key)
+);
 
   const handleLogout = async () => {
     try {
@@ -278,7 +379,7 @@ export default function Sidebar({ isOpen, onToggle, company }) {
         />
 
         <List sx={{ px: 2 }}>
-          {menuItems.map((item) => {
+          {filteredMenu.map((item) => {
             const isLogout = item.text === "Logout";
 
             return (

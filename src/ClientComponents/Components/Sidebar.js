@@ -36,24 +36,144 @@ import axios from "axios";
 export const drawerWidth = 240;
 export const drawerWidthClosed = 70;
 
-const menuItems = [
-  { text: "Dashboard", icon: <DashboardIcon />, path: "dashboard" },
-  {
-    text: "Document Upload",
-    icon: <UploadFileIcon />,
-    path: "documents",
-  },
-  { text: "Appointment", icon: <EventIcon />, path: "appointment" },
 
-  { text: "Reviews", icon: <StarBorderIcon />, path: "reviews" },
-  { text: "Bills", icon: <ReceiptIcon />, path: "bills" },
-    { text: "Prescriptions", icon: <ReceiptIcon />, path: "prescriptions" },
+// const menuItems = [
+//   { text: "Dashboard", icon: <DashboardIcon />, path: "dashboard" },
+//   {
+//     text: "Document Upload",
+//     icon: <UploadFileIcon />,
+//     path: "documents",
+//   },
+//   { text: "Appointment", icon: <EventIcon />, path: "appointment" },
 
-];
+//   { text: "Reviews", icon: <StarBorderIcon />, path: "reviews" },
+//   { text: "Bills", icon: <ReceiptIcon />, path: "bills" },
+//     { text: "Prescriptions", icon: <ReceiptIcon />, path: "prescriptions" },
+
+// ];
+
+// ✅ MASTER MENU WITH module_key
+
 
 export default function Sidebar({ isOpen, onToggle }) {
   // const staffRole = localStorage.getItem("role");
   const UserName = localStorage.getItem("userName");
+  // ✅ GET MODULES FROM STORAGE
+  const [allowedModules, setAllowedModules] = useState([]);
+
+ 
+
+useEffect(() => {
+  const storedModules = localStorage.getItem("modules");
+
+  console.log("RAW:", storedModules); // 👈 ADD
+  if (storedModules) {
+    try {
+      const parsed = JSON.parse(storedModules);
+      console.log("PARSED:", parsed); // 👈 ADD
+      setAllowedModules(parsed);
+    } catch (err) {
+      console.error("Invalid modules JSON", err);
+      setAllowedModules([]);
+    }
+  }
+}, []);
+
+    const handleConfirmLogout = async () => {
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_URL}/logout`,
+        {},
+        { withCredentials: true }
+      );
+
+      setOpenAlert(true); // ✅ THIS WAS MISSING
+
+      setTimeout(() => {
+        localStorage.clear();
+        window.location.href = "/";
+      }, 100);
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
+
+  const moduleAccessMap = {
+  appointments: ["appointments", "reviews"],
+  attendance: ["attendance", "leave_requests"],
+  prescriptions: [
+    "medicine",
+    "medical_tests",
+    "consultation_types",
+    "prescriptions",
+  ],
+  documents: ["documents"],
+  bills: ["bills"],
+  notifications: ["notifications"],
+  clients: ["clients"],
+  employees: ["employees"],
+};
+
+const hasAccess = (itemKey) => {
+  return allowedModules.some((module) => {
+    const children = moduleAccessMap[module];
+
+    // if module has child mapping
+    if (children) {
+      return children.includes(itemKey);
+    }
+
+    // fallback direct match
+    return module === itemKey;
+  });
+};
+
+
+const menuItems = [
+  {
+    text: "Dashboard",
+    module_key: "dashboard",
+    icon: <DashboardIcon />,
+    path: "dashboard",
+  },
+  {
+    text: "Document Upload",
+    module_key: "documents",
+    icon: <UploadFileIcon />,
+    path: "documents",
+  },
+  {
+    text: "Appointment",
+    module_key: "appointments",
+    icon: <EventIcon />,
+    path: "appointment",
+  },
+  {
+    text: "Reviews",
+    module_key: "appointment_review", // ✅ FIXED
+    icon: <StarBorderIcon />,
+    path: "reviews",
+  },
+  {
+    text: "Bills",
+    module_key: "bills",
+    icon: <ReceiptIcon />,
+    path: "bills",
+  },
+  {
+    text: "Prescriptions",
+    module_key: "prescriptions",
+    icon: <ReceiptIcon />,
+    path: "prescriptions",
+  },
+];
+
+const defaultModules = ["dashboard", "profile"];
+
+const filteredMenu = menuItems.filter(
+  (item) =>
+    defaultModules.includes(item.module_key) || hasAccess(item.module_key)
+);
 
   const getAvatarLetters = (name = "") => {
     if (!name) return "?";
@@ -100,24 +220,7 @@ export default function Sidebar({ isOpen, onToggle }) {
   }, []);
 
   const [openAlert, setOpenAlert] = useState(false);
-  const handleConfirmLogout = async () => {
-    try {
-      await axios.post(
-        `${process.env.REACT_APP_URL}/logout`,
-        {},
-        { withCredentials: true }
-      );
 
-      setOpenAlert(true); // ✅ THIS WAS MISSING
-
-      setTimeout(() => {
-        localStorage.clear();
-        window.location.href = "/";
-      }, 100);
-    } catch (error) {
-      console.error("Logout failed", error);
-    }
-  };
 
   return (
     <Drawer
@@ -358,7 +461,7 @@ export default function Sidebar({ isOpen, onToggle }) {
 
         {/* Menu */}
         <List sx={{ px: 2 }}>
-          {menuItems.map((item) => (
+          {filteredMenu.map((item) => (
             <ListItem
               key={item.text}
               component={NavLink}

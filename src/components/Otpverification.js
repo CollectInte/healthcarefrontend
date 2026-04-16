@@ -106,12 +106,13 @@ export default function OtpVerification() {
                 localStorage.setItem("adminId", data.id);
                 localStorage.setItem("adminName", data.name);
                 localStorage.setItem("role", data.role);
-
+                localStorage.setItem("modules", JSON.stringify(data.modules));
             } else if (data.role === "doctor") {
                 localStorage.setItem("userId", data.id);
                 localStorage.setItem("userName", data.name);
                 localStorage.setItem("role", data.role);
                 localStorage.setItem("adminId", data.adminId);
+                localStorage.setItem("modules", JSON.stringify(data.modules));
                 // localStorage.setItem("id", data.user.id);
                 // localStorage.setItem("role", data.user.role);
                 // localStorage.setItem("name", data.user.name);
@@ -121,6 +122,7 @@ export default function OtpVerification() {
                 localStorage.setItem("userName", data.name);
                 localStorage.setItem("role", data.role);
                 localStorage.setItem("adminId", data.adminId);
+                localStorage.setItem("modules", JSON.stringify(data.modules));
                 // localStorage.setItem("id", data.id);
                 // localStorage.setItem("role", data.user.role);
                 // localStorage.setItem("name", data.user.name);
@@ -130,6 +132,7 @@ export default function OtpVerification() {
                 localStorage.setItem("userName", data.name);
                 localStorage.setItem("adminId", data.adminId);
                 localStorage.setItem("role", data.role);
+                localStorage.setItem("modules", JSON.stringify(data.modules));
 
                 navigate("/client");
             } else {

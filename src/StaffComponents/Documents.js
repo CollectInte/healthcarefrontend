@@ -99,67 +99,67 @@ function Documents() {
   };
 
   const handleUploadFromMainPage = async () => {
-  if (!selectedFile || !selectedClientForUpload) {
-    setError("Please select both client and file");
-    return;
-  }
+    if (!selectedFile || !selectedClientForUpload) {
+      setError("Please select both client and file");
+      return;
+    }
 
-  const formData = new FormData();
-  formData.append("file", selectedFile);
-  formData.append("client_id", selectedClientForUpload);
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("client_id", selectedClientForUpload);
 
-  try {
-    setUploadLoading(true);
-    setError("");
-    setSuccess("");
-    await api.post("/api/documents/upload", formData);
-    setSuccess("Document uploaded successfully");
+    try {
+      setUploadLoading(true);
+      setError("");
+      setSuccess("");
+      await api.post("/api/documents/upload", formData);
+      setSuccess("Document uploaded successfully");
 
-    // Hide success message after 30 seconds
-    setTimeout(() => setSuccess(""), 10000);
+      // Hide success message after 30 seconds
+      setTimeout(() => setSuccess(""), 10000);
 
-    setSelectedFile(null);
-    setSelectedClientForUpload("");
-    setOpenUploadModal(false);
-    fetchClients();
-  } catch {
-    setError("Upload failed");
-  } finally {
-    setUploadLoading(false);
-  }
-};
+      setSelectedFile(null);
+      setSelectedClientForUpload("");
+      setOpenUploadModal(false);
+      fetchClients();
+    } catch {
+      setError("Upload failed");
+    } finally {
+      setUploadLoading(false);
+    }
+  };
 
-const handleUploadFromDocView = async () => {
-  if (!selectedFile || !activeClient) {
-    setError("Client and file are required");
-    return;
-  }
+  const handleUploadFromDocView = async () => {
+    if (!selectedFile || !activeClient) {
+      setError("Client and file are required");
+      return;
+    }
 
-  const formData = new FormData();
-  formData.append("file", selectedFile);
-  formData.append("client_id", activeClient.id);
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("client_id", activeClient.id);
 
-  try {
-    setUploadLoading(true);
-    setError("");
-    setSuccess("");
-    await api.post("/api/documents/upload", formData);
-    setSuccess("Uploaded successfully");
+    try {
+      setUploadLoading(true);
+      setError("");
+      setSuccess("");
+      await api.post("/api/documents/upload", formData);
+      setSuccess("Uploaded successfully");
 
-    // Hide success message after 30 seconds
-    setTimeout(() => setSuccess(""), 10000);
+      // Hide success message after 30 seconds
+      setTimeout(() => setSuccess(""), 10000);
 
-    setSelectedFile(null);
-    setUploadedDate("");
-    setDoctorName("");
-    setOpenUploadModal(false);
-    fetchClientDocuments(activeClient.id);
-  } catch {
-    setError("Upload failed");
-  } finally {
-    setUploadLoading(false);
-  }
-};
+      setSelectedFile(null);
+      setUploadedDate("");
+      setDoctorName("");
+      setOpenUploadModal(false);
+      fetchClientDocuments(activeClient.id);
+    } catch {
+      setError("Upload failed");
+    } finally {
+      setUploadLoading(false);
+    }
+  };
 
   const handleDelete = async (docId) => {
     if (!window.confirm("Delete this document?")) return;
@@ -224,106 +224,106 @@ const handleUploadFromDocView = async () => {
     return doc.uploaded_by_role?.toLowerCase() === roleFilter.toLowerCase();
   });
 
-   const UploadSectionMainPage = () => (
-  <Box
-    sx={{
-      borderRadius: 3,
-      p: 4,
-      textAlign: "center",
-      minHeight: 200,
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      position: "fixed",
-    }}
-  >
-    <Box sx={{ border: "2px dashed #5A9BA5", borderRadius: 3, p: 1, width: 240, height: 150 }}>
-      <FolderIcon sx={{ fontSize: 45, color: "#5A9BA5" }} />
-      <Typography fontSize="0.95rem" color="text.secondary" mb={0}>
-        Drop your documents or,
-      </Typography>
-      <Button
-        component="label"
-        sx={{
-          textTransform: "none",
-          color: "#5A9BA5",
-          fontWeight: 600,
-          fontSize: "0.95rem",
-          textDecoration: "underline",
-          mb: 3,
-          "&:hover": { bgcolor: "transparent", textDecoration: "underline" },
-        }}
-      >
-        Click to browse
-        <input type="file" hidden onChange={(e) => setSelectedFile(e.target.files[0])} />
-      </Button>
+  const UploadSectionMainPage = () => (
+    <Box
+      sx={{
+        borderRadius: 3,
+        p: 4,
+        textAlign: "center",
+        minHeight: 200,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "fixed",
+      }}
+    >
+      <Box sx={{ border: "2px dashed #5A9BA5", borderRadius: 3, p: 1, width: 240, height: 150 }}>
+        <FolderIcon sx={{ fontSize: 45, color: "#5A9BA5" }} />
+        <Typography fontSize="0.95rem" color="text.secondary" mb={0}>
+          Drop your documents or,
+        </Typography>
+        <Button
+          component="label"
+          sx={{
+            textTransform: "none",
+            color: "#5A9BA5",
+            fontWeight: 600,
+            fontSize: "0.95rem",
+            textDecoration: "underline",
+            mb: 3,
+            "&:hover": { bgcolor: "transparent", textDecoration: "underline" },
+          }}
+        >
+          Click to browse
+          <input type="file" hidden onChange={(e) => setSelectedFile(e.target.files[0])} />
+        </Button>
+      </Box>
+
+      <Divider sx={{ width: "100%", my: 2, backgroundColor: "#5A9BA5", height: 2 }} />
+
+      <Stack spacing={1} width="80%" maxHeight="100vh" sx={{ backgroundColor: "none" }}>
+        {/* SEARCHABLE PATIENT DROPDOWN */}
+        <Autocomplete
+          options={clients}
+          getOptionLabel={(option) => `CI - ${option.id} (${option.name})`}
+          value={clients.find(c => c.id === selectedClientForUpload) || null}
+          onChange={(event, newValue) => setSelectedClientForUpload(newValue?.id || "")}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Select Patient"
+              size="small"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 0,
+                  borderBottom: "2px solid #5A9BA5",
+                  "& fieldset": { border: "none" },
+                },
+              }}
+            />
+          )}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+          clearOnEscape
+        />
+
+        {/* File Name */}
+        <TextField
+          placeholder="File Name"
+          size="small"
+          disabled
+          value={selectedFile?.name || "File Name"}
+          InputProps={{ sx: { "& input": { textAlign: "center" } } }}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: 0,
+              borderBottom: "2px solid #5A9BA5",
+              "& fieldset": { border: "none" },
+            },
+          }}
+        />
+
+        {/* Upload Button */}
+        <Button
+          variant="contained"
+          fullWidth
+          onClick={handleUploadFromMainPage}
+          disabled={uploadLoading || !selectedFile || !selectedClientForUpload}
+          sx={{
+            bgcolor: "#5A9BA5",
+            textTransform: "lowercase",
+            borderRadius: 2,
+            py: 0.5,
+            fontSize: "0.95rem",
+            "&:hover": { bgcolor: "#4A8A94" },
+            "&:disabled": { bgcolor: "#B0BEC5" },
+          }}
+        >
+          {uploadLoading ? <CircularProgress size={24} color="inherit" /> : "upload file"}
+        </Button>
+      </Stack>
     </Box>
-
-    <Divider sx={{ width: "100%", my: 2, backgroundColor: "#5A9BA5", height: 2 }} />
-
-    <Stack spacing={1} width="80%" maxHeight="100vh" sx={{ backgroundColor: "none" }}>
-      {/* SEARCHABLE PATIENT DROPDOWN */}
-      <Autocomplete
-        options={clients}
-        getOptionLabel={(option) => `CI - ${option.id} (${option.name})`}
-        value={clients.find(c => c.id === selectedClientForUpload) || null}
-        onChange={(event, newValue) => setSelectedClientForUpload(newValue?.id || "")}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Select Patient"
-            size="small"
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: 0,
-                borderBottom: "2px solid #5A9BA5",
-                "& fieldset": { border: "none" },
-              },
-            }}
-          />
-        )}
-        isOptionEqualToValue={(option, value) => option.id === value.id}
-        clearOnEscape
-      />
-
-      {/* File Name */}
-      <TextField
-        placeholder="File Name"
-        size="small"
-        disabled
-        value={selectedFile?.name || "File Name"}
-        InputProps={{ sx: { "& input": { textAlign: "center" } } }}
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            borderRadius: 0,
-            borderBottom: "2px solid #5A9BA5",
-            "& fieldset": { border: "none" },
-          },
-        }}
-      />
-
-      {/* Upload Button */}
-      <Button
-        variant="contained"
-        fullWidth
-        onClick={handleUploadFromMainPage}
-        disabled={uploadLoading || !selectedFile || !selectedClientForUpload}
-        sx={{
-          bgcolor: "#5A9BA5",
-          textTransform: "lowercase",
-          borderRadius: 2,
-          py: 0.5,
-          fontSize: "0.95rem",
-          "&:hover": { bgcolor: "#4A8A94" },
-          "&:disabled": { bgcolor: "#B0BEC5" },
-        }}
-      >
-        {uploadLoading ? <CircularProgress size={24} color="inherit" /> : "upload file"}
-      </Button>
-    </Stack>
-  </Box>
-);
+  );
 
 
   const UploadSectionDocView = () => (
@@ -457,51 +457,51 @@ const handleUploadFromDocView = async () => {
         {!activeClient && (
           <>
             {/* Search Card */}
-           <Box
-  sx={{
-    bgcolor: "#5A9BA5",
-    borderRadius: 4,
-    p: 2,
-    mb: 2,
-    maxWidth: 600,
-    color: "white",
-    borderTopRightRadius: 80,
-  }}
->
-  <Grid
-    container
-    spacing={2}
-    alignItems="center"
-  >
-    {/* LEFT COLUMN - TEXT */}
-    <Grid item xs={12} md={6}>
-      <Typography fontWeight={700} fontSize="1.1rem" mb={0.5}>
-        Enter Client ID
-      </Typography>
-      <Typography fontSize="0.9rem" sx={{ opacity: 0.9 }}>
-        To View The Documents
-      </Typography>
-    </Grid>
+            <Box
+              sx={{
+                bgcolor: "#5A9BA5",
+                borderRadius: 4,
+                p: 2,
+                mb: 2,
+                maxWidth: 600,
+                color: "white",
+                borderTopRightRadius: 80,
+              }}
+            >
+              <Grid
+                container
+                spacing={2}
+                alignItems="center"
+              >
+                {/* LEFT COLUMN - TEXT */}
+                <Grid item xs={12} md={6}>
+                  <Typography fontWeight={700} fontSize="1.1rem" mb={0.5}>
+                    Enter Client ID
+                  </Typography>
+                  <Typography fontSize="0.9rem" sx={{ opacity: 0.9 }}>
+                    To View The Documents
+                  </Typography>
+                </Grid>
 
-    {/* RIGHT COLUMN - SEARCH */}
-    <Grid item xs={12} md={6} display="flex" justifyContent="flex-end">
-      <TextField
-        placeholder="Search"
-        size="small"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        sx={{
-          bgcolor: "white",
-          borderRadius: 2,
-          width: { xs: "100%", md: 280 },
-          "& .MuiOutlinedInput-root fieldset": {
-            border: "none",
-          },
-        }}
-      />
-    </Grid>
-  </Grid>
-</Box>
+                {/* RIGHT COLUMN - SEARCH */}
+                <Grid item xs={12} md={6} display="flex" justifyContent="flex-end">
+                  <TextField
+                    placeholder="Search"
+                    size="small"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    sx={{
+                      bgcolor: "white",
+                      borderRadius: 2,
+                      width: { xs: "100%", md: 280 },
+                      "& .MuiOutlinedInput-root fieldset": {
+                        border: "none",
+                      },
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </Box>
 
 
             {/* Mobile Upload Button */}
@@ -523,130 +523,137 @@ const handleUploadFromDocView = async () => {
               Upload Document
             </Button>
 
-       <Grid container spacing={3} sx={{ flexWrap: "nowrap" }}>
-  {/* LEFT SIDE — CLIENT CARDS */}
-<Grid item xs={12} md={6} lg={5} xl={5}>
-    <Box
-      sx={{
-        maxHeight: { xs: "calc(100vh - 280px)", lg: "calc(100vh - 280px)" },
-        overflowY: "auto",
-        pr: 1,
-        "&::-webkit-scrollbar": {
-          width: "8px",
-        },
-        "&::-webkit-scrollbar-track": {
-          background: "#f1f1f1",
-          borderRadius: "10px",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          background: "#5A9BA5",
-          borderRadius: "10px",
-        },
-      }}
-    >
-      {loadingClients ? (
-        <Box display="flex" justifyContent="center" mt={2}>
-          <CircularProgress sx={{ color: "#5A9BA5" }} />
-        </Box>
-      ) : (
-       <Box
-  sx={{
-    display: "grid",
-    gridTemplateColumns: {
-      xs: "1fr",        // mobile → 1 card
-      sm: "repeat(2, 1fr)", // tablet → 2 cards
-      md: "repeat(3, 1fr)", // laptop → 2 cards
-      lg: "repeat(3, 1fr)", // desktop → 2 cards
-      xl: "repeat(4, 1fr)", // ultra-wide → still 2
-    },
-    gap: 2,
-  }}
->
-  {clients
-    .filter((c) =>
-      c.name.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .map((client) => (
-      <Card
-        key={client.id}
-        sx={{
-          borderRadius: 3,
-          height: 180,
-          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-          transition: "transform 0.2s, box-shadow 0.2s",
-          "&:hover": {
-            transform: "translateY(-4px)",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-          },
-        }}
-      >
-        <CardContent>
-          <Box
-            sx={{
-              bgcolor: "#D9ECEE",
-              borderRadius: 2,
-              p: 2,
-              display: "flex",
-              justifyContent: "center",
-              mb: 2,
-            }}
-          >
-            <FolderIcon sx={{ fontSize: 40, color: "#5A9BA5" }} />
-          </Box>
+            <Grid container spacing={3} sx={{ flexWrap: "nowrap" }}>
+              {/* LEFT SIDE — CLIENT CARDS */}
+              <Grid item xs={12} md={6} lg={5} xl={5}>
+                <Box
+                  sx={{
+                    maxHeight: { xs: "calc(100vh - 280px)", lg: "calc(100vh - 280px)" },
+                    overflowY: "auto",
+                    pr: 1,
+                    "&::-webkit-scrollbar": {
+                      width: "8px",
+                    },
+                    "&::-webkit-scrollbar-track": {
+                      background: "#f1f1f1",
+                      borderRadius: "10px",
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                      background: "#5A9BA5",
+                      borderRadius: "10px",
+                    },
+                  }}
+                >
+                  {loadingClients ? (
+                    <Box display="flex" justifyContent="center" mt={2}>
+                      <CircularProgress sx={{ color: "#5A9BA5" }} />
+                    </Box>
+                  ) : (
+                    <Box
+                      sx={{
+                        display: "grid",
+                        gridTemplateColumns: {
+                          xs: "1fr",        // mobile → 1 card
+                          sm: "repeat(2, 1fr)", // tablet → 2 cards
+                          md: "repeat(3, 1fr)", // laptop → 2 cards
+                          lg: "repeat(3, 1fr)", // desktop → 2 cards
+                          xl: "repeat(4, 1fr)", // ultra-wide → still 2
+                        },
+                        gap: 2,
+                      }}
+                    >
+                      {clients
+                        .filter((c) =>
+                          c.name.toLowerCase().includes(searchTerm.toLowerCase())
+                        )
+                        .map((client) => (
+                          <Card
+                            key={client.id}
+                            sx={{
+                              borderRadius: 3,
+                              height: 200,
+                              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                              transition: "transform 0.2s, box-shadow 0.2s",
+                              "&:hover": {
+                                transform: "translateY(-4px)",
+                                boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                              },
+                            }}
+                          >
+                            <CardContent>
+                              <Box
+                                sx={{
+                                  bgcolor: "#D9ECEE",
+                                  borderRadius: 2,
+                                  p: 2,
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  mb: 2,
+                                }}
+                              >
+                                <FolderIcon sx={{ fontSize: 40, color: "#5A9BA5" }} />
+                              </Box>
 
-          <Typography fontSize="0.9rem" mb={0.5}>
-            Client ID :{" "}
-            <span style={{ color: "#5A9BA5", fontWeight: 600 }}>
-              CI - {client.id}
-            </span>
-          </Typography>
+                              <Typography fontSize="0.9rem" mb={0.5}>
+                                Patient ID :{" "}
+                                <span style={{ color: "#5A9BA5", fontWeight: 600 }}>
+                                  CI - {client.id}
+                                </span>
+                              </Typography>
 
-          <Button
-            fullWidth
-            variant="contained"
-            onClick={() => handleViewClient(client)}
-            sx={{
-              bgcolor: "#5A9BA5",
-              textTransform: "none",
-              borderRadius: 2,
-              py: 0.5,
-              fontSize: "0.9rem",
-              "&:hover": {
-                bgcolor: "#4A8A94",
-              },
-            }}
-          >
-            View Documents
-          </Button>
-        </CardContent>
-      </Card>
-    ))}
-</Box>
+                              <Typography fontSize="0.9rem" mb={0.5}>
+                                Patient Name :{" "}
+                                <span style={{ color: "#5A9BA5", fontWeight: 600 }}>
+                                  {client.name}
+                                </span>
+                              </Typography>
 
-      )}
-    </Box>
-  </Grid>
+                              <Button
+                                fullWidth
+                                variant="contained"
+                                onClick={() => handleViewClient(client)}
+                                sx={{
+                                  bgcolor: "#5A9BA5",
+                                  textTransform: "none",
+                                  borderRadius: 2,
+                                  py: 0.5,
+                                  fontSize: "0.9rem",
+                                  "&:hover": {
+                                    bgcolor: "#4A8A94",
+                                  },
+                                }}
+                              >
+                                View Documents
+                              </Button>
+                            </CardContent>
+                          </Card>
+                        ))}
+                    </Box>
 
-  {/* DIVIDER */}
-  <Grid item sx={{ display: { xs: "none", lg: "block" } }}>
-    <Box sx={{ width: 3, height: "100%", backgroundColor: "#437986" }} />
-  </Grid>
+                  )}
+                </Box>
+              </Grid>
 
-  {/* RIGHT SIDE — UPLOAD SECTION */}
-{/* RIGHT SIDE — UPLOAD SECTION */}
-<Grid item xs={12} md={6} lg={6} sx={{ display: { xs: "none", lg: "block" } }}>
-  <Box
-    sx={{
-      position: "sticky",
-      top: 20,
-      boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-    }}
-  >
-    <UploadSectionMainPage />
-  </Box>
-</Grid>
+              {/* DIVIDER */}
+              <Grid item sx={{ display: { xs: "none", lg: "block" } }}>
+                <Box sx={{ width: 3, height: "100%", backgroundColor: "#437986" }} />
+              </Grid>
 
-</Grid>
+              {/* RIGHT SIDE — UPLOAD SECTION */}
+              {/* RIGHT SIDE — UPLOAD SECTION */}
+              <Grid item xs={12} md={6} lg={6} sx={{ display: { xs: "none", lg: "block" } }}>
+                <Box
+                  sx={{
+                    position: "sticky",
+                    top: 20,
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                  }}
+                >
+                  <UploadSectionMainPage />
+                </Box>
+              </Grid>
+
+            </Grid>
 
 
 
@@ -776,8 +783,8 @@ const handleUploadFromDocView = async () => {
                       <Grid item xs={12} sm={6} md={4} lg={3} key={doc.id} >
                         <Card
                           sx={{
-                            height: {md:120,xs:120},
-                            width:{md:200,xs:200},
+                            height: { md: 130, xs: 120 },
+                            width: { md: 200, xs: 200 },
                             backgroundColor: "rgba(104, 101, 101, 0.08)",
                             borderRadius: 3,
                             boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
@@ -822,6 +829,9 @@ const handleUploadFromDocView = async () => {
                               size="small"
                               sx={{ mb: 1, alignSelf: "flex-start" }}
                             />
+                            <span style={{ fontSize: "0.75rem", color: "#555" }}>
+                              Uploaded on {new Date(doc.uploaded_at).toLocaleDateString()}
+                            </span>
 
                             {/* SPACER */}
                             <Box sx={{ flexGrow: 1 }} />
