@@ -25,7 +25,7 @@ const Footer = () => {
 
             <div className="footer-socials">
               <a
-                href="https://www.linkedin.com/company/110922098/admin/dashboard/"
+                href="https://www.linkedin.com/company/109917971/admin/dashboard/"
                 className="social-link"
               >
                 <lord-icon
@@ -37,7 +37,7 @@ const Footer = () => {
                 ></lord-icon>
               </a>
               <a
-                href="https://www.instagram.com/caredesk360/"
+                href="https://www.instagram.com/ridgeveda/"
                 className="social-link"
               >
                 <lord-icon
@@ -50,7 +50,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://www.facebook.com/profile.php?id=61585598232626"
+                href="https://www.facebook.com/profile.php?id=61583992647403"
                 className="social-link"
               >
                 <lord-icon
@@ -62,7 +62,7 @@ const Footer = () => {
                 ></lord-icon>
               </a>
 
-              <a href="https://x.com/caredesk360" className="social-link">
+              <a href="https://x.com/RidgeVeda18911" className="social-link">
                 <lord-icon
                   src="/animations/social/x.json"
                   trigger="loop"
@@ -73,7 +73,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://www.youtube.com/channel/UCCHgm9uIKkEMZH8cklyYkFQ"
+                href="https://youtube.com/@ridgeveda?si=_hHhDZqjtCmKOiti"
                 className="social-link"
               >
                 <lord-icon

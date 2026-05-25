@@ -7,6 +7,7 @@ import WestIcon from "@mui/icons-material/West";
 import "./Comparison.css";
 import Contactmodal from "./Contactmodal";
 import EastIcon from "@mui/icons-material/East";
+import DigitalVisibilityPlan from "./DigitalVisibilityPlan";
 const Comparison = () => {
   const [open, setOpen] = useState(false);
   const swiperRef = useRef(null);
@@ -23,7 +24,7 @@ const Comparison = () => {
         <div className="freemium-card">
           <div className="free-price">
             <h3>Freemium</h3>
-            <h2>₹5,000</h2>
+            <h2>₹10,000</h2>
           </div>
           <ul>
             <li>Basic Website</li>
@@ -222,6 +223,67 @@ const Comparison = () => {
                   </button>
                 </div>
               </SwiperSlide>
+
+              <SwiperSlide>
+                <div className="advanced-card">
+                  <div className="advanced-header">
+                    <h3>Scale Advantage</h3>
+                    <h2>₹60,000</h2>
+                    <p>Per Quarter</p>
+                    <hr />
+                    <h2>₹2,00,000</h2>
+                    <p>Per Year</p>
+                  </div>
+                  <ul className="plan-features">
+                    <li>Everything on scale.</li>
+                    <li>6 Meta Ads campaigns.</li>
+                    <li>50,000 Reach Assured</li>
+                  </ul>
+                  <button onClick={() => setOpen(true)} className="plan-btn">
+                    Get Started
+                  </button>
+                </div>
+              </SwiperSlide>
+
+              <SwiperSlide>
+                <div className="advanced-card">
+                  <div className="advanced-header">
+                    <h3>Enterprise Starts From</h3>
+                    <h2>₹1,00,000</h2>
+                    <p>Per Month</p>
+                  </div>
+                  <ul>
+                    <li>
+                      Suitable for clinics/hospitals with Ad spend of minimum 3
+                      lakh/month.
+                    </li>
+                    <li>Pricing customized based on features & support.</li>
+                    <li>Upto 15 Blogs per month.</li>
+                  </ul>
+                  <button onClick={() => setOpen(true)} className="plan-btn">
+                    Get Started
+                  </button>
+                </div>
+              </SwiperSlide>
+
+              <SwiperSlide>
+                <div className="advanced-card">
+                  <div className="advanced-header">
+                    <h3>Scale Advantage Plus</h3>
+                    <h2>₹90,000</h2>
+                    <p>Per Quarter</p>
+                  </div>
+                  <ul>
+                    <li>Everything on scale.</li>
+                    <li>Guaranteed reach: 1,00,000+ per month.</li>
+                    <li>Guaranteed views: 3–5 lakh per month.</li>
+                    <li>Upto 10 Blogs per month.</li>
+                  </ul>
+                  <button onClick={() => setOpen(true)} className="plan-btn">
+                    Get Started
+                  </button>
+                </div>
+              </SwiperSlide>
             </Swiper>
 
             {/* CUSTOM RIGHT ARROW */}
@@ -235,7 +297,23 @@ const Comparison = () => {
         </div>
 
         {/* ADVANCED PLANS */}
+
         <div className="advanced-plans">
+          <div className="plan-card">
+            <div className="plan-header">
+              <h3>Scale Advantage</h3>
+              <h2>₹60,000</h2>
+              <p>Per Quarter</p>
+              <hr />
+              <h2>₹2,00,000</h2>
+              <p>Per Year</p>
+            </div>
+            <ul className="plan-features">
+              <li>Everything on scale.</li>
+              <li>6 Meta Ads campaigns.</li>
+              <li>50,000 Reach Assured</li>
+            </ul>
+          </div>
           <div className="advanced-card">
             <div className="advanced-header">
               <h3>Scale Advantage Plus</h3>
@@ -265,6 +343,8 @@ const Comparison = () => {
             </ul>
           </div>
         </div>
+
+        <DigitalVisibilityPlan />
 
         {/* ADD-ONS */}
         <div className="addons-section">

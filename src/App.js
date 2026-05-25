@@ -38,6 +38,7 @@ import AppointmentsPage from "./ClientComponents/Appointments/Appointment";
 import Navbar from "./landingcomponents/components/Navbar";
 import Hero from "./landingcomponents/components/Hero";
 import FeaturesStrip from "./landingcomponents/components/FeaturesStrip";
+import DigitalVisibilityPlan from './landingcomponents/components/DigitalVisibilityPlan';
 import FeatureSections from "./landingcomponents/components/FeatureSections";
 import CTABanner from "./landingcomponents/components/CTABanner";
 import Comparison from "./landingcomponents/components/Comparison";
