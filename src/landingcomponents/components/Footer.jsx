@@ -226,829 +226,626 @@ const Footer = () => {
               <CloseIcon /> Close
             </Button>
           </div>
-          <Typography variant="h6" gutterBottom>
-            CareDesk360 – Clinic & Healthcare Management Platform
-          </Typography>
+          <Typography variant="h6" gutterBottom> CareDesk360 – Clinic & Healthcare Management Platform </Typography> <Typography variant="body2" paragraph> Effective Date: 26 May 2026 </Typography> <Typography variant="body2" paragraph> These Terms & Conditions ("Terms", "Agreement") govern the access, subscription, usage, licensing, and operation of CareDesk360, a proprietary healthcare technology product owned and operated by Ridgeveda Solutions Private Limited ("Company", "Ridgeveda", "we", "our", or "us"). </Typography> <Typography variant="body2" paragraph> By accessing, registering, subscribing to, or using CareDesk360, the clinic, hospital, healthcare institution, doctor, administrator, consultant, employee, representative, or authorized user ("User") acknowledges that they have read, understood, and agreed to be legally bound by these Terms. </Typography> <Typography variant="body2" paragraph> If the User does not agree to these Terms, the User must immediately discontinue usage of the Platform. </Typography> {/* 1. DEFINITIONS */} <Typography variant="h5" sx={{ mt: 3, mb: 2 }}> 1. DEFINITIONS </Typography> <Typography variant="body2" paragraph> For the purposes of this Agreement: </Typography> <Typography variant="body2" paragraph> • "Platform" refers to CareDesk360, including its software systems, dashboards, mobile applications, APIs, websites, communication systems, and associated digital services. </Typography> <Typography variant="body2" paragraph> • "Company" refers to Ridgeveda Solutions Private Limited. </Typography> <Typography variant="body2" paragraph> • "User" refers to any clinic, hospital, healthcare institution, doctor, employee, consultant, staff member, or authorized representative using the Platform. </Typography> <Typography variant="body2" paragraph> • "Services" refers to all operational, administrative, technical, software, automation, reporting, and healthcare management functionalities offered through CareDesk360. </Typography> <Typography variant="body2" paragraph> • "Data" refers to all information uploaded, processed, stored, or generated through the Platform. </Typography> {/* 2. NATURE OF SERVICES */} <Typography variant="h5" sx={{ mt: 3, mb: 2 }}> 2. NATURE OF SERVICES </Typography> <Typography variant="body2" paragraph> CareDesk360 is a healthcare operations and clinic management software platform intended to assist healthcare institutions with: </Typography> <Typography variant="body2" paragraph>• Appointment management</Typography> <Typography variant="body2" paragraph>• Clinic operations</Typography> <Typography variant="body2" paragraph>• Patient workflow management</Typography> <Typography variant="body2" paragraph>• Billing and invoicing</Typography> <Typography variant="body2" paragraph>• Inventory management</Typography> <Typography variant="body2" paragraph>• Staff and consultant management</Typography> <Typography variant="body2" paragraph>• Reporting systems</Typography> <Typography variant="body2" paragraph>• Payroll administration</Typography> <Typography variant="body2" paragraph>• Healthcare business operations</Typography> <Typography variant="body2" paragraph> The Platform functions strictly as a software and technology infrastructure provider. </Typography> <Typography variant="body2" paragraph> CareDesk360 does not: </Typography> <Typography variant="body2" paragraph>• Provide medical consultation</Typography> <Typography variant="body2" paragraph>• Participate in diagnosis or treatment</Typography> <Typography variant="body2" paragraph>• Guarantee medical outcomes</Typography> <Typography variant="body2" paragraph>• Supervise healthcare professionals</Typography> <Typography variant="body2" paragraph>• Assume responsibility for patient care decisions</Typography> <Typography variant="body2" paragraph> All medical responsibility remains solely with the healthcare provider. </Typography> {/* 3. ELIGIBILITY */} <Typography variant="h5" sx={{ mt: 3, mb: 2 }}> 3. ELIGIBILITY </Typography> <Typography variant="body2" paragraph> By using the Platform, the User represents and warrants that: </Typography> <Typography variant="body2" paragraph> • They possess legal authority to enter into this Agreement. </Typography> <Typography variant="body2" paragraph> • All information provided is accurate and lawful. </Typography> <Typography variant="body2" paragraph> • They shall comply with all applicable laws and regulations. </Typography> <Typography variant="body2" paragraph> • They are authorized to act on behalf of the clinic or organization where applicable. </Typography> <Typography variant="body2" paragraph> Unauthorized use of the Platform is strictly prohibited. </Typography> {/* Continue the exact same structure for Sections 4–19 */} <Typography variant="h5" sx={{ mt: 3, mb: 2 }}> 4. ACCOUNT ACCESS & SECURITY </Typography> <Typography variant="body2" paragraph> Users are solely responsible for maintaining confidentiality of login credentials, restricting unauthorized access, safeguarding passwords, monitoring user activity within their organization, and ensuring lawful internal usage of the Platform. </Typography> <Typography variant="body2" paragraph> Any activity conducted through authorized accounts shall be deemed the responsibility of the respective User. </Typography> <Typography variant="body2" paragraph> CareDesk360 shall not be liable for losses arising from credential misuse, unauthorized access, or negligence by Users. </Typography>
 
-          <Typography variant="body1" gutterBottom>
-            Effective Date: 26 May 2026
-          </Typography>
+          {/* 5. DATA OWNERSHIP */}
 
-          <Typography variant="body1" paragraph>
-            These Terms & Conditions (“Terms”, “Agreement”) govern the access,
-            subscription, usage, licensing, and operation of CareDesk360, a proprietary
-            healthcare technology product owned and operated by Ridgeveda Solutions
-            Private Limited (“Company”, “Ridgeveda”, “we”, “our”, or “us”).
-          </Typography>
-
-          <Typography variant="body1" paragraph>
-            By accessing, registering, subscribing to, or using CareDesk360, the clinic,
-            hospital, healthcare institution, doctor, administrator, consultant,
-            employee, representative, or authorized user (“User”) acknowledges that they
-            have read, understood, and agreed to be legally bound by these Terms.
-          </Typography>
-
-          <Typography variant="body1" paragraph>
-            If the User does not agree to these Terms, the User must immediately
-            discontinue usage of the Platform.
-          </Typography>
-
-          <Typography variant="h5" gutterBottom>
-            1. DEFINITIONS
-          </Typography>
-
-          <Typography variant="body1" paragraph>
-            For the purposes of this Agreement:
-          </Typography>
-
-          <Typography variant="body1" paragraph>
-            “Platform” refers to CareDesk360, including its software systems, dashboards,
-            mobile applications, APIs, websites, communication systems, and associated
-            digital services.
-          </Typography>
-
-          <Typography variant="body1" paragraph>
-            “Company” refers to Ridgeveda Solutions Private Limited.
-          </Typography>
-
-          <Typography variant="body1" paragraph>
-            “User” refers to any clinic, hospital, healthcare institution, doctor,
-            employee, consultant, staff member, or authorized representative using the
-            Platform.
-          </Typography>
-
-          <Typography variant="body1" paragraph>
-            “Services” refers to all operational, administrative, technical, software,
-            automation, reporting, and healthcare management functionalities offered
-            through CareDesk360.
-          </Typography>
-
-          <Typography variant="body1" paragraph>
-            “Data” refers to all information uploaded, processed, stored, or generated
-            through the Platform.
-          </Typography>
-
-          <Typography variant="h5" gutterBottom>
-            2. NATURE OF SERVICES
-          </Typography>
-
-          <Typography variant="body1" paragraph>
-            CareDesk360 is a healthcare operations and clinic management software
-            platform intended to assist healthcare institutions with:
-          </Typography>
-
-          <ul>
-            <li>
-              <Typography variant="body1">appointment management</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">clinic operations</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">patient workflow management</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">billing and invoicing</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">inventory management</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">staff and consultant management</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">reporting systems</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">payroll administration</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">healthcare business operations</Typography>
-            </li>
-          </ul>
-
-          <Typography variant="body1" paragraph>
-            The Platform functions strictly as a software and technology infrastructure
-            provider.
-          </Typography>
-
-          <Typography variant="body1" paragraph>
-            CareDesk360 does not:
-          </Typography>
-
-          <ul>
-            <li>
-              <Typography variant="body1">
-                provide medical consultation
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                participate in diagnosis or treatment
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                guarantee medical outcomes
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                supervise healthcare professionals
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                assume responsibility for patient care decisions
-              </Typography>
-            </li>
-          </ul>
-
-          <Typography variant="body1" paragraph>
-            All medical responsibility remains solely with the healthcare provider.
-          </Typography>
-
-          <Typography variant="h5" gutterBottom>
-            3. ELIGIBILITY
-          </Typography>
-
-          <ul>
-            <li>
-              <Typography variant="body1">
-                they possess legal authority to enter into this Agreement
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                all information provided is accurate and lawful
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                they shall comply with all applicable laws and regulations
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                they are authorized to act on behalf of the clinic or organization where
-                applicable
-              </Typography>
-            </li>
-          </ul>
-
-          <Typography variant="body1" paragraph>
-            Unauthorized use of the Platform is strictly prohibited.
-          </Typography>
-
-          <Typography variant="h5" gutterBottom>
-            4. ACCOUNT ACCESS & SECURITY
-          </Typography>
-
-          <ul>
-            <li>
-              <Typography variant="body1">
-                maintaining confidentiality of login credentials
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                restricting unauthorized access
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                safeguarding passwords and authentication systems
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                monitoring user activity within their organization
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                ensuring lawful internal usage of the Platform
-              </Typography>
-            </li>
-          </ul>
-
-          <Typography variant="body1" paragraph>
-            Any activity conducted through authorized accounts shall be deemed the
-            responsibility of the respective User.
-          </Typography>
-
-          <Typography variant="body1" paragraph>
-            CareDesk360 shall not be liable for losses arising from credential misuse,
-            unauthorized access, or negligence by Users.
-          </Typography>
-
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             5. DATA OWNERSHIP
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             All patient records, clinic information, operational records, healthcare
             documentation, reports, prescriptions, and uploaded materials remain the
             exclusive property of the respective healthcare institution or User.
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             Ridgeveda Solutions Private Limited does not claim ownership over User or
             patient data stored within the Platform.
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             The Company acts solely as a technology service provider and data processor.
           </Typography>
 
-          <Typography variant="h5" gutterBottom>
+          {/* 6. PATIENT DATA & CONFIDENTIALITY */}
+
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             6. PATIENT DATA & CONFIDENTIALITY
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             CareDesk360 maintains strict confidentiality obligations regarding
             healthcare-related information.
           </Typography>
 
-          <ul>
-            <li>
-              <Typography variant="body1">
-                Patient data shall not be sold, rented, traded, or commercially exploited
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                Patient information shall not be used for marketing or advertising
-                purposes
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                Access to patient records shall remain restricted and controlled
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                Any technical-access requirement shall remain limited, confidential,
-                monitored, and purpose-specific
-              </Typography>
-            </li>
-          </ul>
+          <Typography variant="body2" paragraph>
+            Accordingly:
+          </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
+            • Patient data shall not be sold, rented, traded, or commercially exploited.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Patient information shall not be used for marketing or advertising purposes.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Access to patient records shall remain restricted and controlled.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Any technical-access requirement shall remain limited, confidential,
+            monitored, and purpose-specific.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
             Users remain solely responsible for:
           </Typography>
 
-          <ul>
-            <li>
-              <Typography variant="body1">
-                obtaining patient consent where legally required
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                ensuring lawful data collection
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                complying with healthcare privacy regulations
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                maintaining regulatory compliance within their jurisdiction
-              </Typography>
-            </li>
-          </ul>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="body2" paragraph>
+            • Obtaining patient consent where legally required.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Ensuring lawful data collection.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Complying with healthcare privacy regulations.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Maintaining regulatory compliance within their jurisdiction.
+          </Typography>
+
+          {/* 7. LICENSE & PERMITTED USE */}
+
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             7. LICENSE & PERMITTED USE
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             Subject to compliance with these Terms, CareDesk360 grants the User a
             limited, non-transferable, non-exclusive, revocable license to access and
             use the Platform for legitimate healthcare operational purposes.
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             The User shall not:
           </Typography>
 
-          <ul>
-            <li>
-              <Typography variant="body1">
-                copy, replicate, or redistribute the Platform
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                reverse engineer or decompile the software
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">create derivative works</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                sublicense or commercially resell the Platform
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                attempt unauthorized access to infrastructure
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                interfere with system security
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                misuse APIs, databases, or operational workflows
-              </Typography>
-            </li>
-          </ul>
+          <Typography variant="body2" paragraph>
+            • Copy, replicate, or redistribute the Platform.
+          </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
+            • Reverse engineer or decompile the software.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Create derivative works.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Sublicense or commercially resell the Platform.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Attempt unauthorized access to infrastructure.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Interfere with system security.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Misuse APIs, databases, or operational workflows.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
             Any unauthorized usage may result in immediate suspension, legal action, or
             termination.
           </Typography>
 
-          <Typography variant="h5" gutterBottom>
-            8. SUBSCRIPTION, BILLING & PAYMENT TERMS
+          {/* 8. SUBSCRIPTION, BILLING, PAYMENT & REFUND POLICY */}
+
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
+            8. SUBSCRIPTION, BILLING, PAYMENT & REFUND POLICY
           </Typography>
 
-          <Typography variant="body1" paragraph>
-            By subscribing to CareDesk360, the User expressly agrees to the following
-            commercial conditions:
+          <Typography variant="body2" paragraph>
+            By subscribing to, purchasing, or using CareDesk360 ("Services"), the User
+            expressly acknowledges, understands, and agrees to the following commercial
+            terms and conditions:
           </Typography>
 
-          <ul>
-            <li>
-              <Typography variant="body1">
-                All payments are final and legally non-refundable
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                Subscription fees once paid cannot be revoked, reversed, disputed, or
-                refunded
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                Partial usage, dissatisfaction, operational interruptions, or non-usage
-                shall not constitute grounds for refund
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                Subscription access remains subject to timely payment obligations
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                Failure to renew subscriptions may result in suspension or termination of
-                services
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                Pricing structures, service scope, and commercial terms may be revised by
-                the Company with prior notice
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                The User expressly waives chargeback or refund claims except where
-                required under applicable law
-              </Typography>
-            </li>
-          </ul>
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            8.1 Subscription & Payment Obligations
+          </Typography>
 
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="body2" paragraph>
+            a. The User shall pay all applicable subscription fees, onboarding charges,
+            implementation fees, customization charges, and any other charges specified
+            by Ridgeveda Solutions Private Limited.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            b. Subscription fees are payable in advance and are due immediately upon
+            invoice generation unless otherwise agreed in writing.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            c. Access to the Services is contingent upon successful receipt of payment.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            d. Failure to make timely payments may result in suspension, restriction, or
+            termination without prior notice.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            e. The Company reserves the right to revise pricing, plans, and commercial
+            terms with reasonable prior notice.
+          </Typography>
+
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            8.2 Refund Eligibility
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            a. Refund requests may be submitted within twenty-four (24) hours of the
+            initial subscription purchase.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            b. Requests received after twenty-four (24) hours may be rejected.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            c. Refund requests must be submitted through official support channels with
+            proof of payment.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            d. Approval remains subject to transaction verification.
+          </Typography>
+
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            8.3 Non-Refundable Circumstances
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Partial usage of Services.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Failure to utilize Services after purchase.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Dissatisfaction based on preferences or expectations.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Lack of training or technical knowledge.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Suspension due to Terms violations.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Subscription renewals not cancelled before renewal.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Custom development, integrations, onboarding, consulting, migration, or
+            training services.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Requests submitted after the refund window.
+          </Typography>
+
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            8.4 Refund Processing
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            a. Approved refunds shall be processed through the original payment method.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            b. Refunds are generally credited within five (5) to seven (7) business days.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            c. The Company is not liable for delays caused by banks or payment providers.
+          </Typography>
+
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            8.5 Chargebacks & Payment Disputes
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            a. Users agree not to initiate chargebacks before giving the Company an
+            opportunity to resolve the issue.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            b. Fraudulent chargebacks may result in suspension, termination, and legal
+            action.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            c. The Company may submit usage logs, invoices, payment records, and other
+            evidence in dispute proceedings.
+          </Typography>
+
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            8.6 Governing Law & Jurisdiction
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            This Refund Policy and all related commercial matters shall be governed by
+            the laws of Telangana and India.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            Courts located in Greater Hyderabad, Telangana shall have exclusive
+            jurisdiction over disputes relating to subscriptions, payments, or refunds.
+          </Typography>
+
+          {/* 9. SERVICE AVAILABILITY */}
+
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             9. SERVICE AVAILABILITY
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             While CareDesk360 endeavors to maintain uninterrupted access, the Company
             does not guarantee:
           </Typography>
 
-          <ul>
-            <li>
-              <Typography variant="body1">uninterrupted uptime</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">error-free operation</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                permanent service availability
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                compatibility with all external systems or devices
-              </Typography>
-            </li>
-          </ul>
+          <Typography variant="body2" paragraph>
+            • Uninterrupted uptime.
+          </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
+            • Error-free operation.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Permanent service availability.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Compatibility with all external systems or devices.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
             Temporary interruptions may occur due to:
           </Typography>
 
-          <ul>
-            <li>
-              <Typography variant="body1">maintenance</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">upgrades</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">cybersecurity events</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">server failures</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                third-party infrastructure disruptions
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">force majeure events</Typography>
-            </li>
-          </ul>
+          <Typography variant="body2" paragraph>• Maintenance.</Typography>
+          <Typography variant="body2" paragraph>• Upgrades.</Typography>
+          <Typography variant="body2" paragraph>• Cybersecurity events.</Typography>
+          <Typography variant="body2" paragraph>• Server failures.</Typography>
+          <Typography variant="body2" paragraph>• Third-party infrastructure disruptions.</Typography>
+          <Typography variant="body2" paragraph>• Force majeure events.</Typography>
 
-          <Typography variant="h5" gutterBottom>
+          {/* 10. THIRD-PARTY SERVICES */}
+
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             10. THIRD-PARTY SERVICES
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             The Platform may integrate with or utilize third-party services including:
           </Typography>
 
-          <ul>
-            <li>
-              <Typography variant="body1">payment gateways</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">cloud hosting systems</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">communication providers</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">analytics systems</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">infrastructure vendors</Typography>
-            </li>
-          </ul>
+          <Typography variant="body2" paragraph>• Payment gateways.</Typography>
+          <Typography variant="body2" paragraph>• Cloud hosting systems.</Typography>
+          <Typography variant="body2" paragraph>• Communication providers.</Typography>
+          <Typography variant="body2" paragraph>• Analytics systems.</Typography>
+          <Typography variant="body2" paragraph>• Infrastructure vendors.</Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             CareDesk360 shall not be liable for interruptions, losses, breaches, or
             damages attributable to third-party providers beyond reasonable control.
           </Typography>
 
-          <Typography variant="h5" gutterBottom>
+          {/* 11. INTELLECTUAL PROPERTY RIGHTS */}
+
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             11. INTELLECTUAL PROPERTY RIGHTS
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             All intellectual property associated with CareDesk360, including:
           </Typography>
 
-          <ul>
-            <li>
-              <Typography variant="body1">software architecture</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">source code</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">workflows</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">dashboards</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">UI/UX structures</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">branding</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">business methodologies</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">operational systems</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                proprietary documentation
-              </Typography>
-            </li>
-          </ul>
+          <Typography variant="body2" paragraph>• Software architecture.</Typography>
+          <Typography variant="body2" paragraph>• Source code.</Typography>
+          <Typography variant="body2" paragraph>• Workflows.</Typography>
+          <Typography variant="body2" paragraph>• Dashboards.</Typography>
+          <Typography variant="body2" paragraph>• UI/UX structures.</Typography>
+          <Typography variant="body2" paragraph>• Branding.</Typography>
+          <Typography variant="body2" paragraph>• Business methodologies.</Typography>
+          <Typography variant="body2" paragraph>• Operational systems.</Typography>
+          <Typography variant="body2" paragraph>• Proprietary documentation.</Typography>
 
-          <Typography variant="body1" paragraph>
-            shall remain the exclusive property of Ridgeveda Solutions Private Limited.
+          <Typography variant="body2" paragraph>
+            Shall remain the exclusive property of Ridgeveda Solutions Private Limited.
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             Nothing within these Terms transfers ownership rights to the User.
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             Unauthorized reproduction, copying, resale, or commercial exploitation is
             strictly prohibited.
           </Typography>
 
-          <Typography variant="h5" gutterBottom>
+          {/* 12. PROHIBITED ACTIVITIES */}
+
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             12. PROHIBITED ACTIVITIES
           </Typography>
 
-          <ul>
-            <li>
-              <Typography variant="body1">
-                upload unlawful or fraudulent information
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">misuse patient records</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                violate healthcare regulations
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                attempt hacking or unauthorized access
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                disrupt Platform operations
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                transmit malware or harmful code
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                use the Platform for unlawful purposes
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                interfere with system security mechanisms
-              </Typography>
-            </li>
-          </ul>
+          <Typography variant="body2" paragraph>
+            Users shall not:
+          </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
+            • Upload unlawful or fraudulent information.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Misuse patient records.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Violate healthcare regulations.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Attempt hacking or unauthorized access.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Disrupt Platform operations.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Transmit malware or harmful code.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Use the Platform for unlawful purposes.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Interfere with system security mechanisms.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
             Violation may result in immediate account suspension and legal proceedings.
           </Typography>
 
-          <Typography variant="h5" gutterBottom>
+          {/* 13. LIMITATION OF LIABILITY */}
+
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             13. LIMITATION OF LIABILITY
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             To the maximum extent permissible under applicable law, CareDesk360 and
             Ridgeveda Solutions Private Limited shall not be liable for:
           </Typography>
 
-          <ul>
-            <li>
-              <Typography variant="body1">
-                medical negligence by healthcare providers
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">treatment outcomes</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">patient disputes</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                loss of profits or business opportunities
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                indirect or consequential damages
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">cyberattacks</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                infrastructure failures
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">internet interruptions</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                unauthorized access caused by User negligence
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                data corruption caused by external systems
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">force majeure events</Typography>
-            </li>
-          </ul>
+          <Typography variant="body2" paragraph>
+            • Medical negligence by healthcare providers.
+          </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
+            • Treatment outcomes.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Patient disputes.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Loss of profits or business opportunities.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Indirect or consequential damages.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Cyberattacks.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Infrastructure failures.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Internet interruptions.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Unauthorized access caused by User negligence.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Data corruption caused by external systems.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Force majeure events.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
             In all circumstances, aggregate liability shall not exceed the subscription
             fees paid by the User during the preceding three (3) months.
           </Typography>
 
-          <Typography variant="h5" gutterBottom>
+          {/* 14. INDEMNIFICATION */}
+
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             14. INDEMNIFICATION
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             The User agrees to indemnify, defend, and hold harmless CareDesk360 and
             Ridgeveda Solutions Private Limited from any claims, liabilities, damages,
             penalties, losses, or legal expenses arising from:
           </Typography>
 
-          <ul>
-            <li>
-              <Typography variant="body1">
-                violation of these Terms
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                unlawful use of the Platform
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                healthcare regulatory violations
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">patient disputes</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">data misuse</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">negligence</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                unauthorized activities conducted by the User
-              </Typography>
-            </li>
-          </ul>
+          <Typography variant="body2" paragraph>
+            • Violation of these Terms.
+          </Typography>
 
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="body2" paragraph>
+            • Unlawful use of the Platform.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Healthcare regulatory violations.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Patient disputes.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Data misuse.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Negligence.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Unauthorized activities conducted by the User.
+          </Typography>
+
+          {/* 15. TERMINATION & SUSPENSION */}
+
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             15. TERMINATION & SUSPENSION
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             CareDesk360 reserves the absolute right to suspend, restrict, or terminate
             access without prior notice where:
           </Typography>
 
-          <ul>
-            <li>
-              <Typography variant="body1">payment defaults occur</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                unlawful activities are detected
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                cybersecurity threats arise
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                misuse of the Platform occurs
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                operational integrity is threatened
-              </Typography>
-            </li>
-          </ul>
+          <Typography variant="body2" paragraph>
+            • Payment defaults occur.
+          </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
+            • Unlawful activities are detected.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Cybersecurity threats arise.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Misuse of the Platform occurs.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
+            • Operational integrity is threatened.
+          </Typography>
+
+          <Typography variant="body2" paragraph>
             Termination shall not affect accrued payment obligations or legal remedies
             available to the Company.
           </Typography>
 
-          <Typography variant="h5" gutterBottom>
+          {/* 16. FORCE MAJEURE */}
+
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             16. FORCE MAJEURE
           </Typography>
 
-          <Typography variant="body1" paragraph>
-            The Company shall not be liable for failure or delay in performance caused by
-            circumstances beyond reasonable control, including:
+          <Typography variant="body2" paragraph>
+            The Company shall not be liable for failure or delay in performance caused
+            by circumstances beyond reasonable control, including:
           </Typography>
 
-          <ul>
-            <li>
-              <Typography variant="body1">natural disasters</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">cyberattacks</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">war</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                governmental restrictions
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">internet outages</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">
-                infrastructure failures
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="body1">labor disputes</Typography>
-            </li>
-            <li>
-              <Typography variant="body1">force majeure events</Typography>
-            </li>
-          </ul>
+          <Typography variant="body2" paragraph>• Natural disasters.</Typography>
+          <Typography variant="body2" paragraph>• Cyberattacks.</Typography>
+          <Typography variant="body2" paragraph>• War.</Typography>
+          <Typography variant="body2" paragraph>• Governmental restrictions.</Typography>
+          <Typography variant="body2" paragraph>• Internet outages.</Typography>
+          <Typography variant="body2" paragraph>• Infrastructure failures.</Typography>
+          <Typography variant="body2" paragraph>• Labor disputes.</Typography>
+          <Typography variant="body2" paragraph>• Force majeure events.</Typography>
 
-          <Typography variant="h5" gutterBottom>
+          {/* 17. MODIFICATION OF TERMS */}
+
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             17. MODIFICATION OF TERMS
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             Ridgeveda Solutions Private Limited reserves the unilateral right to revise,
             amend, or modify these Terms at any time.
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             Continued use of the Platform following modifications shall constitute
             acceptance of the revised Terms.
           </Typography>
 
-          <Typography variant="h5" gutterBottom>
+          {/* 18. GOVERNING LAW & JURISDICTION */}
+
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             18. GOVERNING LAW & JURISDICTION
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             These Terms shall be governed and interpreted in accordance with the laws of
             India.
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             Any disputes arising out of or relating to these Terms shall be subject to
-            the exclusive jurisdiction of the competent courts located in Hyderabad,
-            Telangana, India.
+            the exclusive jurisdiction of the competent courts located in Greater
+            Hyderabad Area, Telangana, India.
           </Typography>
 
-          <Typography variant="h5" gutterBottom>
+          {/* 19. CONTACT INFORMATION */}
+
+          <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             19. CONTACT INFORMATION
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             Legal & Compliance Department
           </Typography>
 
-          <Typography variant="body1" paragraph>
+          <Typography variant="body2" paragraph>
             CareDesk360 – A Product of Ridgeveda Solutions Private Limited
           </Typography>
 
-          <Typography variant="body1" paragraph>
-            Email: caredesk360@gmail.com
+          <Typography variant="body2" paragraph>
+            Email: info@ridgeveda.com
           </Typography>
 
-          <Typography variant="body1" paragraph>
-            Website: <a href="https://caredesk360.com" target="_blank" rel="noopener noreferrer">
-              https://caredesk360.com
-            </a>
+          <Typography variant="body2" paragraph>
+            Website: <a href="https://caredesk360.com" target="_blank" rel="noopener noreferrer">https://caredesk360.com</a>
           </Typography>
         </Box>
       </Modal>
