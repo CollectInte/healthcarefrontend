@@ -4,7 +4,7 @@ import branding from '../../images/Brandingimage.png';
 import content from '../../images/content.png';
 
 const MockScheduler = () => (
-  <div className="mock-ui">
+  <div className="mock-ui" id="scheduling">
     <div className="mock-header">
       <span className="mock-title">📅 Dashboard / Appointment</span>
     </div>
@@ -39,7 +39,7 @@ const MockScheduler = () => (
 );
 
 const MockDocuments = () => (
-  <div className="mock-ui">
+  <div className="mock-ui" id="documents">
     <div className="mock-header">
       <span className="mock-title">📂 Dashboard / Documents</span>
     </div>
@@ -82,7 +82,7 @@ const MockDocuments = () => (
 
 
 const MockDigitalPrescription = () => (
-  <div className="mock-ui">
+  <div className="mock-ui" id="eprescribing">
     <div className="mock-header">
       <span className="mock-title">💊 Dashboard / Digital Prescriptions</span>
     </div>
@@ -254,7 +254,7 @@ const MockDigitalPrescription = () => (
 // );
 
 const MockBilling = () => (
-  <div className="mock-ui">
+  <div className="mock-ui" id="billing">
     <div className="mock-header">
       <span className="mock-title">💰 Billing & Claims</span>
     </div>
@@ -331,7 +331,7 @@ const MockBilling = () => (
 
 
 const MockAttendance = () => (
-  <div className="mock-ui">
+  <div className="mock-ui" id="admin-portal">
     <div className="mock-header">
       <span className="mock-title">📊 Dashboard / Attendance</span>
     </div>
@@ -409,14 +409,14 @@ const MockAttendance = () => (
 );
 
 const Branding = () => (
-  <div className="mock-ui">
+  <div className="mock-ui" id="marketing">
     <img src={branding} alt="Branding&Marketing"/>
   </div>
 );
 
 
 const Content = () => (
-  <div className="mock-ui">
+  <div className="mock-ui" id="content-creation">
     <img src={content} alt="Content Creation"/>
   </div>
 );
