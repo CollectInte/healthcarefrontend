@@ -39,7 +39,7 @@ const Testimonials = () => (
         <h2 className="section-title">What Our Clients Say About Us</h2>
         <p className="section-subtitle">Trusted by 200+ healthcare organizations nationwide</p>
       </div>
-      <div className="testimonials-grid">
+      {/* <div className="testimonials-grid">
         {testimonials.map((t, i) => (
           <div className="testimonial-card" key={i}>
             <div className="testimonial-stars">
@@ -56,7 +56,8 @@ const Testimonials = () => (
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
+      <iframe src="https://widgets.sociablekit.com/google-reviews/iframe/25687238" frameborder="0" width="100%" height="1000px"></iframe>
     </div>
   </section>
 );
