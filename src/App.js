@@ -48,6 +48,7 @@ import './Styles/global.css';
 import SuperAdminLogin from "./Pages/Login";
 import SuperAdminDashboard from './Pages/SuperAdminDashboard';
 import ClientPrescriptions from './ClientComponents/ClientPrescriptions';
+import AboutCareDesk360 from './landingcomponents/components/About';
 
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
       <FeatureSections />
       <CTABanner />
       <Comparison />
+      <AboutCareDesk360 />
       <WhyUs />
       <Footer />
     </div>
