@@ -27,7 +27,7 @@ const Comparison = () => {
             <h2>₹10,000</h2>
           </div>
           <ul>
-            <li>Basic Website</li>
+            <li>Custom Advanced Website</li>
             <li>
               Practice Management Software –{" "}
               <b style={{ color: "#46db14" }}>FREE</b>
